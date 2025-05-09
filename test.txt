@@ -1,0 +1,2160 @@
+Australia~Aerospace & Defense              0.005 
+Australia~Automotive         0.0011 
+Australia~Buildings          0.005 
+Australia~Cement & Glass     0.0033 
+Australia~Chemical           0.01 
+Australia~Construction       0.05 
+Australia~Education          0.01 
+Australia~Electric Power Generation        0.015 
+Australia~Electric Power T&D               0.008 
+Australia~Electronics & Electrical         7.71913575452306E-03 
+Australia~Engineering & Business Services  0.12 
+Australia~Entertainment      0.03 
+Australia~Fabricated Metals  0.008 
+Australia~Financial          0.2 
+Australia~Food & Beverage    0.02 
+Australia~Furniture & Wood Products        3.85956787726153E-03 
+Australia~Government         0.09 
+Australia~Healthcare         0.07 
+Australia~Household & Personal Care        0.001 
+Australia~Machinery          0.008 
+Australia~Marine             0.0002 
+Australia~Medical Products   0.0006 
+Australia~Metals             0.0055 
+Australia~Mining             0.05 
+Australia~Mining & Metals    4.10226335211077E-02 
+Australia~Oil & Gas          0.05 
+Australia~Other              2.22044604925031E-16 
+Australia~Other Industries   1.96390949698462E-02 
+Australia~Pharmaceutical & Biotech         0.0055 
+Australia~Plastics & Rubber  0.005 
+Australia~Printing & Publishing            0.0002 
+Australia~Pulp & Paper       0.005 
+Australia~Refining           0.003 
+Australia~Retail             0.0453 
+Australia~Semiconductors     3.85956787726153E-03 
+Australia~Telecommunications               0.02 
+Australia~Textiles           0.0005 
+Australia~Transportation & Logistics       0.0352 
+Australia~Water & Wastewater               0.0055 
+Australia~Wholesale & Distribution         0.038 
+China~Aerospace & Defense    8.36874814918349E-03 
+China~Automotive             2.09218703729587E-02 
+China~Buildings              5.61041776325901E-03 
+China~Cement & Glass         1.04609351864794E-02 
+China~Chemical               2.09218703729587E-02 
+China~Construction           5.57916543278899E-02 
+China~Education              9.29860905464832E-03 
+China~Electric Power Generation            2.09218703729587E-02 
+China~Electric Power T&D     1.04609351864794E-02 
+China~Electronics & Electrical             4.18437407459174E-02 
+China~Engineering & Business Services      7.43888724371866E-02 
+China~Entertainment          2.32465226366208E-02 
+China~Fabricated Metals      0.015691402779719 
+China~Financial              7.71784551535811E-02 
+China~Food & Beverage        1.88296833356628E-02 
+China~Furniture & Wood Products            3.15585999183319E-03 
+China~Government             7.43888724371866E-02 
+China~Healthcare             0.027895827163945 
+China~Household & Personal Care            9.46757997549958E-03 
+China~Machinery              2.92906185221422E-02 
+China~Marine   1.04609351864794E-02 
+China~Medical Products       3.13828055594381E-04 
+China~Metals   3.13828055594381E-02 
+China~Mining   2.09218703729587E-02 
+China~Mining & Metals        5.23046759323968E-02 
+China~Oil & Gas              9.20562296410184E-03 
+China~Other    7.03245322893555E-02 
+China~Other Industries       4.66244748524857E-02 
+China~Pharmaceutical & Biotech             1.04609351864794E-02 
+China~Plastics & Rubber      1.25531222237752E-02 
+China~Printing & Publishing  5.23046759323968E-04 
+China~Pulp & Paper           1.04609351864794E-02 
+China~Refining               1.04609351864794E-02 
+China~Retail   3.71944362185933E-02 
+China~Semiconductors         0.015691402779719 
+China~Telecommunications     1.85972181092966E-02 
+China~Textiles               0.015691402779719 
+China~Transportation & Logistics           1.63887984588177E-02 
+China~Water & Wastewater     2.09218703729587E-02 
+China~Wholesale & Distribution             3.13828055594381E-02 
+India~Aerospace & Defense    5.34703441588996E-03 
+India~Automotive             1.06940688317799E-02 
+India~Buildings              4.75291948079107E-03 
+India~Cement & Glass         1.28328825981359E-02 
+India~Chemical               1.06940688317799E-02 
+India~Construction           5.70350337694929E-02 
+India~Education              1.14070067538986E-02 
+India~Electric Power Generation            2.13881376635598E-02 
+India~Electric Power T&D     1.06940688317799E-02 
+India~Electronics & Electrical             5.34703441588996E-03 
+India~Engineering & Business Services      0.104564228577404 
+India~Entertainment          2.37645974039554E-02 
+India~Fabricated Metals      8.55525506542393E-03 
+India~Financial              8.74537184465558E-02 
+India~Food & Beverage        1.06940688317799E-02 
+India~Furniture & Wood Products            2.13881376635598E-03 
+India~Government             8.07996311734483E-02 
+India~Healthcare             2.85175168847464E-02 
+India~Household & Personal Care            5.34703441588996E-03 
+India~Machinery              1.06940688317799E-02 
+India~Marine   5.34703441588996E-03 
+India~Medical Products       3.20822064953398E-04 
+India~Metals   1.06940688317799E-02 
+India~Mining   1.06940688317799E-02 
+India~Mining & Metals        2.13881376635598E-02 
+India~Oil & Gas              1.06940688317799E-02 
+India~Other    0.222740818547793 
+India~Other Industries       2.63929618768328E-02 
+India~Pharmaceutical & Biotech             5.34703441588996E-03 
+India~Plastics & Rubber      5.34703441588996E-03 
+India~Printing & Publishing  5.34703441588996E-04 
+India~Pulp & Paper           1.17634757149579E-02 
+India~Refining               8.55525506542393E-03 
+India~Retail   4.12315764958626E-02 
+India~Semiconductors         1.06940688317799E-03 
+India~Telecommunications     1.90116779231643E-02 
+India~Textiles               1.06940688317799E-02 
+India~Transportation & Logistics           3.02998616900431E-02 
+India~Water & Wastewater     1.06940688317799E-02 
+India~Wholesale & Distribution             3.44586662357353E-02 
+Indonesia~Aerospace & Defense              5.09476258406358E-03 
+Indonesia~Automotive         8.76299164458936E-03 
+Indonesia~Buildings          4.52867785250096E-03 
+Indonesia~Cement & Glass     3.05685755043815E-02 
+Indonesia~Chemical           1.51479597949097E-02 
+Indonesia~Construction       3.62294228200077E-02 
+Indonesia~Education          9.05735570500193E-03 
+Indonesia~Electric Power Generation        5.15793239901654E-02 
+Indonesia~Electric Power T&D               2.03790503362543E-02 
+Indonesia~Electronics & Electrical         2.03790503362543E-02 
+Indonesia~Engineering & Business Services  5.43441342300116E-02 
+Indonesia~Entertainment      1.81147114100039E-02 
+Indonesia~Fabricated Metals  8.15162013450173E-03 
+Indonesia~Financial          3.62294228200077E-02 
+Indonesia~Food & Beverage    5.98548730425008E-02 
+Indonesia~Furniture & Wood Products        2.03790503362543E-03 
+Indonesia~Government         7.24588456400154E-02 
+Indonesia~Healthcare         2.71720671150058E-02 
+Indonesia~Household & Personal Care        1.01895251681272E-02 
+Indonesia~Machinery          1.01895251681272E-02 
+Indonesia~Marine             5.09476258406358E-03 
+Indonesia~Medical Products   3.05685755043815E-04 
+Indonesia~Metals             1.88292406592779E-02 
+Indonesia~Mining             5.62452672311207E-02 
+Indonesia~Mining & Metals    4.09618911758712E-02 
+Indonesia~Oil & Gas          0.100876299164459 
+Indonesia~Other              0 
+Indonesia~Other Industries   1.09708259520655E-02 
+Indonesia~Pharmaceutical & Biotech         1.01895251681272E-02 
+Indonesia~Plastics & Rubber  1.01895251681272E-02 
+Indonesia~Printing & Publishing            5.09476258406358E-04 
+Indonesia~Pulp & Paper       3.05685755043815E-02 
+Indonesia~Refining           1.88279110898013E-02 
+Indonesia~Retail             6.23825374182008E-02 
+Indonesia~Semiconductors     5.75674415415863E-03 
+Indonesia~Telecommunications               1.63032402690035E-02 
+Indonesia~Textiles           1.01895251681272E-02 
+Indonesia~Transportation & Logistics       3.88334125851958E-02 
+Indonesia~Water & Wastewater               1.01895251681272E-02 
+Indonesia~Wholesale & Distribution         5.23062291963861E-02 
+Japan~Aerospace & Defense    0.0055 
+Japan~Automotive             0.01 
+Japan~Buildings              0.008 
+Japan~Cement & Glass         0.0055 
+Japan~Chemical               0.011 
+Japan~Construction           0.035 
+Japan~Education              0.012 
+Japan~Electric Power Generation            0.011 
+Japan~Electric Power T&D     0.008 
+Japan~Electronics & Electrical             0.03 
+Japan~Engineering & Business Services      0.12 
+Japan~Entertainment          0.032 
+Japan~Fabricated Metals      0.008 
+Japan~Financial              0.2 
+Japan~Food & Beverage        0.011 
+Japan~Furniture & Wood Products            3.85956787726154E-03 
+Japan~Government             0.095 
+Japan~Healthcare             0.07 
+Japan~Household & Personal Care            0.002 
+Japan~Machinery              0.01 
+Japan~Marine   0.001 
+Japan~Medical Products       0.0008 
+Japan~Metals   0.011 
+Japan~Mining   0.0055 
+Japan~Mining & Metals        0.01 
+Japan~Oil & Gas              0.005 
+Japan~Other    8.81447533501203E-03 
+Japan~Other Industries       2.66259567877263E-02 
+Japan~Pharmaceutical & Biotech             0.011 
+Japan~Plastics & Rubber      0.008 
+Japan~Printing & Publishing  0.0002 
+Japan~Pulp & Paper           0.0066 
+Japan~Refining               0.011 
+Japan~Retail   0.0672 
+Japan~Semiconductors         0.01 
+Japan~Telecommunications     0.02 
+Japan~Textiles               0.0005 
+Japan~Transportation & Logistics           0.0471 
+Japan~Water & Wastewater     0.0055 
+Japan~Wholesale & Distribution             0.0563 
+Malaysia~Aerospace & Defense               5.17613837659036E-03 
+Malaysia~Automotive          4.14091070127229E-03 
+Malaysia~Buildings           5.13862945787404E-03 
+Malaysia~Cement & Glass      1.15102050553758E-02 
+Malaysia~Chemical            1.06956466152573E-02 
+Malaysia~Construction        4.14091070127229E-02 
+Malaysia~Education           9.20202378060509E-03 
+Malaysia~Electric Power Generation         0.034678520664488 
+Malaysia~Electric Power T&D  1.03522767531807E-02 
+Malaysia~Electronics & Electrical          5.17613837659036E-02 
+Malaysia~Engineering & Business Services   6.44141664642356E-02 
+Malaysia~Entertainment       2.76060713418153E-02 
+Malaysia~Fabricated Metals   8.28182140254458E-03 
+Malaysia~Financial           7.36161902448407E-02 
+Malaysia~Food & Beverage     1.48911233848231E-02 
+Malaysia~Furniture & Wood Products         4.14091070127229E-03 
+Malaysia~Government          7.82172021351432E-02 
+Malaysia~Healthcare          2.76060713418153E-02 
+Malaysia~Household & Personal Care         1.03522767531807E-02 
+Malaysia~Machinery           1.03522767531807E-02 
+Malaysia~Marine              2.07045535063614E-04 
+Malaysia~Medical Products    6.21136605190843E-04 
+Malaysia~Metals              5.41946610625474E-03 
+Malaysia~Mining              1.6975902800831E-03 
+Malaysia~Mining & Metals     1.08698905908398E-02 
+Malaysia~Oil & Gas           9.31704907786265E-02 
+Malaysia~Other               7.50664320536453E-02 
+Malaysia~Other Industries    4.22771921816802E-02 
+Malaysia~Pharmaceutical & Biotech          1.82131529427677E-03 
+Malaysia~Plastics & Rubber   1.03522767531807E-02 
+Malaysia~Printing & Publishing             5.17613837659036E-04 
+Malaysia~Pulp & Paper        5.6937522142494E-03 
+Malaysia~Refining            1.22508339015779E-02 
+Malaysia~Retail              7.09706084079167E-02 
+Malaysia~Semiconductors      2.07045535063614E-02 
+Malaysia~Telecommunications  1.84040475612102E-02 
+Malaysia~Textiles            8.28182140254458E-03 
+Malaysia~Transportation & Logistics        4.31344864715863E-02 
+Malaysia~Water & Wastewater  1.55284151297711E-02 
+Malaysia~Wholesale & Distribution          5.94680786821604E-02 
+New Zealand~Aerospace & Defense            0.005 
+New Zealand~Automotive       9.99999999999999E-05 
+New Zealand~Buildings        0.005 
+New Zealand~Cement & Glass   0.0003 
+New Zealand~Chemical         0.015 
+New Zealand~Construction     0.055 
+New Zealand~Education        0.012 
+New Zealand~Electric Power Generation      0.0025 
+New Zealand~Electric Power T&D             7.99999999999999E-03 
+New Zealand~Electronics & Electrical       9.99999999999999E-03 
+New Zealand~Engineering & Business Services              9.99999999999999E-02 
+New Zealand~Entertainment    0.03 
+New Zealand~Fabricated Metals              7.99999999999999E-03 
+New Zealand~Financial        0.198 
+New Zealand~Food & Beverage  0.015 
+New Zealand~Furniture & Wood Products      3.85956787726152E-03 
+New Zealand~Government       8.49999999999999E-02 
+New Zealand~Healthcare       6.99999999999999E-02 
+New Zealand~Household & Personal Care      0.005 
+New Zealand~Machinery        7.99999999999999E-03 
+New Zealand~Marine           0.0002 
+New Zealand~Medical Products               5.99999999999999E-04 
+New Zealand~Metals           0.0055 
+New Zealand~Mining           0.0002 
+New Zealand~Mining & Metals  0.0052 
+New Zealand~Oil & Gas        0.005 
+New Zealand~Other            0.198618950670025 
+New Zealand~Other Industries               1.54619135754523E-02 
+New Zealand~Pharmaceutical & Biotech       0.0055 
+New Zealand~Plastics & Rubber              0.005 
+New Zealand~Printing & Publishing          0.0005 
+New Zealand~Pulp & Paper     7.99999999999999E-04 
+New Zealand~Refining         6.99999999999999E-04 
+New Zealand~Retail           0.0356 
+New Zealand~Semiconductors   3.85956787726152E-03 
+New Zealand~Telecommunications             0.02 
+New Zealand~Textiles         0.0005 
+New Zealand~Transportation & Logistics     0.0257 
+New Zealand~Water & Wastewater             0.0055 
+New Zealand~Wholesale & Distribution       0.0298 
+Pakistan~Aerospace & Defense               5.35898660372438E-03 
+Pakistan~Automotive          1.07179732074488E-03 
+Pakistan~Buildings           0.004763543647755 
+Pakistan~Cement & Glass      1.60769598111731E-02 
+Pakistan~Chemical            1.17897705281936E-02 
+Pakistan~Construction        0.04763543647755 
+Pakistan~Education           0.011432504754612 
+Pakistan~Electric Power Generation         5.35898660372438E-03 
+Pakistan~Electric Power T&D  1.07179732074488E-02 
+Pakistan~Electronics & Electrical          5.35898660372438E-03 
+Pakistan~Engineering & Business Services   0.080027533282284 
+Pakistan~Entertainment       0.02858126188653 
+Pakistan~Fabricated Metals   5.35898660372438E-03 
+Pakistan~Financial           0.109561503898365 
+Pakistan~Food & Beverage     1.17897705281936E-02 
+Pakistan~Furniture & Wood Products         5.35898660372438E-03 
+Pakistan~Government          0.080980242011835 
+Pakistan~Healthcare          0.033344805534285 
+Pakistan~Household & Personal Care         3.21539196223463E-03 
+Pakistan~Machinery           5.35898660372438E-03 
+Pakistan~Marine              2.14359464148975E-04 
+Pakistan~Medical Products    3.21539196223463E-04 
+Pakistan~Metals              5.89488526409682E-03 
+Pakistan~Mining              3.21539196223463E-04 
+Pakistan~Mining & Metals     5.89488526409682E-03 
+Pakistan~Oil & Gas           2.14359464148975E-02 
+Pakistan~Other               0.269988126867458 
+Pakistan~Other Industries    2.00533278711366E-02 
+Pakistan~Pharmaceutical & Biotech          5.89488526409682E-03 
+Pakistan~Plastics & Rubber   5.35898660372438E-03 
+Pakistan~Printing & Publishing             5.35898660372438E-04 
+Pakistan~Pulp & Paper        1.17897705281936E-03 
+Pakistan~Refining            2.67949330186219E-03 
+Pakistan~Retail              5.21608029429173E-02 
+Pakistan~Semiconductors      2.14359464148975E-03 
+Pakistan~Telecommunications  0.01905417459102 
+Pakistan~Textiles            5.35898660372438E-03 
+Pakistan~Transportation & Logistics        0.042871892829795 
+Pakistan~Water & Wastewater  1.17897705281936E-02 
+Pakistan~Wholesale & Distribution          4.37055129681521E-02 
+Philippines~Aerospace & Defense            5.27138374392131E-03 
+Philippines~Automotive       1.05427674878426E-03 
+Philippines~Buildings        4.23791922591098E-03 
+Philippines~Cement & Glass   2.10855349756852E-02 
+Philippines~Chemical         1.05427674878426E-02 
+Philippines~Construction     5.15424188294528E-02 
+Philippines~Education        1.12456186536988E-02 
+Philippines~Electric Power Generation      3.16283024635279E-02 
+Philippines~Electric Power T&D             1.05427674878426E-02 
+Philippines~Electronics & Electrical       2.10855349756852E-02 
+Philippines~Engineering & Business Services              7.49707910246586E-02 
+Philippines~Entertainment    0.028114046634247 
+Philippines~Fabricated Metals              7.37993724148983E-03 
+Philippines~Financial        8.24678701271245E-02 
+Philippines~Food & Beverage  4.21710699513705E-02 
+Philippines~Furniture & Wood Products      1.05427674878426E-02 
+Philippines~Government       7.96564654636998E-02 
+Philippines~Healthcare       3.74853955123293E-02 
+Philippines~Household & Personal Care      5.27138374392131E-03 
+Philippines~Machinery        1.05427674878426E-02 
+Philippines~Marine           2.10855349756852E-04 
+Philippines~Medical Products               3.16283024635279E-04 
+Philippines~Metals           2.10855349756852E-02 
+Philippines~Mining           2.75551929805608E-03 
+Philippines~Mining & Metals  8.36780924809679E-03 
+Philippines~Oil & Gas        5.79852211831344E-03 
+Philippines~Other            0.160549790803315 
+Philippines~Other Industries               3.27956905315445E-02 
+Philippines~Pharmaceutical & Biotech       1.05427674878426E-02 
+Philippines~Plastics & Rubber              5.27138374392131E-03 
+Philippines~Printing & Publishing          5.27138374392131E-04 
+Philippines~Pulp & Paper     5.27138374392131E-04 
+Philippines~Refining         1.05427674878426E-02 
+Philippines~Retail           0.06431088167584 
+Philippines~Semiconductors   1.05427674878426E-02 
+Philippines~Telecommunications             1.87426977561647E-02 
+Philippines~Textiles         5.27138374392131E-03 
+Philippines~Transportation & Logistics     2.53026419708223E-02 
+Philippines~Water & Wastewater             1.58141512317639E-02 
+Philippines~Wholesale & Distribution       5.38852560489734E-02 
+Rest of Asia~Aerospace & Defense           5.39489716659819E-03 
+Rest of Asia~Automotive      1.07897943331964E-02 
+Rest of Asia~Buildings       7.67274263693966E-03 
+Rest of Asia~Cement & Glass  5.93438688325802E-03 
+Rest of Asia~Chemical        0.011868773766516 
+Rest of Asia~Construction    0.033568249036611 
+Rest of Asia~Education       1.15091139554095E-02 
+Rest of Asia~Electric Power Generation     0.011868773766516 
+Rest of Asia~Electric Power T&D            8.63183546655711E-03 
+Rest of Asia~Electronics & Electrical      3.23693829995892E-02 
+Rest of Asia~Engineering & Business Services             0.115091139554095 
+Rest of Asia~Entertainment   3.06909705477586E-02 
+Rest of Asia~Fabricated Metals             8.63183546655711E-03 
+Rest of Asia~Financial       0.191818565923491 
+Rest of Asia~Food & Beverage               0.011868773766516 
+Rest of Asia~Furniture & Wood Products     4.16439436106633E-03 
+Rest of Asia~Government      9.11138188136584E-02 
+Rest of Asia~Healthcare      0.067136498073222 
+Rest of Asia~Household & Personal Care     2.15795886663928E-03 
+Rest of Asia~Machinery       1.07897943331964E-02 
+Rest of Asia~Marine          1.07897943331964E-03 
+Rest of Asia~Medical Products              8.63183546655711E-04 
+Rest of Asia~Metals          0.011868773766516 
+Rest of Asia~Mining          5.93438688325802E-03 
+Rest of Asia~Mining & Metals               1.07897943331964E-02 
+Rest of Asia~Oil & Gas       1.07897943331964E-02 
+Rest of Asia~Other           0.118049437731037 
+Rest of Asia~Other Industries              2.49848011327949E-02 
+Rest of Asia~Pharmaceutical & Biotech      1.07897943331964E-02 
+Rest of Asia~Plastics & Rubber             8.63183546655711E-03 
+Rest of Asia~Printing & Publishing         2.15795886663928E-04 
+Rest of Asia~Pulp & Paper    7.12126425990962E-03 
+Rest of Asia~Refining        0.011868773766516 
+Rest of Asia~Retail          2.58955063996713E-02 
+Rest of Asia~Semiconductors  1.07897943331964E-02 
+Rest of Asia~Telecommunications            1.91818565923491E-02 
+Rest of Asia~Textiles        5.39489716659819E-04 
+Rest of Asia~Transportation & Logistics    1.99011762145622E-02 
+Rest of Asia~Water & Wastewater            5.93438688325802E-03 
+Rest of Asia~Wholesale & Distribution      0.021699475270095 
+Singapore~Aerospace & Defense              0.005 
+Singapore~Automotive         0.0001 
+Singapore~Buildings          0.005 
+Singapore~Cement & Glass     0.0001 
+Singapore~Chemical           2.54151361160883E-02 
+Singapore~Construction       0.05 
+Singapore~Education          0.012 
+Singapore~Electric Power Generation        1.22548879290677E-02 
+Singapore~Electric Power T&D               0.005 
+Singapore~Electronics & Electrical         0.04 
+Singapore~Engineering & Business Services  0.1 
+Singapore~Entertainment      0.03 
+Singapore~Fabricated Metals  0.005 
+Singapore~Financial          0.2 
+Singapore~Food & Beverage    3.07691158078783E-03 
+Singapore~Furniture & Wood Products        0.004 
+Singapore~Government         0.085 
+Singapore~Healthcare         0.07 
+Singapore~Household & Personal Care        0.005 
+Singapore~Machinery          0.01 
+Singapore~Marine             0.001 
+Singapore~Medical Products   0.0003 
+Singapore~Metals             2.45291554630781E-04 
+Singapore~Mining             0.0001 
+Singapore~Mining & Metals    0.005 
+Singapore~Oil & Gas          0.0001 
+Singapore~Other              5.69764901417163E-02 
+Singapore~Other Industries   2.39294099871167E-02 
+Singapore~Pharmaceutical & Biotech         0.01 
+Singapore~Plastics & Rubber  0.005 
+Singapore~Printing & Publishing            0.0005 
+Singapore~Pulp & Paper       2.92894810496678E-04 
+Singapore~Refining           0.02767615759644 
+Singapore~Retail             0.0682 
+Singapore~Semiconductors     0.01 
+Singapore~Telecommunications               0.02 
+Singapore~Textiles           0.0005 
+Singapore~Transportation & Logistics       0.0446 
+Singapore~Water & Wastewater               1.53282028365559E-03 
+Singapore~Wholesale & Distribution         0.0571 
+South Korea~Aerospace & Defense            0.006 
+South Korea~Automotive       0.03 
+South Korea~Buildings        9.6271575802566E-03 
+South Korea~Cement & Glass   0.022 
+South Korea~Chemical         0.022 
+South Korea~Construction     0.035 
+South Korea~Education        0.012 
+South Korea~Electric Power Generation      0.033 
+South Korea~Electric Power T&D             0.01 
+South Korea~Electronics & Electrical       0.05 
+South Korea~Engineering & Business Services              0.1 
+South Korea~Entertainment    0.03 
+South Korea~Fabricated Metals              0.01 
+South Korea~Financial        0.15 
+South Korea~Food & Beverage  0.022 
+South Korea~Furniture & Wood Products      0.01 
+South Korea~Government       0.08 
+South Korea~Healthcare       0.051 
+South Korea~Household & Personal Care      0.008 
+South Korea~Machinery        0.02 
+South Korea~Marine           0.01 
+South Korea~Medical Products               0.0006 
+South Korea~Metals           0.011 
+South Korea~Mining           0.0003 
+South Korea~Mining & Metals  0.0103 
+South Korea~Oil & Gas        0.00043 
+South Korea~Other            3.67771266617176E-02 
+South Korea~Other Industries               3.86657157580257E-02 
+South Korea~Pharmaceutical & Biotech       0.011 
+South Korea~Plastics & Rubber              0.005 
+South Korea~Printing & Publishing          0.0002 
+South Korea~Pulp & Paper     0.0111 
+South Korea~Refining         0.022 
+South Korea~Retail           0.0312 
+South Korea~Semiconductors   0.02 
+South Korea~Telecommunications             0.02 
+South Korea~Textiles         0.0005 
+South Korea~Transportation & Logistics     0.0287 
+South Korea~Water & Wastewater             0.0055 
+South Korea~Wholesale & Distribution       0.0261 
+Thailand~Aerospace & Defense               5.16939071374369E-03 
+Thailand~Automotive          1.29234767843592E-02 
+Thailand~Buildings           4.39229451962841E-03 
+Thailand~Cement & Glass      2.58469535687184E-02 
+Thailand~Chemical            1.28877513279797E-02 
+Thailand~Construction        5.05451536454938E-02 
+Thailand~Education           1.10280335226532E-02 
+Thailand~Electric Power Generation         4.13551257099495E-02 
+Thailand~Electric Power T&D  1.55081721412311E-02 
+Thailand~Electronics & Electrical          4.13551257099495E-02 
+Thailand~Engineering & Business Services   7.35202234843547E-02 
+Thailand~Entertainment       0.027570083806633 
+Thailand~Fabricated Metals   8.2710251419899E-03 
+Thailand~Financial           5.97351815810382E-02 
+Thailand~Food & Beverage     1.99735513912044E-02 
+Thailand~Furniture & Wood Products         1.03387814274874E-02 
+Thailand~Government          7.35202234843547E-02 
+Thailand~Healthcare          0.027570083806633 
+Thailand~Household & Personal Care         5.16939071374369E-03 
+Thailand~Machinery           1.03387814274874E-02 
+Thailand~Marine              2.06775628549748E-04 
+Thailand~Medical Products    3.10163442824621E-04 
+Thailand~Metals              4.64418668488125E-03 
+Thailand~Mining              6.06142593244163E-03 
+Thailand~Mining & Metals     8.13925899356571E-03 
+Thailand~Oil & Gas           5.16939071374369E-02 
+Thailand~Other               6.34413298153882E-02 
+Thailand~Other Industries    4.42187056336938E-02 
+Thailand~Pharmaceutical & Biotech          1.03387814274874E-02 
+Thailand~Plastics & Rubber   1.03387814274874E-02 
+Thailand~Printing & Publishing             5.16939071374369E-04 
+Thailand~Pulp & Paper        1.63723547024864E-02 
+Thailand~Refining            3.37771264621069E-02 
+Thailand~Retail              7.19119685956344E-02 
+Thailand~Semiconductors      2.06775628549748E-02 
+Thailand~Telecommunications  1.37850419033165E-02 
+Thailand~Textiles            5.16939071374369E-04 
+Thailand~Transportation & Logistics        0.03549648290104 
+Thailand~Water & Wastewater  1.03387814274874E-02 
+Thailand~Wholesale & Distribution          6.01946829778154E-02 
+Vietnam~Aerospace & Defense  5.22417176784195E-03 
+Vietnam~Automotive           3.13450306070517E-04 
+Vietnam~Buildings            4.4828752045358E-03 
+Vietnam~Cement & Glass       0.104483435356839 
+Vietnam~Chemical             1.02216779349701E-02 
+Vietnam~Construction         4.64370823808173E-02 
+Vietnam~Education            1.11448997713962E-02 
+Vietnam~Electric Power Generation          4.17933741427356E-02 
+Vietnam~Electric Power T&D   1.04483435356839E-02 
+Vietnam~Electronics & Electrical           6.26900612141034E-02 
+Vietnam~Engineering & Business Services    3.71496659046538E-02 
+Vietnam~Entertainment        2.78622494284904E-02 
+Vietnam~Fabricated Metals    8.35867482854711E-03 
+Vietnam~Financial            3.71496659046538E-02 
+Vietnam~Food & Beverage      1.41460253323271E-02 
+Vietnam~Furniture & Wood Products          1.04483435356839E-02 
+Vietnam~Government           7.42993318093077E-02 
+Vietnam~Healthcare           2.78622494284904E-02 
+Vietnam~Household & Personal Care          5.22417176784195E-03 
+Vietnam~Machinery            1.04483435356839E-02 
+Vietnam~Marine               2.08966870713678E-04 
+Vietnam~Medical Products     3.13450306070517E-04 
+Vietnam~Metals               9.86756654422262E-03 
+Vietnam~Mining               1.36000064933585E-02 
+Vietnam~Mining & Metals      8.8139815139405E-03 
+Vietnam~Oil & Gas            5.22417176784195E-02 
+Vietnam~Other  0.149311545878416 
+Vietnam~Other Industries     4.77995019687448E-02 
+Vietnam~Pharmaceutical & Biotech           1.04483435356839E-02 
+Vietnam~Plastics & Rubber    1.04483435356839E-02 
+Vietnam~Printing & Publishing              5.22417176784195E-04 
+Vietnam~Pulp & Paper         1.16703313052023E-02 
+Vietnam~Refining             5.81892320127032E-03 
+Vietnam~Retail               3.79623148463182E-02 
+Vietnam~Semiconductors       1.04483435356839E-02 
+Vietnam~Telecommunications   9.28741647616346E-03 
+Vietnam~Textiles             1.04483435356839E-02 
+Vietnam~Transportation & Logistics         1.31184757725809E-02 
+Vietnam~Water & Wastewater   1.56725153035258E-02 
+Vietnam~Wholesale & Distribution           3.18094014308599E-02 
+Austria~Aerospace & Defense  7.47058762314694E-03 
+Austria~Automotive           2.49019587438232E-02 
+Austria~Buildings            6.22548968595579E-03 
+Austria~Cement & Glass       6.22548968595579E-03 
+Austria~Chemical             2.49019587438232E-02 
+Austria~Construction         0.039843133990117 
+Austria~Education            1.49411752462939E-02 
+Austria~Electric Power Generation          1.78684908516094E-02 
+Austria~Electric Power T&D   9.96078349752926E-03 
+Austria~Electronics & Electrical           3.11274484297789E-02 
+Austria~Engineering & Business Services    0.12949018546788 
+Austria~Entertainment        3.73529381157347E-02 
+Austria~Fabricated Metals    1.74313711206762E-02 
+Austria~Financial            1.24509793719116E-02 
+Austria~Food & Beverage      3.11274484297789E-02 
+Austria~Furniture & Wood Products          2.49019587438231E-03 
+Austria~Government           0.112058814347204 
+Austria~Healthcare           0.087156855603381 
+Austria~Household & Personal Care          4.98039174876463E-03 
+Austria~Machinery            2.14421890219312E-02 
+Austria~Marine               9.96078349752926E-04 
+Austria~Medical Products     1.24509793719116E-03 
+Austria~Metals               1.25079435961265E-02 
+Austria~Mining               7.50476615767594E-03 
+Austria~Mining & Metals      2.00127097538025E-02 
+Austria~Oil & Gas            1.24509793719116E-02 
+Austria~Other  9.77518441473459E-02 
+Austria~Other Industries     4.45394892915346E-02 
+Austria~Pharmaceutical & Biotech           8.7156855603381E-03 
+Austria~Plastics & Rubber    6.22548968595579E-03 
+Austria~Printing & Publishing              2.49019587438231E-04 
+Austria~Pulp & Paper         6.22548968595579E-03 
+Austria~Refining             1.24509793719116E-02 
+Austria~Retail               3.74634071367791E-02 
+Austria~Semiconductors       1.24509793719116E-02 
+Austria~Telecommunications   2.49019587438232E-02 
+Austria~Textiles             1.24509793719116E-03 
+Austria~Transportation & Logistics         1.37686026229188E-02 
+Austria~Water & Wastewater   6.22548968595579E-03 
+Austria~Wholesale & Distribution           3.36210064048017E-02 
+Belgium~Aerospace & Defense  4.06113625917224E-03 
+Belgium~Automotive           1.16032464547778E-02 
+Belgium~Buildings            5.80162322738892E-03 
+Belgium~Cement & Glass       5.80162322738892E-03 
+Belgium~Chemical             2.32064929095557E-02 
+Belgium~Construction         3.71303886552891E-02 
+Belgium~Education            1.39238957457334E-02 
+Belgium~Electric Power Generation          0.016244545036689 
+Belgium~Electric Power T&D   5.80162322738892E-03 
+Belgium~Electronics & Electrical           1.16032464547778E-02 
+Belgium~Engineering & Business Services    0.150842203912112 
+Belgium~Entertainment        3.71303886552891E-02 
+Belgium~Fabricated Metals    3.76262943308039E-03 
+Belgium~Financial            1.16032464547778E-02 
+Belgium~Food & Beverage      2.90081161369446E-02 
+Belgium~Furniture & Wood Products          2.32064929095557E-03 
+Belgium~Government           0.129956360293512 
+Belgium~Healthcare           8.12227251834449E-02 
+Belgium~Household & Personal Care          0.003135524527567 
+Belgium~Machinery            5.64394414962059E-03 
+Belgium~Marine               6.9619478728667E-04 
+Belgium~Medical Products     1.16032464547778E-03 
+Belgium~Metals               6.9619478728667E-03 
+Belgium~Mining               4.17716872372002E-03 
+Belgium~Mining & Metals      1.11391165965867E-02 
+Belgium~Oil & Gas            1.25420981102679E-02 
+Belgium~Other  0.215994336982562 
+Belgium~Other Industries     2.84648819413916E-02 
+Belgium~Pharmaceutical & Biotech           5.80162322738892E-03 
+Belgium~Plastics & Rubber    2.32064929095557E-04 
+Belgium~Printing & Publishing              2.32064929095557E-04 
+Belgium~Pulp & Paper         5.80162322738892E-03 
+Belgium~Refining             1.16032464547778E-02 
+Belgium~Retail               2.80483371017443E-02 
+Belgium~Semiconductors       5.80162322738892E-03 
+Belgium~Telecommunications   2.32064929095557E-02 
+Belgium~Textiles             1.16032464547778E-03 
+Belgium~Transportation & Logistics         0.016127793833503 
+Belgium~Water & Wastewater   5.80162322738892E-03 
+Belgium~Wholesale & Distribution           2.52435033915699E-02 
+Bulgaria~Aerospace & Defense               4.64133672105967E-04 
+Bulgaria~Automotive          1.34993161918436E-02 
+Bulgaria~Buildings           4.49977206394785E-03 
+Bulgaria~Cement & Glass      8.9995441278957E-03 
+Bulgaria~Chemical            8.9995441278957E-03 
+Bulgaria~Construction        2.69986323836871E-02 
+Bulgaria~Education           1.07994529534748E-02 
+Bulgaria~Electric Power Generation         1.79990882557914E-02 
+Bulgaria~Electric Power T&D  8.9995441278957E-03 
+Bulgaria~Electronics & Electrical          1.79990882557914E-02 
+Bulgaria~Engineering & Business Services   9.17953501045362E-02 
+Bulgaria~Entertainment       2.69986323836871E-02 
+Bulgaria~Fabricated Metals   7.19963530231656E-03 
+Bulgaria~Financial           8.9995441278957E-03 
+Bulgaria~Food & Beverage     2.24988603197393E-02 
+Bulgaria~Furniture & Wood Products         2.69986323836871E-03 
+Bulgaria~Government          0.089995441278957 
+Bulgaria~Healthcare          5.39972647673742E-02 
+Bulgaria~Household & Personal Care         4.64133672105968E-03 
+Bulgaria~Machinery           1.07994529534748E-02 
+Bulgaria~Marine              5.39972647673742E-04 
+Bulgaria~Medical Products    8.9995441278957E-04 
+Bulgaria~Metals              1.79990882557914E-02 
+Bulgaria~Mining              7.19963530231656E-03 
+Bulgaria~Mining & Metals     0.025198723558108 
+Bulgaria~Oil & Gas           2.24988603197393E-02 
+Bulgaria~Other               0.07457073367325 
+Bulgaria~Other Industries    0.032573394443503 
+Bulgaria~Pharmaceutical & Biotech          4.49977206394785E-03 
+Bulgaria~Plastics & Rubber   4.49977206394785E-03 
+Bulgaria~Printing & Publishing             1.79990882557914E-04 
+Bulgaria~Pulp & Paper        4.49977206394785E-03 
+Bulgaria~Refining            8.9995441278957E-03 
+Bulgaria~Retail              0.129687753808104 
+Bulgaria~Semiconductors      1.39240101631791E-02 
+Bulgaria~Telecommunications  1.79990882557914E-02 
+Bulgaria~Textiles            8.9995441278957E-04 
+Bulgaria~Transportation & Logistics        7.33587294268063E-02 
+Bulgaria~Water & Wastewater  4.49977206394785E-03 
+Bulgaria~Wholesale & Distribution          0.116587980696174 
+Croatia~Aerospace & Defense  1.23805924291803E-03 
+Croatia~Automotive           2.47611848583605E-03 
+Croatia~Buildings            0.00414705320387 
+Croatia~Cement & Glass       4.9522369716721E-03 
+Croatia~Chemical             0.01658821281548 
+Croatia~Construction         0.026541140504768 
+Croatia~Education            9.95292768928801E-03 
+Croatia~Electric Power Generation          0.01658821281548 
+Croatia~Electric Power T&D   0.003317642563096 
+Croatia~Electronics & Electrical           0.01658821281548 
+Croatia~Engineering & Business Services    8.29410640774001E-02 
+Croatia~Entertainment        0.02488231922322 
+Croatia~Fabricated Metals    4.9522369716721E-03 
+Croatia~Financial            8.29410640774001E-03 
+Croatia~Food & Beverage      2.22850663725244E-02 
+Croatia~Furniture & Wood Products          0.001658821281548 
+Croatia~Government           8.95763492035921E-02 
+Croatia~Healthcare           0.0414705320387 
+Croatia~Household & Personal Care          2.47611848583605E-03 
+Croatia~Machinery            7.42835545750815E-03 
+Croatia~Marine               0.000414705320387 
+Croatia~Medical Products     8.29410640774001E-04 
+Croatia~Metals               6.93313176034094E-03 
+Croatia~Mining               4.15987905620456E-03 
+Croatia~Mining & Metals      1.10930108165455E-02 
+Croatia~Oil & Gas            7.42835545750815E-03 
+Croatia~Other  9.47301479834557E-02 
+Croatia~Other Industries     0.02675122204905 
+Croatia~Pharmaceutical & Biotech           7.42835545750815E-03 
+Croatia~Plastics & Rubber    0.00414705320387 
+Croatia~Printing & Publishing              1.658821281548E-04 
+Croatia~Pulp & Paper         0.00414705320387 
+Croatia~Refining             0.01244115961161 
+Croatia~Retail               0.170803587454332 
+Croatia~Semiconductors       9.90447394334423E-03 
+Croatia~Telecommunications   0.01658821281548 
+Croatia~Textiles             8.29410640774001E-04 
+Croatia~Transportation & Logistics         7.38218894929739E-02 
+Croatia~Water & Wastewater   0.00414705320387 
+Croatia~Wholesale & Distribution           0.154881219132318 
+Czech Republic~Aerospace & Defense         8.90552015240729E-03 
+Czech Republic~Automotive    3.89616506667819E-02 
+Czech Republic~Buildings     5.56595009525456E-03 
+Czech Republic~Cement & Glass              1.34968724287814E-02 
+Czech Republic~Chemical      2.94334988088038E-02 
+Czech Republic~Construction  3.56220806096292E-02 
+Czech Republic~Education     1.33582802286109E-02 
+Czech Republic~Electric Power Generation   2.07644191212022E-02 
+Czech Republic~Electric Power T&D          4.90558313480063E-03 
+Czech Republic~Electronics & Electrical    3.33957005715273E-02 
+Czech Republic~Engineering & Business Services           0.111319001905091 
+Czech Republic~Entertainment               3.33957005715273E-02 
+Czech Republic~Fabricated Metals           1.83765109222639E-02 
+Czech Republic~Financial     1.11319001905091E-02 
+Czech Republic~Food & Beverage             2.55229318364776E-02 
+Czech Republic~Furniture & Wood Products   2.22638003810182E-03 
+Czech Republic~Government    0.117998142019397 
+Czech Republic~Healthcare    3.33957005715273E-02 
+Czech Republic~Household & Personal Care   5.10458636729553E-03 
+Czech Republic~Machinery     2.75647663833959E-02 
+Czech Republic~Marine        5.56595009525456E-04 
+Czech Republic~Medical Products            1.11319001905091E-03 
+Czech Republic~Metals        2.51941618670587E-02 
+Czech Republic~Mining        1.51164971202352E-02 
+Czech Republic~Mining & Metals             4.03106589872937E-02 
+Czech Republic~Oil & Gas     1.47167494044019E-02 
+Czech Republic~Other        -1.23588918993324E-16 
+Czech Republic~Other Industries            4.15411120161714E-02 
+Czech Republic~Pharmaceutical & Biotech    1.02091727345911E-02 
+Czech Republic~Plastics & Rubber           5.56595009525456E-03 
+Czech Republic~Printing & Publishing       2.22638003810182E-04 
+Czech Republic~Pulp & Paper  4.90558313480063E-03 
+Czech Republic~Refining      1.47167494044019E-02 
+Czech Republic~Retail        7.77346250591484E-02 
+Czech Republic~Semiconductors              1.53137591018866E-02 
+Czech Republic~Telecommunications          2.22638003810182E-02 
+Czech Republic~Textiles      1.20752815625862E-03 
+Czech Republic~Transportation & Logistics  4.45276007620365E-02 
+Czech Republic~Water & Wastewater          4.90558313480063E-03 
+Czech Republic~Wholesale & Distribution    6.94328689848704E-02 
+Denmark~Aerospace & Defense  2.74522155432995E-03 
+Denmark~Automotive           8.23566466298987E-03 
+Denmark~Buildings            5.80930543109658E-03 
+Denmark~Cement & Glass       5.49044310865991E-03 
+Denmark~Chemical             9.29488868975452E-03 
+Denmark~Construction         3.71795547590181E-02 
+Denmark~Education            1.74279162932897E-02 
+Denmark~Electric Power Generation          1.37261077716499E-02 
+Denmark~Electric Power T&D   2.90465271554829E-03 
+Denmark~Electronics & Electrical           1.16186108621932E-02 
+Denmark~Engineering & Business Services    0.151041941208511 
+Denmark~Entertainment        3.71795547590181E-02 
+Denmark~Fabricated Metals    5.49044310865991E-03 
+Denmark~Financial            1.16186108621932E-02 
+Denmark~Food & Beverage      1.74279162932897E-02 
+Denmark~Furniture & Wood Products          2.32372217243863E-03 
+Denmark~Government           0.121995414053028 
+Denmark~Healthcare           0.110376803190835 
+Denmark~Household & Personal Care          3.90708264054927E-03 
+Denmark~Machinery            8.23566466298987E-03 
+Denmark~Marine               4.64744434487726E-03 
+Denmark~Medical Products     1.16186108621932E-03 
+Denmark~Metals               9.88279759558784E-03 
+Denmark~Mining               4.64744434487726E-03 
+Denmark~Mining & Metals      1.45302419404651E-02 
+Denmark~Oil & Gas            1.16186108621932E-02 
+Denmark~Other  0.188071698901524 
+Denmark~Other Industries     2.64866686091877E-02 
+Denmark~Pharmaceutical & Biotech           5.80930543109658E-03 
+Denmark~Plastics & Rubber    2.32372217243863E-03 
+Denmark~Printing & Publishing              2.32372217243863E-04 
+Denmark~Pulp & Paper         2.32372217243863E-03 
+Denmark~Refining             8.23566466298987E-03 
+Denmark~Retail               3.73376908614903E-02 
+Denmark~Semiconductors       5.80930543109658E-03 
+Denmark~Telecommunications   0.024822657816595 
+Denmark~Textiles             1.16186108621932E-03 
+Denmark~Transportation & Logistics         2.72345509813223E-02 
+Denmark~Water & Wastewater   5.80930543109658E-03 
+Denmark~Wholesale & Distribution           3.38235552509971E-02 
+Finland~Aerospace & Defense  4.04295530795728E-03 
+Finland~Automotive           2.16030377815043E-02 
+Finland~Buildings            5.40075944537608E-03 
+Finland~Cement & Glass       4.74525270887004E-03 
+Finland~Chemical             1.26778390736528E-02 
+Finland~Construction         3.45648604504069E-02 
+Finland~Education            1.29618226689026E-02 
+Finland~Electric Power Generation          1.61718212318291E-02 
+Finland~Electric Power T&D   8.64121511260172E-03 
+Finland~Electronics & Electrical           6.84603309977249E-02 
+Finland~Engineering & Business Services    0.116656404020123 
+Finland~Entertainment        3.24045566722565E-02 
+Finland~Fabricated Metals    4.32060755630086E-03 
+Finland~Financial            1.08015188907522E-02 
+Finland~Food & Beverage      1.94427340033539E-02 
+Finland~Furniture & Wood Products          2.16030377815043E-03 
+Finland~Government           0.108015188907522 
+Finland~Healthcare           9.18129105713933E-02 
+Finland~Household & Personal Care          4.04295530795728E-03 
+Finland~Machinery            1.08015188907522E-02 
+Finland~Marine               1.08015188907522E-03 
+Finland~Medical Products     1.08015188907522E-03 
+Finland~Metals               1.01422712589222E-02 
+Finland~Mining               1.77489747031139E-02 
+Finland~Mining & Metals      2.78912459620361E-02 
+Finland~Oil & Gas            2.16030377815043E-02 
+Finland~Other  0.13303072823038 
+Finland~Other Industries     0.035040198047793 
+Finland~Pharmaceutical & Biotech           5.40075944537608E-03 
+Finland~Plastics & Rubber    5.40075944537608E-03 
+Finland~Printing & Publishing              2.16030377815043E-04 
+Finland~Pulp & Paper         1.08015188907522E-02 
+Finland~Refining             1.08015188907522E-02 
+Finland~Retail               3.44837222803355E-02 
+Finland~Semiconductors       8.64121511260172E-03 
+Finland~Telecommunications   2.16030377815043E-02 
+Finland~Textiles             1.08015188907522E-03 
+Finland~Transportation & Logistics         2.78912459620361E-02 
+Finland~Water & Wastewater   5.40075944537608E-03 
+Finland~Wholesale & Distribution           3.09339273397127E-02 
+France~Aerospace & Defense   1.44560896277557E-02 
+France~Automotive            1.50343332128659E-02 
+France~Buildings             4.90302373208047E-03 
+France~Cement & Glass        4.90302373208047E-03 
+France~Chemical              9.80604746416095E-03 
+France~Construction          0.031379351885315 
+France~Education             1.47090711962414E-02 
+France~Electric Power Generation           1.15648717022046E-02 
+France~Electric Power T&D    4.41272135887243E-03 
+France~Electronics & Electrical            4.62594868088182E-03 
+France~Engineering & Business Services     0.117672569569931 
+France~Entertainment         0.031379351885315 
+France~Fabricated Metals     2.94181423924828E-03 
+France~Financial             9.80604746416095E-03 
+France~Food & Beverage       1.17672569569931E-02 
+France~Furniture & Wood Products           1.96120949283219E-03 
+France~Government            0.122575593302012 
+France~Healthcare            8.82544271774486E-02 
+France~Household & Personal Care           3.19775315770994E-03 
+France~Machinery             3.99086714032895E-03 
+France~Marine  5.88362847849657E-04 
+France~Medical Products      9.80604746416095E-04 
+France~Metals  3.54743745807018E-03 
+France~Mining  2.1284624748421E-03 
+France~Mining & Metals       4.90302373208047E-03 
+France~Oil & Gas             9.80604746416095E-03 
+France~Other   0.21659065321995 
+France~Other Industries      2.09279650938095E-02 
+France~Pharmaceutical & Biotech            5.88362847849657E-03 
+France~Plastics & Rubber     3.92241898566438E-03 
+France~Printing & Publishing               1.96120949283219E-04 
+France~Pulp & Paper          4.90302373208047E-03 
+France~Refining              9.80604746416095E-03 
+France~Retail  9.05914950006024E-02 
+France~Semiconductors        2.31297434044091E-03 
+France~Telecommunications    2.09501947886229E-02 
+France~Textiles              9.80604746416095E-04 
+France~Transportation & Logistics          4.81869654258523E-03 
+France~Water & Wastewater    4.90302373208047E-03 
+France~Wholesale & Distribution            0.081917841223949 
+Germany~Aerospace & Defense  9.34486827999772E-03 
+Germany~Automotive           3.60341964524334E-02 
+Germany~Buildings            5.84054267499857E-03 
+Germany~Cement & Glass       7.00865120999829E-03 
+Germany~Chemical             2.52239375167034E-02 
+Germany~Construction         3.73794731199909E-02 
+Germany~Education            1.40173024199966E-02 
+Germany~Electric Power Generation          1.62339285106551E-02 
+Germany~Electric Power T&D   5.25648840749872E-03 
+Germany~Electronics & Electrical           2.33621706999943E-02 
+Germany~Engineering & Business Services    0.126155721779969 
+Germany~Entertainment        3.50432560499914E-02 
+Germany~Fabricated Metals    1.16810853499971E-02 
+Germany~Financial            1.16810853499971E-02 
+Germany~Food & Beverage      2.10259536299949E-02 
+Germany~Furniture & Wood Products          2.33621706999943E-03 
+Germany~Government           0.116810853499971 
+Germany~Healthcare           7.59270547749814E-02 
+Germany~Household & Personal Care          4.05848212766376E-03 
+Germany~Machinery            3.50432560499914E-02 
+Germany~Marine               1.16810853499971E-03 
+Germany~Medical Products     1.16810853499971E-03 
+Germany~Metals               4.87017855319651E-03 
+Germany~Mining               2.9221071319179E-03 
+Germany~Mining & Metals      7.79228568511442E-03 
+Germany~Oil & Gas            3.50432560499914E-03 
+Germany~Other  0.189063953912527 
+Germany~Other Industries     3.54447297121964E-02 
+Germany~Pharmaceutical & Biotech           1.16810853499971E-02 
+Germany~Plastics & Rubber    5.84054267499857E-03 
+Germany~Printing & Publishing              2.33621706999943E-04 
+Germany~Pulp & Paper         5.84054267499857E-03 
+Germany~Refining             7.70951633099812E-03 
+Germany~Retail               2.34222276940817E-02 
+Germany~Semiconductors       1.21754463829913E-02 
+Germany~Telecommunications   2.49561318481655E-02 
+Germany~Textiles             1.16810853499971E-03 
+Germany~Transportation & Logistics         1.44136785809733E-02 
+Germany~Water & Wastewater   5.84054267499857E-03 
+Germany~Wholesale & Distribution           2.13202329010231E-02 
+Greece~Aerospace & Defense   4.29714407287963E-04 
+Greece~Automotive            7.03629481184591E-03 
+Greece~Buildings             3.51814740592296E-03 
+Greece~Cement & Glass        2.86476271525308E-03 
+Greece~Chemical              7.03629481184591E-03 
+Greece~Construction          2.81451792473837E-02 
+Greece~Education             8.4435537742151E-03 
+Greece~Electric Power Generation           7.03629481184591E-03 
+Greece~Electric Power T&D    3.51814740592296E-03 
+Greece~Electronics & Electrical            2.86476271525308E-03 
+Greece~Engineering & Business Services     8.79536851480739E-02 
+Greece~Entertainment         2.11088844355377E-02 
+Greece~Fabricated Metals     1.14590508610123E-03 
+Greece~Financial             7.03629481184591E-03 
+Greece~Food & Beverage       1.75907370296148E-02 
+Greece~Furniture & Wood Products           1.40725896236918E-03 
+Greece~Government            0.080917390336228 
+Greece~Healthcare            4.92540636829214E-02 
+Greece~Household & Personal Care           2.13601083881113E-03 
+Greece~Machinery             1.71885762915185E-03 
+Greece~Marine  5.62903584947673E-04 
+Greece~Medical Products      7.03629481184591E-04 
+Greece~Metals  3.51814740592296E-03 
+Greece~Mining  2.11088844355377E-03 
+Greece~Mining & Metals       5.62903584947673E-03 
+Greece~Oil & Gas             3.51814740592296E-03 
+Greece~Other   9.61683819980538E-02 
+Greece~Other Industries      0.017163777989246 
+Greece~Pharmaceutical & Biotech            3.51814740592296E-03 
+Greece~Plastics & Rubber     2.11088844355377E-03 
+Greece~Printing & Publishing               1.40725896236918E-04 
+Greece~Pulp & Paper          2.11088844355377E-03 
+Greece~Refining              7.03629481184591E-03 
+Greece~Retail  0.211979514584725 
+Greece~Semiconductors        2.86476271525308E-03 
+Greece~Telecommunications    1.75907370296148E-02 
+Greece~Textiles              7.03629481184591E-04 
+Greece~Transportation & Logistics          8.72856824760632E-02 
+Greece~Water & Wastewater    3.51814740592296E-03 
+Greece~Wholesale & Distribution            0.190603429080383 
+Hungary~Aerospace & Defense  3.91938848996294E-03 
+Hungary~Automotive           2.43293995664293E-02 
+Hungary~Buildings            4.86587991328587E-03 
+Hungary~Cement & Glass       7.83877697992585E-03 
+Hungary~Chemical             6.43634909164798E-03 
+Hungary~Construction         3.11416314450296E-02 
+Hungary~Education            1.16781117918861E-02 
+Hungary~Electric Power Generation          1.75171676878291E-02 
+Hungary~Electric Power T&D   7.78540786125739E-03 
+Hungary~Electronics & Electrical           2.43293995664293E-02 
+Hungary~Engineering & Business Services    0.107049358092289 
+Hungary~Entertainment        2.91952794797152E-02 
+Hungary~Fabricated Metals    7.78540786125739E-03 
+Hungary~Financial            9.73175982657174E-03 
+Hungary~Food & Beverage      1.94635196531435E-02 
+Hungary~Furniture & Wood Products          1.94635196531435E-03 
+Hungary~Government           9.73175982657174E-02 
+Hungary~Healthcare           5.83905589594304E-02 
+Hungary~Household & Personal Care          3.91938848996294E-03 
+Hungary~Machinery            1.16781117918861E-02 
+Hungary~Marine               4.86587991328587E-04 
+Hungary~Medical Products     9.73175982657174E-04 
+Hungary~Metals               1.61752540855613E-02 
+Hungary~Mining               1.54472378199551E-02 
+Hungary~Mining & Metals      3.16224919055164E-02 
+Hungary~Oil & Gas            3.21817454582399E-03 
+Hungary~Other  0.064629372063489 
+Hungary~Other Industries     3.64697397081661E-02 
+Hungary~Pharmaceutical & Biotech           2.57453963665919E-03 
+Hungary~Plastics & Rubber    4.86587991328587E-03 
+Hungary~Printing & Publishing              1.94635196531435E-04 
+Hungary~Pulp & Paper         4.86587991328587E-03 
+Hungary~Refining             9.65452363747196E-03 
+Hungary~Retail               0.109417934558016 
+Hungary~Semiconductors       7.83877697992585E-03 
+Hungary~Telecommunications   2.07914824752705E-02 
+Hungary~Textiles             1.94635196531435E-03 
+Hungary~Transportation & Logistics         7.85234589181053E-02 
+Hungary~Water & Wastewater   4.86587991328587E-03 
+Hungary~Wholesale & Distribution           9.91197760113788E-02 
+Ireland~Aerospace & Defense  3.69583120186144E-03 
+Ireland~Automotive           0.011012006094779 
+Ireland~Buildings            4.58833587282458E-03 
+Ireland~Cement & Glass       1.54749945120559E-03 
+Ireland~Chemical             3.1264199941403E-03 
+Ireland~Construction         2.93653495860773E-02 
+Ireland~Education            0.011012006094779 
+Ireland~Electric Power Generation          6.96374753042517E-03 
+Ireland~Electric Power T&D   1.85699934144671E-03 
+Ireland~Electronics & Electrical           2.75300152369475E-02 
+Ireland~Engineering & Business Services    9.36020518056215E-02 
+Ireland~Entertainment        2.75300152369475E-02 
+Ireland~Fabricated Metals    2.47195607536692E-03 
+Ireland~Financial            9.17667174564916E-03 
+Ireland~Food & Beverage      1.83533434912983E-02 
+Ireland~Furniture & Wood Products          1.83533434912983E-03 
+Ireland~Government           9.17667174564916E-02 
+Ireland~Healthcare           6.42367022195441E-02 
+Ireland~Household & Personal Care          3.08994509420865E-03 
+Ireland~Machinery            3.70793411305039E-03 
+Ireland~Marine               4.58833587282458E-04 
+Ireland~Medical Products     9.17667174564916E-04 
+Ireland~Metals               2.08427999609353E-04 
+Ireland~Mining               1.25056799765612E-04 
+Ireland~Mining & Metals      3.33484799374964E-04 
+Ireland~Oil & Gas            1.23799956096447E-02 
+Ireland~Other  0.147784519013324 
+Ireland~Other Industries     2.73291071937761E-02 
+Ireland~Pharmaceutical & Biotech           5.04716946010704E-02 
+Ireland~Plastics & Rubber    2.75300152369475E-03 
+Ireland~Printing & Publishing              1.83533434912983E-04 
+Ireland~Pulp & Paper         4.58833587282458E-03 
+Ireland~Refining             5.21069999023383E-03 
+Ireland~Retail               0.10522996268198 
+Ireland~Semiconductors       6.1798901884173E-03 
+Ireland~Telecommunications   1.96055608832454E-02 
+Ireland~Textiles             9.17667174564916E-04 
+Ireland~Transportation & Logistics         0.102134963779569 
+Ireland~Water & Wastewater   7.73749725602796E-04 
+Ireland~Wholesale & Distribution           9.59449659747467E-02 
+Italy~Aerospace & Defense    5.81985685628668E-03 
+Italy~Automotive             2.56073701676614E-02 
+Italy~Buildings              5.81985685628668E-03 
+Italy~Cement & Glass         6.98382822754402E-03 
+Italy~Chemical               1.38685950617895E-02 
+Italy~Construction           4.07389979940068E-02 
+Italy~Education              0.013967656455088 
+Italy~Electric Power Generation            1.28036850838307E-02 
+Italy~Electric Power T&D     9.31177097005869E-03 
+Italy~Electronics & Electrical             1.16397137125734E-02 
+Italy~Engineering & Business Services      0.130364793580822 
+Italy~Entertainment          3.72470838802348E-02 
+Italy~Fabricated Metals      1.16397137125734E-02 
+Italy~Financial              1.16397137125734E-02 
+Italy~Food & Beverage        2.32794274251467E-02 
+Italy~Furniture & Wood Products            2.32794274251467E-03 
+Italy~Government             0.128036850838307 
+Italy~Healthcare             8.14779959880136E-02 
+Italy~Household & Personal Care            3.41105774928751E-03 
+Italy~Machinery              2.56073701676614E-02 
+Italy~Marine   6.98382822754402E-04 
+Italy~Medical Products       1.16397137125734E-03 
+Italy~Metals   5.45769239885999E-03 
+Italy~Mining   3.27461543931601E-03 
+Italy~Mining & Metals        8.73230783817597E-03 
+Italy~Oil & Gas              4.45776269843235E-03 
+Italy~Other    0.153326548471998 
+Italy~Other Industries       3.27931321163327E-02 
+Italy~Pharmaceutical & Biotech             5.81985685628668E-03 
+Italy~Plastics & Rubber      3.49191411377201E-03 
+Italy~Printing & Publishing  2.32794274251467E-04 
+Italy~Pulp & Paper           5.81985685628668E-03 
+Italy~Refining               9.70801654325268E-03 
+Italy~Retail   5.39884593476807E-02 
+Italy~Semiconductors         4.65588548502935E-03 
+Italy~Telecommunications     2.48677431404909E-02 
+Italy~Textiles               1.16397137125734E-03 
+Italy~Transportation & Logistics           2.32794274251467E-02 
+Italy~Water & Wastewater     6.93429753089477E-03 
+Italy~Wholesale & Distribution             4.85400827162634E-02 
+Middle East~Aerospace & Defense            5.55424705305712E-03 
+Middle East~Automotive       1.50619844938994E-02 
+Middle East~Buildings        5.02066149796645E-03 
+Middle East~Cement & Glass   1.80743813926793E-02 
+Middle East~Chemical         5.02066149796645E-02 
+Middle East~Construction     3.81570273845452E-02 
+Middle East~Education        1.20495875951195E-02 
+Middle East~Electric Power Generation      3.01239689877989E-02 
+Middle East~Electric Power T&D             1.11084941061142E-02 
+Middle East~Electronics & Electrical       5.55424705305712E-03 
+Middle East~Engineering & Business Services              5.02066149796645E-02 
+Middle East~Entertainment    2.51033074898324E-02 
+Middle East~Fabricated Metals              5.02066149796645E-03 
+Middle East~Financial        1.00413229959329E-02 
+Middle East~Food & Beverage  2.51033074898324E-02 
+Middle East~Furniture & Wood Products      2.00826459918659E-03 
+Middle East~Government       9.03719069633964E-02 
+Middle East~Healthcare       4.21735565829182E-02 
+Middle East~Household & Personal Care      5.02066149796645E-03 
+Middle East~Machinery        5.02066149796645E-04 
+Middle East~Marine           1.00413229959329E-03 
+Middle East~Medical Products               1.00413229959329E-03 
+Middle East~Metals           6.66509646366855E-03 
+Middle East~Mining           3.99905787820113E-03 
+Middle East~Mining & Metals  1.06641543418697E-02 
+Middle East~Oil & Gas        0.100413229959329 
+Middle East~Other            0.171289939404237 
+Middle East~Other Industries               4.17550131582137E-02 
+Middle East~Pharmaceutical & Biotech       5.02066149796645E-03 
+Middle East~Plastics & Rubber              1.00413229959329E-02 
+Middle East~Printing & Publishing          2.00826459918658E-04 
+Middle East~Pulp & Paper     5.02066149796645E-03 
+Middle East~Refining         4.01652919837316E-02 
+Middle East~Retail           4.96019894223273E-02 
+Middle East~Semiconductors   2.77712352652856E-03 
+Middle East~Telecommunications             2.00826459918658E-02 
+Middle East~Textiles         1.00413229959329E-03 
+Middle East~Transportation & Logistics     3.30679929482182E-02 
+Middle East~Water & Wastewater             5.02066149796645E-03 
+Middle East~Wholesale & Distribution       4.47390492828834E-02 
+Netherlands~Aerospace & Defense            3.99190186726856E-03 
+Netherlands~Automotive       1.47242885443863E-02 
+Netherlands~Buildings        5.7027169532408E-03 
+Netherlands~Cement & Glass   5.7027169532408E-03 
+Netherlands~Chemical         1.85526035659267E-02 
+Netherlands~Construction     3.99190186726856E-02 
+Netherlands~Education        1.36865206877779E-02 
+Netherlands~Electric Power Generation      1.36865206877779E-02 
+Netherlands~Electric Power T&D             6.71427557624014E-03 
+Netherlands~Electronics & Electrical       1.23684023772845E-02 
+Netherlands~Engineering & Business Services              0.13002194653389 
+Netherlands~Entertainment    3.42163017194448E-02 
+Netherlands~Fabricated Metals              6.85918360160061E-03 
+Netherlands~Financial        1.14054339064816E-02 
+Netherlands~Food & Beverage  0.023558861671018 
+Netherlands~Furniture & Wood Products      2.28108678129632E-03 
+Netherlands~Government       0.125459772971298 
+Netherlands~Healthcare       7.98380373453713E-02 
+Netherlands~Household & Personal Care      3.3207022611249E-03 
+Netherlands~Machinery        1.02887754024009E-02 
+Netherlands~Marine           3.42163017194448E-03 
+Netherlands~Medical Products               1.14054339064816E-03 
+Netherlands~Metals           1.06262472355997E-02 
+Netherlands~Mining           6.37574834135983E-03 
+Netherlands~Mining & Metals  1.70019955769596E-02 
+Netherlands~Oil & Gas        2.23809185874671E-02 
+Netherlands~Other            0.112510338885596 
+Netherlands~Other Industries               3.45262365976944E-02 
+Netherlands~Pharmaceutical & Biotech       6.18420118864224E-03 
+Netherlands~Plastics & Rubber              5.7027169532408E-03 
+Netherlands~Printing & Publishing          2.28108678129632E-04 
+Netherlands~Pulp & Paper     5.7027169532408E-03 
+Netherlands~Refining         1.11904592937336E-02 
+Netherlands~Retail           6.59648126788505E-02 
+Netherlands~Semiconductors   9.96210678337473E-03 
+Netherlands~Telecommunications             2.43672145033819E-02 
+Netherlands~Textiles         1.14054339064816E-03 
+Netherlands~Transportation & Logistics     3.18044632558744E-02 
+Netherlands~Water & Wastewater             7.98380373453713E-03 
+Netherlands~Wholesale & Distribution       5.94861257193206E-02 
+Norway~Aerospace & Defense   6.27569463415453E-03 
+Norway~Automotive            7.11245391870848E-03 
+Norway~Buildings             5.67172406089281E-03 
+Norway~Cement & Glass        1.21536944161989E-03 
+Norway~Chemical              0.013388148552863 
+Norway~Construction          0.036299033989714 
+Norway~Education             1.36121377461427E-02 
+Norway~Electric Power Generation           4.18379642276967E-03 
+Norway~Electric Power T&D    2.09189821138484E-03 
+Norway~Electronics & Electrical            1.13434481217856E-02 
+Norway~Engineering & Business Services     0.102091033096071 
+Norway~Entertainment         0.028358620304464 
+Norway~Fabricated Metals     1.50616671219708E-03 
+Norway~Financial             1.13434481217856E-02 
+Norway~Food & Beverage       2.75483740100508E-02 
+Norway~Furniture & Wood Products           2.26868962435712E-03 
+Norway~Government            0.113434481217856 
+Norway~Healthcare            7.94041368524993E-02 
+Norway~Household & Personal Care           3.40303443653569E-03 
+Norway~Machinery             2.25925006829564E-03 
+Norway~Marine  3.40303443653569E-03 
+Norway~Medical Products      1.13434481217856E-03 
+Norway~Metals  6.69407427643149E-03 
+Norway~Mining  4.01644456585891E-03 
+Norway~Mining & Metals       1.07105188422904E-02 
+Norway~Oil & Gas             0.145844332994387 
+Norway~Other   0.121988017859643 
+Norway~Other Industries      4.34618534348015E-02 
+Norway~Pharmaceutical & Biotech            4.18379642276967E-03 
+Norway~Plastics & Rubber     3.40303443653569E-03 
+Norway~Printing & Publishing               2.26868962435712E-04 
+Norway~Pulp & Paper          4.05123147206629E-03 
+Norway~Refining              1.29639407106121E-02 
+Norway~Retail  5.10455165480353E-02 
+Norway~Semiconductors        6.27569463415453E-04 
+Norway~Telecommunications    2.26868962435712E-02 
+Norway~Textiles              8.10246294413259E-04 
+Norway~Transportation & Logistics          3.97020684262497E-02 
+Norway~Water & Wastewater    4.05123147206629E-03 
+Norway~Wholesale & Distribution            4.61840387815557E-02 
+Poland~Aerospace & Defense   4.20239901519423E-03 
+Poland~Automotive            3.36191921215538E-02 
+Poland~Buildings             5.25299876899278E-03 
+Poland~Cement & Glass        6.60819501160763E-03 
+Poland~Chemical              2.64327800464305E-02 
+Poland~Construction          3.36191921215538E-02 
+Poland~Education             1.26071970455827E-02 
+Poland~Electric Power Generation           2.62649938449639E-02 
+Poland~Electric Power T&D    4.3764894574688E-03 
+Poland~Electronics & Electrical            1.05059975379856E-02 
+Poland~Engineering & Business Services     0.102958775872259 
+Poland~Entertainment         3.15179926139567E-02 
+Poland~Fabricated Metals     1.05059975379856E-02 
+Poland~Financial             1.05059975379856E-02 
+Poland~Food & Beverage       2.31131945835682E-02 
+Poland~Furniture & Wood Products           2.10119950759711E-03 
+Poland~Government            0.115565972917841 
+Poland~Healthcare            5.25299876899278E-02 
+Poland~Household & Personal Care           4.3764894574688E-03 
+Poland~Machinery             2.62589367448128E-02 
+Poland~Marine  5.25299876899278E-04 
+Poland~Medical Products      1.05059975379856E-03 
+Poland~Metals  0.015140287852865 
+Poland~Mining  9.08417271171902E-03 
+Poland~Mining & Metals       2.42244605645839E-02 
+Poland~Oil & Gas             1.29036544200555E-02 
+Poland~Other  -1.16640003633268E-16 
+Poland~Other Industries      3.60351438575283E-02 
+Poland~Pharmaceutical & Biotech            4.30121814001846E-03 
+Poland~Plastics & Rubber     3.15179926139567E-03 
+Poland~Printing & Publishing               2.10119950759711E-04 
+Poland~Pulp & Paper          5.25299876899278E-03 
+Poland~Refining              5.16265235281846E-03 
+Poland~Retail  0.129066308820461 
+Poland~Semiconductors        8.75297891493758E-03 
+Poland~Telecommunications    2.24456077409393E-02 
+Poland~Textiles              1.05059975379856E-03 
+Poland~Transportation & Logistics          0.056789175881003 
+Poland~Water & Wastewater    5.25299876899278E-03 
+Poland~Wholesale & Distribution            0.116675943173697 
+Portugal~Aerospace & Defense               4.61258408708425E-03 
+Portugal~Automotive          8.36372610853649E-03 
+Portugal~Buildings           4.18186305426824E-03 
+Portugal~Cement & Glass      4.18186305426824E-03 
+Portugal~Chemical            1.25455891628047E-02 
+Portugal~Construction        2.67639235473168E-02 
+Portugal~Education           1.00364713302438E-02 
+Portugal~Electric Power Generation         0.016727452217073 
+Portugal~Electric Power T&D  2.30629204354212E-03 
+Portugal~Electronics & Electrical          2.07566283918791E-02 
+Portugal~Engineering & Business Services   8.36372610853649E-02 
+Portugal~Entertainment       2.50911783256095E-02 
+Portugal~Fabricated Metals   9.22516817416848E-04 
+Portugal~Financial           8.36372610853649E-03 
+Portugal~Food & Beverage     2.09093152713412E-02 
+Portugal~Furniture & Wood Products         1.6727452217073E-03 
+Portugal~Government          9.20009871939013E-02 
+Portugal~Healthcare          5.85460827597554E-02 
+Portugal~Household & Personal Care         2.30629204354212E-03 
+Portugal~Machinery           1.38377522612527E-03 
+Portugal~Marine              4.18186305426824E-04 
+Portugal~Medical Products    8.36372610853649E-04 
+Portugal~Metals              3.6900672696674E-03 
+Portugal~Mining              2.21404036180044E-03 
+Portugal~Mining & Metals     5.90410763146786E-03 
+Portugal~Oil & Gas           4.61258408708425E-03 
+Portugal~Other               8.27420902896195E-02 
+Portugal~Other Industries    2.54489736213094E-02 
+Portugal~Pharmaceutical & Biotech          4.18186305426824E-03 
+Portugal~Plastics & Rubber   2.50911783256095E-03 
+Portugal~Printing & Publishing             1.6727452217073E-04 
+Portugal~Pulp & Paper        4.18186305426824E-03 
+Portugal~Refining            8.36372610853649E-03 
+Portugal~Retail              0.190583267063372 
+Portugal~Semiconductors      6.9750786535718E-03 
+Portugal~Telecommunications  1.78687378143874E-02 
+Portugal~Textiles            8.36372610853649E-04 
+Portugal~Transportation & Logistics        5.75863109112348E-02 
+Portugal~Water & Wastewater  4.18186305426824E-03 
+Portugal~Wholesale & Distribution          0.171387830092961 
+Rest of Africa~Aerospace & Defense         3.06990471836277E-04 
+Rest of Africa~Automotive    1.32833245513114E-02 
+Rest of Africa~Buildings     4.42777485043713E-03 
+Rest of Africa~Cement & Glass              1.59399894615737E-02 
+Rest of Africa~Chemical      3.09944239530599E-02 
+Rest of Africa~Construction  3.36510888633222E-02 
+Rest of Africa~Education     8.85554970087423E-03 
+Rest of Africa~Electric Power Generation   0.035422198803497 
+Rest of Africa~Electric Power T&D          7.08443976069941E-03 
+Rest of Africa~Electronics & Electrical    8.85554970087423E-03 
+Rest of Africa~Engineering & Business Services           5.31332982052456E-02 
+Rest of Africa~Entertainment               2.65666491026228E-02 
+Rest of Africa~Fabricated Metals           4.42777485043713E-03 
+Rest of Africa~Financial     8.85554970087423E-03 
+Rest of Africa~Food & Beverage             2.30244292222731E-02 
+Rest of Africa~Furniture & Wood Products   1.77110994017485E-03 
+Rest of Africa~Government    9.74110467096167E-02 
+Rest of Africa~Healthcare    3.09944239530599E-02 
+Rest of Africa~Household & Personal Care   2.42050732926881E-03 
+Rest of Africa~Machinery     7.08443976069941E-03 
+Rest of Africa~Marine        4.42777485043713E-04 
+Rest of Africa~Medical Products            8.85554970087423E-04 
+Rest of Africa~Metals        8.85554970087423E-03 
+Rest of Africa~Mining        5.75610730556827E-02 
+Rest of Africa~Mining & Metals             0 
+Rest of Africa~Oil & Gas     8.85554970087423E-02 
+Rest of Africa~Other         6.33137420868496E-02 
+Rest of Africa~Other Industries            4.16322992812743E-02 
+Rest of Africa~Pharmaceutical & Biotech    4.42777485043713E-03 
+Rest of Africa~Plastics & Rubber           4.42777485043713E-03 
+Rest of Africa~Printing & Publishing       1.77110994017485E-04 
+Rest of Africa~Pulp & Paper  4.42777485043713E-03 
+Rest of Africa~Refining      0.035422198803497 
+Rest of Africa~Retail        0.102608384443379 
+Rest of Africa~Semiconductors              3.06990471836277E-04 
+Rest of Africa~Telecommunications          1.89194975724627E-02 
+Rest of Africa~Textiles      8.85554970087423E-04 
+Rest of Africa~Transportation & Logistics  5.53759535091253E-02 
+Rest of Africa~Water & Wastewater          4.42777485043713E-03 
+Rest of Africa~Wholesale & Distribution    9.28361573535336E-02 
+Rest of EMEA~Aerospace & Defense           5.12631383729598E-03 
+Rest of EMEA~Automotive      2.05052553491839E-02 
+Rest of EMEA~Buildings       5.12631383729598E-03 
+Rest of EMEA~Cement & Glass  5.12631383729598E-03 
+Rest of EMEA~Chemical        0.015378941511888 
+Rest of EMEA~Construction    3.38336713261535E-02 
+Rest of EMEA~Education       1.23031532095104E-02 
+Rest of EMEA~Electric Power Generation     2.05052553491839E-02 
+Rest of EMEA~Electric Power T&D            8.20210213967359E-03 
+Rest of EMEA~Electronics & Electrical      2.05052553491839E-02 
+Rest of EMEA~Engineering & Business Services             0.112778904420512 
+Rest of EMEA~Entertainment   3.07578830237759E-02 
+Rest of EMEA~Fabricated Metals             5.12631383729598E-03 
+Rest of EMEA~Financial       0.010252627674592 
+Rest of EMEA~Food & Beverage               2.56315691864799E-02 
+Rest of EMEA~Furniture & Wood Products     2.05052553491839E-03 
+Rest of EMEA~Government      0.112778904420512 
+Rest of EMEA~Healthcare      7.17683937221439E-02 
+Rest of EMEA~Household & Personal Care     5.12631383729598E-03 
+Rest of EMEA~Machinery       0.010252627674592 
+Rest of EMEA~Marine          5.12631383729598E-04 
+Rest of EMEA~Medical Products              1.0252627674592E-03 
+Rest of EMEA~Metals          6.03804150297276E-03 
+Rest of EMEA~Mining          0.010252627674592 
+Rest of EMEA~Mining & Metals               1.62906691775647E-02 
+Rest of EMEA~Oil & Gas       2.56315691864799E-02 
+Rest of EMEA~Other           0.200140577683385 
+Rest of EMEA~Other Industries              2.96791553529364E-02 
+Rest of EMEA~Pharmaceutical & Biotech      5.12631383729598E-03 
+Rest of EMEA~Plastics & Rubber             5.12631383729598E-03 
+Rest of EMEA~Printing & Publishing         2.05052553491839E-04 
+Rest of EMEA~Pulp & Paper    5.12631383729598E-03 
+Rest of EMEA~Refining        0.010252627674592 
+Rest of EMEA~Retail          5.06888657078961E-02 
+Rest of EMEA~Semiconductors  5.12631383729598E-03 
+Rest of EMEA~Telecommunications            2.19042940249837E-02 
+Rest of EMEA~Textiles        1.0252627674592E-03 
+Rest of EMEA~Transportation & Logistics    2.53444328539481E-02 
+Rest of EMEA~Water & Wastewater            5.12631383729598E-03 
+Rest of EMEA~Wholesale & Distribution      4.22407214232468E-02 
+Romania~Aerospace & Defense  1.91657736847382E-03 
+Romania~Automotive           2.39572171059227E-02 
+Romania~Buildings            4.79144342118454E-03 
+Romania~Cement & Glass       7.66630947389527E-03 
+Romania~Chemical             2.06083588007937E-02 
+Romania~Construction         3.06652378955811E-02 
+Romania~Education            1.14994642108429E-02 
+Romania~Electric Power Generation          2.41247964892632E-02 
+Romania~Electric Power T&D   4.02079941487718E-03 
+Romania~Electronics & Electrical           1.91657736847382E-02 
+Romania~Engineering & Business Services    9.58288684236909E-02 
+Romania~Entertainment        2.39572171059227E-02 
+Romania~Fabricated Metals    1.12582383616561E-02 
+Romania~Financial            9.58288684236909E-03 
+Romania~Food & Beverage      2.39572171059227E-02 
+Romania~Furniture & Wood Products          1.91657736847382E-03 
+Romania~Government           8.62459815813218E-02 
+Romania~Healthcare           4.79144342118454E-02 
+Romania~Household & Personal Care          4.02079941487718E-03 
+Romania~Machinery            1.72491963162644E-02 
+Romania~Marine               4.79144342118454E-04 
+Romania~Medical Products     9.58288684236909E-04 
+Romania~Metals               9.64991859570524E-03 
+Romania~Mining               9.58288684236909E-03 
+Romania~Mining & Metals      1.92328054380743E-02 
+Romania~Oil & Gas            5.18812827726093E-03 
+Romania~Other  0.155902383883774 
+Romania~Other Industries     0.03240297297689 
+Romania~Pharmaceutical & Biotech           1.15291739494687E-03 
+Romania~Plastics & Rubber    2.87486605271073E-03 
+Romania~Printing & Publishing              1.91657736847382E-04 
+Romania~Pulp & Paper         1.37389058671958E-03 
+Romania~Refining             6.18250764023812E-03 
+Romania~Retail               8.51812163766141E-02 
+Romania~Semiconductors       9.58288684236909E-03 
+Romania~Telecommunications   0.020473421806157 
+Romania~Textiles             9.58288684236909E-04 
+Romania~Transportation & Logistics         8.65551069633337E-02 
+Romania~Water & Wastewater   4.79144342118454E-03 
+Romania~Wholesale & Distribution           7.69378728562966E-02 
+Russia~Aerospace & Defense   8.04527438723799E-03 
+Russia~Automotive            1.50848894760712E-02 
+Russia~Buildings             5.02829649202374E-03 
+Russia~Cement & Glass        6.03395579042849E-03 
+Russia~Chemical              2.51414824601187E-02 
+Russia~Construction          3.21810975489519E-02 
+Russia~Education             0.012067911580857 
+Russia~Electric Power Generation           1.10622522824522E-02 
+Russia~Electric Power T&D    5.35177115819896E-03 
+Russia~Electronics & Electrical            1.00565929840475E-02 
+Russia~Engineering & Business Services     0.100565929840475 
+Russia~Entertainment         2.51414824601187E-02 
+Russia~Fabricated Metals     8.56283385311835E-03 
+Russia~Financial             1.00565929840475E-02 
+Russia~Food & Beverage       2.51414824601187E-02 
+Russia~Furniture & Wood Products           2.0113185968095E-03 
+Russia~Government            0.110622522824522 
+Russia~Healthcare            4.02263719361899E-02 
+Russia~Household & Personal Care           3.68154487750423E-03 
+Russia~Machinery             1.28442507796775E-02 
+Russia~Marine  1.00565929840475E-03 
+Russia~Medical Products      1.00565929840475E-03 
+Russia~Metals  1.92663761695163E-02 
+Russia~Mining  0.020113185968095 
+Russia~Mining & Metals       3.93795621376112E-02 
+Russia~Oil & Gas             7.54244473803561E-02 
+Russia~Other  -1.11650610801734E-16 
+Russia~Other Industries      3.13661081386142E-02 
+Russia~Pharmaceutical & Biotech            2.67588557909948E-03 
+Russia~Plastics & Rubber     5.02829649202374E-03 
+Russia~Printing & Publishing               2.0113185968095E-04 
+Russia~Pulp & Paper          5.02829649202374E-03 
+Russia~Refining              1.50848894760712E-02 
+Russia~Retail  0.12620038254491 
+Russia~Semiconductors        5.02829649202374E-03 
+Russia~Telecommunications    2.14854744172626E-02 
+Russia~Textiles              1.00565929840475E-03 
+Russia~Transportation & Logistics          4.33813814998127E-02 
+Russia~Water & Wastewater    5.02829649202374E-03 
+Russia~Wholesale & Distribution            0.113383156192692 
+Slovakia~Aerospace & Defense               8.11126283751503E-03 
+Slovakia~Automotive          5.66261467963371E-02 
+Slovakia~Buildings           5.19073012299757E-03 
+Slovakia~Cement & Glass      6.22887614759708E-03 
+Slovakia~Chemical            1.17971139159036E-02 
+Slovakia~Construction        3.32206727871844E-02 
+Slovakia~Education           1.24577522951942E-02 
+Slovakia~Electric Power Generation         1.17971139159036E-02 
+Slovakia~Electric Power T&D  2.02781570937877E-03 
+Slovakia~Electronics & Electrical          4.24696100972528E-02 
+Slovakia~Engineering & Business Services   0.112119770656747 
+Slovakia~Entertainment       3.11443807379854E-02 
+Slovakia~Fabricated Metals   1.07068669455199E-02 
+Slovakia~Financial           1.03814602459951E-02 
+Slovakia~Food & Beverage     2.49155045903883E-02 
+Slovakia~Furniture & Wood Products         3.11443807379854E-03 
+Slovakia~Government          0.114196062705947 
+Slovakia~Healthcare          5.19073012299757E-02 
+Slovakia~Household & Personal Care         4.46119456063328E-03 
+Slovakia~Machinery           1.86866284427913E-02 
+Slovakia~Marine              5.19073012299757E-04 
+Slovakia~Medical Products    1.03814602459951E-03 
+Slovakia~Metals              2.31982117152931E-02 
+Slovakia~Mining              1.55721903689927E-02 
+Slovakia~Mining & Metals     3.87704020842858E-02 
+Slovakia~Oil & Gas           4.86675770250903E-03 
+Slovakia~Other               3.06905919809402E-02 
+Slovakia~Other Industries    4.26652108336943E-02 
+Slovakia~Pharmaceutical & Biotech          4.05563141875753E-03 
+Slovakia~Plastics & Rubber   1.03814602459951E-02 
+Slovakia~Printing & Publishing             2.07629204919903E-04 
+Slovakia~Pulp & Paper        5.19073012299757E-03 
+Slovakia~Refining            3.39756880778023E-03 
+Slovakia~Retail              8.11641437414165E-02 
+Slovakia~Semiconductors      8.92238912126657E-03 
+Slovakia~Telecommunications  2.21795392219787E-02 
+Slovakia~Textiles            2.07629204919903E-03 
+Slovakia~Transportation & Logistics        5.56823776830648E-02 
+Slovakia~Water & Wastewater  5.19073012299757E-03 
+Slovakia~Wholesale & Distribution          0.072670221721966 
+Slovenia~Aerospace & Defense               6.45625605813827E-03 
+Slovenia~Automotive          3.87375363488296E-02 
+Slovenia~Buildings           6.45625605813827E-03 
+Slovenia~Cement & Glass      3.56281688827028E-03 
+Slovenia~Chemical            5.93802814711713E-03 
+Slovenia~Construction        4.13200387720849E-02 
+Slovenia~Education           1.54950145395318E-02 
+Slovenia~Electric Power Generation         5.93802814711713E-03 
+Slovenia~Electric Power T&D  2.15928296258805E-03 
+Slovenia~Electronics & Electrical          3.87375363488296E-02 
+Slovenia~Engineering & Business Services   0.129125121162765 
+Slovenia~Entertainment       3.87375363488296E-02 
+Slovenia~Fabricated Metals   1.93937924227021E-02 
+Slovenia~Financial           1.29125121162765E-02 
+Slovenia~Food & Beverage     0.029698777867436 
+Slovenia~Furniture & Wood Products         2.58250242325531E-03 
+Slovenia~Government          0.142037633279042 
+Slovenia~Healthcare          6.45625605813827E-02 
+Slovenia~Household & Personal Care         4.84844810567554E-03 
+Slovenia~Machinery           2.90906886340533E-02 
+Slovenia~Marine              6.45625605813827E-04 
+Slovenia~Medical Products    1.29125121162765E-03 
+Slovenia~Metals              1.21459666645578E-02 
+Slovenia~Mining              7.12563377654056E-03 
+Slovenia~Mining & Metals     0.020243277774263 
+Slovenia~Oil & Gas           1.07964148129402E-02 
+Slovenia~Other               8.09504502169029E-02 
+Slovenia~Other Industries    5.04696046248949E-02 
+Slovenia~Pharmaceutical & Biotech          1.48450703677928E-03 
+Slovenia~Plastics & Rubber   1.03300096930212E-02 
+Slovenia~Printing & Publishing             2.58250242325531E-04 
+Slovenia~Pulp & Paper        1.78140844413514E-03 
+Slovenia~Refining            5.99201022118183E-03 
+Slovenia~Retail              5.02033288801721E-02 
+Slovenia~Semiconductors      4.84844810567554E-03 
+Slovenia~Telecommunications  2.75870216858667E-02 
+Slovenia~Textiles            1.29125121162765E-03 
+Slovenia~Transportation & Logistics        2.64512162917036E-02 
+Slovenia~Water & Wastewater  2.96901407355857E-03 
+Slovenia~Wholesale & Distribution          0.045344942214349 
+South Africa~Aerospace & Defense           1.93728396914669E-03 
+South Africa~Automotive      1.78388944744155E-02 
+South Africa~Buildings       5.69853573488275E-03 
+South Africa~Cement & Glass  7.43287269767315E-03 
+South Africa~Chemical        2.05147286455779E-02 
+South Africa~Construction    3.64706287032496E-02 
+South Africa~Education       1.36764857637186E-02 
+South Africa~Electric Power Generation     1.85821817441829E-02 
+South Africa~Electric Power T&D            1.10997565618586E-02 
+South Africa~Electronics & Electrical      1.78230125161495E-02 
+South Africa~Engineering & Business Services             0.136764857637186 
+South Africa~Entertainment   3.41912144092965E-02 
+South Africa~Fabricated Metals             5.81185190744006E-03 
+South Africa~Financial       1.13970714697655E-02 
+South Africa~Food & Beverage               2.84926786744137E-02 
+South Africa~Furniture & Wood Products     2.2794142939531E-03 
+South Africa~Government      5.69853573488275E-02 
+South Africa~Healthcare      5.69853573488275E-02 
+South Africa~Household & Personal Care     4.45575312903738E-03 
+South Africa~Machinery       4.95524846511543E-03 
+South Africa~Marine          1.13970714697655E-03 
+South Africa~Medical Products              1.13970714697655E-03 
+South Africa~Metals          2.97314907906926E-02 
+South Africa~Mining          9.11765717581239E-02 
+South Africa~Mining & Metals               0 
+South Africa~Oil & Gas       0.110997565618586 
+South Africa~Other          -2.53065823180643E-16 
+South Africa~Other Industries              3.90342822638358E-02 
+South Africa~Pharmaceutical & Biotech      7.92839754418469E-03 
+South Africa~Plastics & Rubber             3.41912144092965E-03 
+South Africa~Printing & Publishing         2.2794142939531E-04 
+South Africa~Pulp & Paper    6.83824288185929E-03 
+South Africa~Refining        1.90281541060433E-02 
+South Africa~Retail          6.64003294325468E-02 
+South Africa~Semiconductors  4.45575312903738E-03 
+South Africa~Telecommunications            2.43493485202984E-02 
+South Africa~Textiles        1.13970714697655E-03 
+South Africa~Transportation & Logistics    3.07225404837157E-02 
+South Africa~Water & Wastewater            8.91944723720777E-03 
+South Africa~Wholesale & Distribution      5.99585064278967E-02 
+Spain~Aerospace & Defense    5.44237771004795E-03 
+Spain~Automotive             3.91851195123452E-02 
+Spain~Buildings              4.86548567278286E-03 
+Spain~Cement & Glass         4.35390216803836E-03 
+Spain~Chemical               1.30617065041151E-02 
+Spain~Construction           3.11391083058103E-02 
+Spain~Education              1.16771656146789E-02 
+Spain~Electric Power Generation            9.8514005310835E-03 
+Spain~Electric Power T&D     3.26542662602877E-03 
+Spain~Electronics & Electrical             1.63271331301438E-02 
+Spain~Engineering & Business Services      0.107040684801223 
+Spain~Entertainment          2.91929140366972E-02 
+Spain~Fabricated Metals      5.22468260164603E-03 
+Spain~Financial              9.73097134556573E-03 
+Spain~Food & Beverage        3.59196928863164E-02 
+Spain~Furniture & Wood Products            2.17695108401918E-03 
+Spain~Government             0.10217519912844 
+Spain~Healthcare             6.81167994189601E-02 
+Spain~Household & Personal Care            2.9357173582629E-03 
+Spain~Machinery              1.04493652032921E-02 
+Spain~Marine   9.73097134556573E-04 
+Spain~Medical Products       9.73097134556573E-04 
+Spain~Metals   3.26542662602877E-03 
+Spain~Mining   4.35390216803836E-03 
+Spain~Mining & Metals        7.61932879406712E-03 
+Spain~Oil & Gas              4.89813993904315E-03 
+Spain~Other    3.22926735473618E-02 
+Spain~Other Industries       3.41866695338421E-02 
+Spain~Pharmaceutical & Biotech             5.22468260164603E-03 
+Spain~Plastics & Rubber      4.86548567278286E-03 
+Spain~Printing & Publishing  1.94619426911315E-04 
+Spain~Pulp & Paper           1.08847554200959E-03 
+Spain~Refining               7.18393857726329E-03 
+Spain~Retail   0.148032673713304 
+Spain~Semiconductors         1.30617065041151E-02 
+Spain~Telecommunications     2.07897979198241E-02 
+Spain~Textiles               7.61932879406712E-04 
+Spain~Transportation & Logistics           5.87776792685178E-02 
+Spain~Water & Wastewater     5.44237771004795E-03 
+Spain~Wholesale & Distribution             0.133882491667179 
+Sweden~Aerospace & Defense   5.13427091149968E-03 
+Sweden~Automotive            2.79953104062138E-02 
+Sweden~Buildings             5.13427091149968E-03 
+Sweden~Cement & Glass        5.13427091149968E-03 
+Sweden~Chemical              2.05370836459987E-02 
+Sweden~Construction          3.28593338335979E-02 
+Sweden~Education             1.23222501875992E-02 
+Sweden~Electric Power Generation           1.49052926352241E-02 
+Sweden~Electric Power T&D    8.21483345839948E-03 
+Sweden~Electronics & Electrical            0.015402812734499 
+Sweden~Engineering & Business Services     0.112953960052993 
+Sweden~Entertainment         3.08056254689981E-02 
+Sweden~Fabricated Metals     5.96211705408967E-03 
+Sweden~Financial             1.02685418229994E-02 
+Sweden~Food & Beverage       3.45126949369294E-02 
+Sweden~Furniture & Wood Products           2.05370836459987E-03 
+Sweden~Government            0.107819689141493 
+Sweden~Healthcare            7.18797927609955E-02 
+Sweden~Household & Personal Care           3.72632315880604E-03 
+Sweden~Machinery             0.014144998942087 
+Sweden~Marine  1.02685418229994E-02 
+Sweden~Medical Products      1.02685418229994E-03 
+Sweden~Metals  1.19242341081793E-02 
+Sweden~Mining  7.15454046490761E-03 
+Sweden~Mining & Metals       1.90787745730869E-02 
+Sweden~Oil & Gas             1.02685418229994E-02 
+Sweden~Other   0.108595139714582 
+Sweden~Other Industries      3.25681051952604E-02 
+Sweden~Pharmaceutical & Biotech            1.02685418229994E-02 
+Sweden~Plastics & Rubber     3.08056254689981E-03 
+Sweden~Printing & Publishing               2.05370836459987E-04 
+Sweden~Pulp & Paper          5.13427091149968E-03 
+Sweden~Refining              1.02685418229994E-02 
+Sweden~Retail  7.14615801047009E-02 
+Sweden~Semiconductors        1.02685418229994E-02 
+Sweden~Telecommunications    2.19382939123234E-02 
+Sweden~Textiles              1.02685418229994E-03 
+Sweden~Transportation & Logistics          5.44082484888064E-02 
+Sweden~Water & Wastewater    5.13427091149968E-03 
+Sweden~Wholesale & Distribution            6.41530094121747E-02 
+Switzerland~Aerospace & Defense            6.36358130686851E-03 
+Switzerland~Automotive       0.012727162613737 
+Switzerland~Buildings        5.78290451261676E-03 
+Switzerland~Cement & Glass   3.18179065343425E-03 
+Switzerland~Chemical         1.65453113978581E-02 
+Switzerland~Construction     3.70105888807472E-02 
+Switzerland~Education        1.38789708302802E-02 
+Switzerland~Electric Power Generation      7.50396590421051E-03 
+Switzerland~Electric Power T&D             2.50132196807016E-03 
+Switzerland~Electronics & Electrical       0.012727162613737 
+Switzerland~Engineering & Business Services              0.104092281227102 
+Switzerland~Entertainment    3.46974270757005E-02 
+Switzerland~Fabricated Metals              1.01817300909896E-02 
+Switzerland~Financial        1.15658090252335E-02 
+Switzerland~Food & Beverage  3.97723831679282E-02 
+Switzerland~Furniture & Wood Products      2.41816089661003E-03 
+Switzerland~Government       0.121440994764952 
+Switzerland~Healthcare       8.09606631766346E-02 
+Switzerland~Household & Personal Care      4.54615267696752E-03 
+Switzerland~Machinery        1.59089532671713E-02 
+Switzerland~Marine           5.78290451261676E-04 
+Switzerland~Medical Products               1.15658090252335E-03 
+Switzerland~Metals           7.63629756824221E-03 
+Switzerland~Mining           4.58177854094532E-03 
+Switzerland~Mining & Metals  1.22180761091875E-02 
+Switzerland~Oil & Gas        8.27265569892906E-03 
+Switzerland~Other            0.105256586422057 
+Switzerland~Other Industries               4.03361538405273E-02 
+Switzerland~Pharmaceutical & Biotech       5.09086504549481E-02 
+Switzerland~Plastics & Rubber              3.46974270757005E-03 
+Switzerland~Printing & Publishing          2.3131618050467E-04 
+Switzerland~Pulp & Paper     3.8181487841211E-03 
+Switzerland~Refining         8.27265569892906E-03 
+Switzerland~Retail           7.57266175517352E-02 
+Switzerland~Semiconductors   0.012727162613737 
+Switzerland~Telecommunications             2.47098489837248E-02 
+Switzerland~Textiles         1.15658090252335E-03 
+Switzerland~Transportation & Logistics     2.29088927047266E-02 
+Switzerland~Water & Wastewater             4.13632784946453E-03 
+Switzerland~Wholesale & Distribution       0.068090319983493 
+Turkey~Aerospace & Defense   2.20574835605753E-03 
+Turkey~Automotive            1.72048371772488E-02 
+Turkey~Buildings             5.73494572574959E-03 
+Turkey~Cement & Glass        5.29379605453808E-03 
+Turkey~Chemical              1.76459868484603E-02 
+Turkey~Construction          3.67036526447974E-02 
+Turkey~Education             0.013763869741799 
+Turkey~Electric Power Generation           3.55373108511895E-02 
+Turkey~Electric Power T&D    7.05839473938411E-03 
+Turkey~Electronics & Electrical            1.76459868484603E-02 
+Turkey~Engineering & Business Services     0.100935044773193 
+Turkey~Entertainment         3.44096743544975E-02 
+Turkey~Fabricated Metals     4.41149671211507E-03 
+Turkey~Financial             1.14698914514992E-02 
+Turkey~Food & Beverage       1.94105855333063E-02 
+Turkey~Furniture & Wood Products           2.29397829029983E-03 
+Turkey~Government            0.120433860240741 
+Turkey~Healthcare            5.73494572574959E-02 
+Turkey~Household & Personal Care           3.36807107334927E-03 
+Turkey~Machinery             1.23521907939222E-02 
+Turkey~Marine  5.73494572574959E-04 
+Turkey~Medical Products      1.14698914514992E-03 
+Turkey~Metals  3.28036715549441E-03 
+Turkey~Mining  3.52919736969205E-03 
+Turkey~Mining & Metals       9.52883289816854E-03 
+Turkey~Oil & Gas             1.76459868484603E-02 
+Turkey~Other   8.08368538274626E-02 
+Turkey~Other Industries      4.06824535349254E-02 
+Turkey~Pharmaceutical & Biotech            4.41149671211507E-04 
+Turkey~Plastics & Rubber     3.17627763272285E-03 
+Turkey~Printing & Publishing               2.29397829029983E-04 
+Turkey~Pulp & Paper          4.41149671211507E-03 
+Turkey~Refining              1.05875921090762E-02 
+Turkey~Retail  0.109405118460454 
+Turkey~Semiconductors        6.83409824061336E-04 
+Turkey~Telecommunications    2.45049252506172E-02 
+Turkey~Textiles              1.76459868484603E-03 
+Turkey~Transportation & Logistics          5.91140559423419E-02 
+Turkey~Water & Wastewater    4.41149671211507E-03 
+Turkey~Wholesale & Distribution            9.88175263513775E-02 
+Ukraine~Aerospace & Defense  3.54893886653742E-03 
+Ukraine~Automotive           0.007527459741424 
+Ukraine~Buildings            0.003763729870712 
+Ukraine~Cement & Glass       0.003763729870712 
+Ukraine~Chemical             2.61067967910659E-02 
+Ukraine~Construction         2.40878711725568E-02 
+Ukraine~Education            9.0329516897088E-03 
+Ukraine~Electric Power Generation          0.022582379224272 
+Ukraine~Electric Power T&D   6.0219677931392E-03 
+Ukraine~Electronics & Electrical           0.007527459741424 
+Ukraine~Engineering & Business Services    0.060219677931392 
+Ukraine~Entertainment        0.022582379224272 
+Ukraine~Fabricated Metals    6.0219677931392E-03 
+Ukraine~Financial            0.007527459741424 
+Ukraine~Food & Beverage      1.80659033794176E-02 
+Ukraine~Furniture & Wood Products          1.5054919482848E-03 
+Ukraine~Government           0.03763729870712 
+Ukraine~Healthcare           0.03763729870712 
+Ukraine~Household & Personal Care          3.54893886653742E-03 
+Ukraine~Machinery            0.007527459741424 
+Ukraine~Marine               3.763729870712E-04 
+Ukraine~Medical Products     7.527459741424E-04 
+Ukraine~Metals               4.30796047383155E-02 
+Ukraine~Mining               2.58477628429893E-02 
+Ukraine~Mining & Metals      6.89273675813046E-02 
+Ukraine~Oil & Gas            0.114217235960913 
+Ukraine~Other  3.17149936493585E-03 
+Ukraine~Other Industries     3.45867747169625E-02 
+Ukraine~Pharmaceutical & Biotech           1.06468165996123E-02 
+Ukraine~Plastics & Rubber    2.2582379224272E-03 
+Ukraine~Printing & Publishing              1.5054919482848E-04 
+Ukraine~Pulp & Paper         0.003763729870712 
+Ukraine~Refining             0.011291189612136 
+Ukraine~Retail               0.133797333554213 
+Ukraine~Semiconductors       3.54893886653743E-04 
+Ukraine~Telecommunications   1.60820910180903E-02 
+Ukraine~Textiles             7.527459741424E-04 
+Ukraine~Transportation & Logistics         8.91982223694751E-02 
+Ukraine~Water & Wastewater   0.003763729870712 
+Ukraine~Wholesale & Distribution           0.12074393515868 
+United Kingdom~Aerospace & Defense         7.1405552505533E-03 
+United Kingdom~Automotive    7.61659226725685E-03 
+United Kingdom~Buildings     4.71276646536518E-03 
+United Kingdom~Cement & Glass              3.42746652026558E-03 
+United Kingdom~Chemical      1.52331845345137E-02 
+United Kingdom~Construction  3.01617053783371E-02 
+United Kingdom~Education     1.31957461030225E-02 
+United Kingdom~Electric Power Generation   1.11990414857055E-02 
+United Kingdom~Electric Power T&D          5.71244420044264E-03 
+United Kingdom~Electronics & Electrical    4.56995536035411E-03 
+United Kingdom~Engineering & Business Services           0.117819161634129 
+United Kingdom~Entertainment               2.82765987921911E-02 
+United Kingdom~Fabricated Metals           2.82765987921911E-03 
+United Kingdom~Financial     9.42553293073035E-03 
+United Kingdom~Food & Beverage             1.99935547015492E-02 
+United Kingdom~Furniture & Wood Products   1.88510658614607E-03 
+United Kingdom~Government    0.11499150175491 
+United Kingdom~Healthcare    6.59787305151125E-02 
+United Kingdom~Household & Personal Care   2.30980230642677E-03 
+United Kingdom~Machinery     4.71276646536518E-03 
+United Kingdom~Marine        9.42553293073036E-04 
+United Kingdom~Medical Products            9.42553293073036E-04 
+United Kingdom~Metals        4.71276646536518E-03 
+United Kingdom~Mining        9.42553293073035E-03 
+United Kingdom~Mining & Metals             1.41382993960955E-02 
+United Kingdom~Oil & Gas     6.66451823384975E-02 
+United Kingdom~Other         0.142077885439467 
+United Kingdom~Other Industries            2.39835419114422E-02 
+United Kingdom~Pharmaceutical & Biotech    7.1405552505533E-03 
+United Kingdom~Plastics & Rubber           2.82765987921911E-03 
+United Kingdom~Printing & Publishing       1.88510658614607E-04 
+United Kingdom~Pulp & Paper  2.82765987921911E-03 
+United Kingdom~Refining      7.1405552505533E-03 
+United Kingdom~Retail        0.089494959140268 
+United Kingdom~Semiconductors              1.99935547015492E-03 
+United Kingdom~Telecommunications          2.01372420036799E-02 
+United Kingdom~Textiles      9.42553293073036E-04 
+United Kingdom~Transportation & Logistics  4.85557757037624E-02 
+United Kingdom~Water & Wastewater          4.71276646536518E-03 
+United Kingdom~Wholesale & Distribution    0.079974218806197 
+Argentina~Aerospace & Defense              5.3186477484995E-03 
+Argentina~Automotive         1.59559432454985E-02 
+Argentina~Buildings          4.72768688755511E-03 
+Argentina~Cement & Glass     1.48922136957986E-02 
+Argentina~Chemical           1.59559432454985E-02 
+Argentina~Construction       4.72768688755511E-02 
+Argentina~Education          1.41830606626653E-02 
+Argentina~Electric Power Generation        0.021274590993998 
+Argentina~Electric Power T&D               8.5098363975992E-03 
+Argentina~Electronics & Electrical         5.16121972225636E-03 
+Argentina~Engineering & Business Services  6.61876164257716E-02 
+Argentina~Entertainment      2.83661213253307E-02 
+Argentina~Fabricated Metals  6.3823772981994E-03 
+Argentina~Financial          0.132375232851543 
+Argentina~Food & Beverage    2.34020500933978E-02 
+Argentina~Furniture & Wood Products        2.1274590993998E-03 
+Argentina~Government         9.92814246386573E-02 
+Argentina~Healthcare         4.72768688755511E-02 
+Argentina~Household & Personal Care        5.3186477484995E-03 
+Argentina~Machinery          0.010637295496999 
+Argentina~Marine             1.59559432454985E-03 
+Argentina~Medical Products   1.0637295496999E-03 
+Argentina~Metals             0.010637295496999 
+Argentina~Mining             0.042549181987996 
+Argentina~Mining & Metals    0.031911886490997 
+Argentina~Oil & Gas          0.021274590993998 
+Argentina~Other              0.121315089179922 
+Argentina~Other Industries   3.28109511011147E-02 
+Argentina~Pharmaceutical & Biotech         3.1911886490997E-03 
+Argentina~Plastics & Rubber  5.3186477484995E-03 
+Argentina~Printing & Publishing            4.2549181987996E-04 
+Argentina~Pulp & Paper       1.17010250466989E-02 
+Argentina~Refining           0.010637295496999 
+Argentina~Retail             3.72305342394965E-02 
+Argentina~Semiconductors     2.1274590993998E-03 
+Argentina~Telecommunications               1.98562849277315E-02 
+Argentina~Textiles           5.3186477484995E-03 
+Argentina~Transportation & Logistics       2.35202422655867E-02 
+Argentina~Water & Wastewater               1.48922136957986E-02 
+Argentina~Wholesale & Distribution         0.028011544808764 
+Brazil~Aerospace & Defense   5.28462397551693E-03 
+Brazil~Automotive            1.58538719265508E-02 
+Brazil~Buildings             5.63693224055139E-03 
+Brazil~Cement & Glass        1.05692479510339E-02 
+Brazil~Chemical              1.05692479510339E-02 
+Brazil~Construction          0.051671878871721 
+Brazil~Education             1.40923306013785E-02 
+Brazil~Electric Power Generation           1.58538719265508E-02 
+Brazil~Electric Power T&D    6.34154877062031E-03 
+Brazil~Electronics & Electrical            8.45539836082708E-03 
+Brazil~Engineering & Business Services     5.63693224055139E-02 
+Brazil~Entertainment         2.81846612027569E-02 
+Brazil~Fabricated Metals     5.28462397551693E-03 
+Brazil~Financial             0.159713080148956 
+Brazil~Food & Beverage       1.58538719265508E-02 
+Brazil~Furniture & Wood Products           2.11384959020677E-03 
+Brazil~Government            0.103343757743442 
+Brazil~Healthcare            4.69744353379282E-02 
+Brazil~Household & Personal Care           5.28462397551693E-03 
+Brazil~Machinery             7.39847356572369E-03 
+Brazil~Marine  1.58538719265508E-03 
+Brazil~Medical Products      5.28462397551692E-04 
+Brazil~Metals  1.05692479510339E-02 
+Brazil~Mining  3.69923678286185E-02 
+Brazil~Mining & Metals       4.75616157796523E-02 
+Brazil~Oil & Gas             0.073984735657237 
+Brazil~Other   5.11363703088685E-02 
+Brazil~Other Industries      0.035903735289662 
+Brazil~Pharmaceutical & Biotech            3.17077438531015E-03 
+Brazil~Plastics & Rubber     5.28462397551693E-03 
+Brazil~Printing & Publishing               4.22769918041354E-04 
+Brazil~Pulp & Paper          7.92693596327539E-03 
+Brazil~Refining              1.05692479510339E-02 
+Brazil~Retail  4.02805783022735E-02 
+Brazil~Semiconductors        2.11384959020677E-03 
+Brazil~Telecommunications    1.97292628419299E-02 
+Brazil~Textiles              3.17077438531015E-03 
+Brazil~Transportation & Logistics          3.12379994997223E-02 
+Brazil~Water & Wastewater    1.26830975412406E-02 
+Brazil~Wholesale & Distribution            3.02985107929637E-02 
+Chile~Aerospace & Defense    5.16675411876416E-03 
+Chile~Automotive             2.06670164750566E-02 
+Chile~Buildings              4.59267032779036E-03 
+Chile~Cement & Glass         0.018600314827551 
+Chile~Chemical               1.03335082375283E-02 
+Chile~Construction           4.13340329501133E-02 
+Chile~Education              1.37780109833711E-02 
+Chile~Electric Power Generation            2.27337181225623E-02 
+Chile~Electric Power T&D     8.26680659002265E-03 
+Chile~Electronics & Electrical             1.55002623562925E-02 
+Chile~Engineering & Business Services      4.59267032779036E-02 
+Chile~Entertainment          0.025718953835626 
+Chile~Fabricated Metals      6.20010494251699E-03 
+Chile~Financial              7.34827252446458E-02 
+Chile~Food & Beverage        2.58337705938208E-02 
+Chile~Furniture & Wood Products            2.06670164750566E-03 
+Chile~Government             7.80753955724362E-02 
+Chile~Healthcare             3.67413626223229E-02 
+Chile~Household & Personal Care            5.16675411876416E-03 
+Chile~Machinery              1.03335082375283E-02 
+Chile~Marine   2.06670164750566E-03 
+Chile~Medical Products       5.16675411876416E-04 
+Chile~Metals   2.06670164750566E-02 
+Chile~Mining   0.108501836494047 
+Chile~Mining & Metals        0.129168852969104 
+Chile~Oil & Gas              3.61672788313491E-02 
+Chile~Other    8.88222441394632E-03 
+Chile~Other Industries       5.29385627008576E-02 
+Chile~Pharmaceutical & Biotech             3.1000524712585E-03 
+Chile~Plastics & Rubber      5.16675411876416E-03 
+Chile~Printing & Publishing  4.13340329501133E-04 
+Chile~Pulp & Paper           1.13668590612811E-02 
+Chile~Refining               0.012400209885034 
+Chile~Retail   3.55931950403753E-02 
+Chile~Semiconductors         2.06670164750566E-03 
+Chile~Telecommunications     1.83706813111615E-02 
+Chile~Textiles               5.16675411876416E-03 
+Chile~Transportation & Logistics           0.037659896687881 
+Chile~Water & Wastewater     0.012400209885034 
+Chile~Wholesale & Distribution             2.68671214175736E-02 
+Colombia~Aerospace & Defense               5.207251502726E-04 
+Colombia~Automotive          1.14559533059972E-02 
+Colombia~Buildings           1.15716700060578E-03 
+Colombia~Cement & Glass      1.14559533059972E-02 
+Colombia~Chemical            0.05207251502726 
+Colombia~Construction        4.62866800242311E-02 
+Colombia~Education           1.38860040072693E-02 
+Colombia~Electric Power Generation         0.015621754508178 
+Colombia~Electric Power T&D  0.010414503005452 
+Colombia~Electronics & Electrical          0.010414503005452 
+Colombia~Engineering & Business Services   5.55440160290773E-02 
+Colombia~Entertainment       2.77720080145386E-02 
+Colombia~Fabricated Metals   0.031243509016356 
+Colombia~Financial           9.72020280508853E-02 
+Colombia~Food & Beverage     0.031243509016356 
+Colombia~Furniture & Wood Products         5.207251502726E-04 
+Colombia~Government          9.25733600484622E-02 
+Colombia~Healthcare          3.70293440193849E-02 
+Colombia~Household & Personal Care         5.207251502726E-04 
+Colombia~Machinery           0.013018128756815 
+Colombia~Marine              0.005207251502726 
+Colombia~Medical Products    5.207251502726E-04 
+Colombia~Metals              0.05207251502726 
+Colombia~Mining              0.010414503005452 
+Colombia~Mining & Metals     0 
+Colombia~Oil & Gas           0.161424796584506 
+Colombia~Other               8.75281119258206E-03 
+Colombia~Other Industries    4.92553919642852E-02 
+Colombia~Pharmaceutical & Biotech          0.005207251502726 
+Colombia~Plastics & Rubber   1.87461054098136E-02 
+Colombia~Printing & Publishing             4.1658012021808E-04 
+Colombia~Pulp & Paper        1.24974036065424E-02 
+Colombia~Refining            0.005207251502726 
+Colombia~Retail              3.41364265178704E-02 
+Colombia~Semiconductors      1.14559533059972E-03 
+Colombia~Telecommunications  1.85146720096924E-02 
+Colombia~Textiles            1.5621754508178E-03 
+Colombia~Transportation & Logistics        2.40690736126002E-02 
+Colombia~Water & Wastewater  0.005207251502726 
+Colombia~Wholesale & Distribution          2.56891074134482E-02 
+Mexico~Aerospace & Defense   5.20050248410669E-03 
+Mexico~Automotive            2.60025124205334E-02 
+Mexico~Buildings             4.6226688747615E-03 
+Mexico~Cement & Glass        1.35213064586774E-02 
+Mexico~Chemical              1.56015074523201E-02 
+Mexico~Construction          5.08493576223765E-02 
+Mexico~Education             1.38680066242845E-02 
+Mexico~Electric Power Generation           2.08020099364267E-02 
+Mexico~Electric Power T&D    8.3208039745707E-03 
+Mexico~Electronics & Electrical            3.12030149046401E-02 
+Mexico~Engineering & Business Services     7.85853708709455E-02 
+Mexico~Entertainment         0.027736013248569 
+Mexico~Fabricated Metals     6.24060298092802E-03 
+Mexico~Financial             0.110944052994276 
+Mexico~Food & Beverage       2.08020099364267E-02 
+Mexico~Furniture & Wood Products           2.08020099364267E-03 
+Mexico~Government            9.70760463699915E-02 
+Mexico~Healthcare            0.046226688747615 
+Mexico~Household & Personal Care           5.20050248410669E-03 
+Mexico~Machinery             1.04010049682134E-02 
+Mexico~Marine  1.56015074523201E-03 
+Mexico~Medical Products      1.04010049682134E-03 
+Mexico~Metals  1.04010049682134E-02 
+Mexico~Mining  2.08020099364267E-02 
+Mexico~Mining & Metals       3.12030149046401E-02 
+Mexico~Oil & Gas             4.36842208664962E-02 
+Mexico~Other   0.011085159961678 
+Mexico~Other Industries      3.80780791886292E-02 
+Mexico~Pharmaceutical & Biotech            3.12030149046401E-03 
+Mexico~Plastics & Rubber     5.20050248410669E-03 
+Mexico~Printing & Publishing               4.16040198728535E-04 
+Mexico~Pulp & Paper          7.80075372616003E-03 
+Mexico~Refining              1.35213064586774E-02 
+Mexico~Retail  7.17669342806723E-02 
+Mexico~Semiconductors        5.20050248410669E-03 
+Mexico~Telecommunications    1.94152092739983E-02 
+Mexico~Textiles              5.20050248410669E-03 
+Mexico~Transportation & Logistics          4.87691566287338E-02 
+Mexico~Water & Wastewater    0.012481205961856 
+Mexico~Wholesale & Distribution            5.39696591128405E-02 
+Rest of Latin America~Aerospace & Defense  3.16200349225719E-03 
+Rest of Latin America~Automotive           1.26480139690288E-02 
+Rest of Latin America~Buildings            4.6844496181588E-03 
+Rest of Latin America~Cement & Glass       1.26480139690288E-02 
+Rest of Latin America~Chemical             1.05400116408573E-02 
+Rest of Latin America~Construction         5.15289457997468E-02 
+Rest of Latin America~Education            1.40533488544764E-02 
+Rest of Latin America~Electric Power Generation          2.10800232817146E-02 
+Rest of Latin America~Electric Power T&D   8.43200931268584E-03 
+Rest of Latin America~Electronics & Electrical           1.05400116408573E-02 
+Rest of Latin America~Engineering & Business Services    0.093688992363176 
+Rest of Latin America~Entertainment        2.81066977089528E-02 
+Rest of Latin America~Fabricated Metals    6.32400698451438E-03 
+Rest of Latin America~Financial            0.107742341217652 
+Rest of Latin America~Food & Beverage      2.10800232817146E-02 
+Rest of Latin America~Furniture & Wood Products          2.10800232817146E-03 
+Rest of Latin America~Government           0.103057891599494 
+Rest of Latin America~Healthcare           0.046844496181588 
+Rest of Latin America~Household & Personal Care          5.27000582042865E-03 
+Rest of Latin America~Machinery            1.05400116408573E-02 
+Rest of Latin America~Marine               1.5810017461286E-03 
+Rest of Latin America~Medical Products     5.27000582042865E-04 
+Rest of Latin America~Metals               1.05400116408573E-02 
+Rest of Latin America~Mining               5.05920558761151E-02 
+Rest of Latin America~Mining & Metals      6.11320675169724E-02 
+Rest of Latin America~Oil & Gas            2.31880256098861E-02 
+Rest of Latin America~Other  5.63164533095048E-02 
+Rest of Latin America~Other Industries     0.035825499567274 
+Rest of Latin America~Pharmaceutical & Biotech           3.16200349225719E-03 
+Rest of Latin America~Plastics & Rubber    5.27000582042865E-03 
+Rest of Latin America~Printing & Publishing              4.21600465634292E-04 
+Rest of Latin America~Pulp & Paper         7.90500873064298E-03 
+Rest of Latin America~Refining             1.26480139690288E-02 
+Rest of Latin America~Retail               0.046844496181588 
+Rest of Latin America~Semiconductors       2.10800232817146E-03 
+Rest of Latin America~Telecommunications   0.019674688396267 
+Rest of Latin America~Textiles             5.27000582042865E-03 
+Rest of Latin America~Transportation & Logistics         0.035133372136191 
+Rest of Latin America~Water & Wastewater   1.26480139690288E-02 
+Rest of Latin America~Wholesale & Distribution           0.035133372136191 
+Venezuela~Aerospace & Defense              3.15738255128646E-03 
+Venezuela~Automotive         1.57869127564323E-02 
+Venezuela~Buildings          4.67760377968364E-03 
+Venezuela~Cement & Glass     1.26295302051458E-02 
+Venezuela~Chemical           2.63115212607205E-02 
+Venezuela~Construction       0.05145364157652 
+Venezuela~Education          1.40328113390509E-02 
+Venezuela~Electric Power Generation        2.10492170085764E-02 
+Venezuela~Electric Power T&D               8.41968680343055E-03 
+Venezuela~Electronics & Electrical         8.41968680343055E-03 
+Venezuela~Engineering & Business Services  7.48416604749382E-02 
+Venezuela~Entertainment      2.80656226781018E-02 
+Venezuela~Fabricated Metals  6.31476510257291E-03 
+Venezuela~Financial          9.35520755936728E-02 
+Venezuela~Food & Beverage    2.10492170085764E-02 
+Venezuela~Furniture & Wood Products        2.10492170085764E-03 
+Venezuela~Government         9.82296793733564E-02 
+Venezuela~Healthcare         4.67760377968364E-02 
+Venezuela~Household & Personal Care        5.26230425214409E-03 
+Venezuela~Machinery          9.19177911284227E-03 
+Venezuela~Marine             1.57869127564323E-03 
+Venezuela~Medical Products   5.26230425214409E-04 
+Venezuela~Metals             1.05246085042882E-02 
+Venezuela~Mining             3.15738255128646E-02 
+Venezuela~Mining & Metals    4.20984340171527E-02 
+Venezuela~Oil & Gas          7.36722595300173E-02 
+Venezuela~Other              7.26086029780221E-02 
+Venezuela~Other Industries   3.86814732246703E-02 
+Venezuela~Pharmaceutical & Biotech         3.15738255128646E-03 
+Venezuela~Plastics & Rubber  5.26230425214409E-03 
+Venezuela~Printing & Publishing            4.20984340171528E-04 
+Venezuela~Pulp & Paper       7.89345637821614E-03 
+Venezuela~Refining           1.57869127564323E-02 
+Venezuela~Retail             4.33847750565658E-02 
+Venezuela~Semiconductors     2.10492170085764E-03 
+Venezuela~Telecommunications               1.96459358746713E-02 
+Venezuela~Textiles           5.26230425214409E-03 
+Venezuela~Transportation & Logistics       2.92350236230227E-02 
+Venezuela~Water & Wastewater               1.26295302051458E-02 
+Venezuela~Wholesale & Distribution         3.26262863632934E-02 
+Canada~Aerospace & Defense   0.004 
+Canada~Automotive            0.009 
+Canada~Buildings             0.004 
+Canada~Cement & Glass        0.005 
+Canada~Chemical              0.012 
+Canada~Construction          0.036 
+Canada~Education             0.015 
+Canada~Electric Power Generation           0.014 
+Canada~Electric Power T&D    0.009 
+Canada~Electronics & Electrical            0.013 
+Canada~Engineering & Business Services     0.105 
+Canada~Entertainment         0.035 
+Canada~Fabricated Metals     0.008 
+Canada~Financial             0.185 
+Canada~Food & Beverage       0.016 
+Canada~Furniture & Wood Products           0.002 
+Canada~Government            0.12 
+Canada~Healthcare            0.078 
+Canada~Household & Personal Care           0.002 
+Canada~Machinery             0.01 
+Canada~Marine  0.001 
+Canada~Medical Products      0.0007 
+Canada~Metals  0.0035 
+Canada~Mining  0.03 
+Canada~Mining & Metals       0.0335 
+Canada~Oil & Gas             0.015 
+Canada~Other   0 
+Canada~Other Industries      2.09999999999999E-02 
+Canada~Pharmaceutical & Biotech            0.006 
+Canada~Plastics & Rubber     0.005 
+Canada~Printing & Publishing               0.0002 
+Canada~Pulp & Paper          0.0066 
+Canada~Refining              0.01 
+Canada~Retail  0.0714 
+Canada~Semiconductors        0.005 
+Canada~Telecommunications    0.022 
+Canada~Textiles              0.001 
+Canada~Transportation & Logistics          0.0331 
+Canada~Water & Wastewater    0.0035 
+Canada~Wholesale & Distribution            0.0495 
+United States~Aerospace & Defense          3.90527770386837E-03 
+United States~Automotive     8.92634903741342E-03 
+United States~Buildings      4.11985340188312E-03 
+United States~Cement & Glass               5.57896814838339E-03 
+United States~Chemical       8.23970680376624E-03 
+United States~Construction   3.30446574942708E-02 
+United States~Education      1.13295968551786E-02 
+United States~Electric Power Generation    1.02996335047078E-02 
+United States~Electric Power T&D           8.23970680376624E-03 
+United States~Electronics & Electrical     1.33895235561201E-02 
+United States~Engineering & Business Services            9.26967015423701E-02 
+United States~Entertainment  3.91386073178896E-02 
+United States~Fabricated Metals            6.86642233647186E-03 
+United States~Financial      0.213202413547451 
+United States~Food & Beverage              1.33895235561201E-02 
+United States~Furniture & Wood Products    2.05992670094156E-03 
+United States~Government     0.140075015664026 
+United States~Healthcare     7.82772146357792E-02 
+United States~Household & Personal Care    1.13295968551786E-03 
+United States~Machinery      9.44133071264881E-03 
+United States~Marine         1.02996335047078E-03 
+United States~Medical Products             5.66479842758929E-04 
+United States~Metals         3.08989005141234E-03 
+United States~Mining         5.1498167523539E-03 
+United States~Mining & Metals              8.23970680376624E-03 
+United States~Oil & Gas      1.54494502570617E-02 
+United States~Other          5.17762576281661E-02 
+United States~Other Industries             2.16601292604005E-02 
+United States~Pharmaceutical & Biotech     5.1498167523539E-03 
+United States~Plastics & Rubber            5.1498167523539E-03 
+United States~Printing & Publishing        2.05992670094156E-04 
+United States~Pulp & Paper   7.72472512853084E-03 
+United States~Refining       9.26967015423701E-03 
+United States~Retail         6.01670257233347E-02 
+United States~Semiconductors               5.1498167523539E-03 
+United States~Telecommunications           2.26591937103571E-02 
+United States~Textiles       8.23970680376623E-04 
+United States~Transportation & Logistics   2.85814829755641E-02 
+United States~Water & Wastewater           3.08989005141234E-03 
+United States~Wholesale & Distribution     4.17135156940666E-02 
