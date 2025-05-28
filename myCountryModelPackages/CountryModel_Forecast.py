@@ -79,10 +79,12 @@ class Report_CountryKnowns_Market_Forecast:
         _regions_without_all_known_countries = _regions_without_all_known_countries.drop(['Country','_merge'],axis=1).drop_duplicates()
         _regionList = _regions_without_all_known_countries['Region'].tolist()
 
-        _kRegion_total_x_year = self.country_known_forecast.groupby(['Region','BaseYear','Year'])['Forecast'].sum().reset_index()
+        _kRegion_total_x_year = self.country_known_forecast.groupby(['Region','Year'])['Forecast'].sum().reset_index()
         _kRegion_total_x_year = _kRegion_total_x_year.rename(columns={'Forecast': 'Region_Total'})
 
-        _ukRxI =  _kRegion_total_x_year.merge(market_ww_forecast_x_region, on=['Region','Year'], how='left')
+       # _ukRxI =  _kRegion_total_x_year.merge(market_ww_forecast_x_region, on=['Region','Year'], how='left')
+        _ukRxI = market_ww_forecast_x_region.merge(_kRegion_total_x_year, on=['Region', 'Year'], how='left')
+        _ukRxI['Region_Total'] = _ukRxI['Region_Total'].fillna(0)
         _ukRxI = _ukRxI[_ukRxI['Region'].isin(_regionList )]
 
         _ukRxI = _ukRxI.merge(sRxIp,on=['Region','Year'],how='left')
@@ -124,10 +126,12 @@ class Report_CountryKnowns_Market_Forecast:
     #     If the analyst provided details on the Industry breakdown for the specific country, then we will not use this dataframe
     def get_kCxIp(self, ww_forecast_x_industry, gCC):
         _gCC = gCC.loc[gCC['Country'].isin(self.country_known_forecast['Country'])]
+        _gCC = _gCC.drop(['BaseYear'],axis=1)
         kCxIp = pd.merge(ww_forecast_x_industry,_gCC,on=['Industry'], how='left')
+        kCxIp = kCxIp[kCxIp['Country'].notna()]
         kCxIp ['Industry_x_Country'] =  kCxIp ['Forecast'] *  kCxIp ['Size']
         kCxIp = kCxIp.drop(['Segment','Forecast','Size'],axis=1)
-        kCxIp['Country_Total'] = kCxIp.groupby(['BaseYear', 'Year','Country'])['Industry_x_Country'].transform('sum')
+        kCxIp['Country_Total'] = kCxIp.groupby(['Year','Country'])['Industry_x_Country'].transform('sum')
         kCxIp ['Forecast'] = kCxIp ['Industry_x_Country'] / kCxIp['Country_Total']
         kCxIp = kCxIp.drop(['Industry_x_Country','Country_Total'],axis=1)
         return kCxIp
@@ -138,7 +142,7 @@ class Report_CountryKnowns_Market_Forecast:
     # **   Segmenting by industry using the country industry character.
 
     def get_kCxI (self,kCxIp):
-        kCxI = pd.merge(self.country_known_forecast.loc[self.country_known_forecast['Industry'] == "Other Industries"],kCxIp,on=['BaseYear','Year','Region','Country'], how='left')
+        kCxI = pd.merge(self.country_known_forecast.loc[self.country_known_forecast['Industry'] == "Other Industries"],kCxIp,on=['Year','Region','Country'], how='left')
         kCxI['Forecast'] = kCxI['Forecast_x'] * kCxI['Forecast_y']
         kCxI = kCxI.drop(['Forecast_x','Forecast_y','Industry_x'],axis=1)
         kCxI = kCxI.rename(columns={'Industry_y': 'Industry'})
@@ -165,7 +169,7 @@ class Report_CountryKnowns_Market_Forecast:
         self.country_known_forecast = pd.read_sql(self.sql_queryCountryKnown, self.connection)
         self.country_known_forecast = self.country_known_forecast.merge(gRegion_x_Country, on='Country', how='left')
         self.country_known_forecast = self.country_known_forecast[self.country_known_forecast['Region'].isin(gRegionList)]
-        self.country_known_forecast = self.country_known_forecast.drop(['Study'],axis=1)
+        self.country_known_forecast = self.country_known_forecast.drop(['Study','BaseYear'],axis=1)
 
 
 

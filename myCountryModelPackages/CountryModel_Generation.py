@@ -4,9 +4,9 @@ import sys
 import pyodbc
 import pandas as pd
 import numpy as np
-from sqlalchemy import create_engine
 import warnings
 from sqlalchemy import create_engine
+from sqlalchemy import text
 
 from myCountryModelPackages.sqlTableRetrieve import *
 from myCountryModelPackages.MarketReportRetrieval import *
@@ -14,16 +14,65 @@ from myCountryModelPackages.CountryModel_Forecast import *
 from myCountryModelPackages.CountryModel_MarketSize import *
 from myCountryModelPackages.Economic_Research import *
 
+class Country_Model_Publish:
+    db_engine_market_data = None
+    market_report = None
+    base_year = None
+    market_shares = None
+    market_forecast = None
+
+    def publish_market_shares(self):
+        _sql_statement = """
+            DELETE FROM [dbo].[StudySizesCountryModel]
+            WHERE [Study] = :study AND [BaseYear] = :base_year
+            """
+        try:
+            with self.db_engine_market_data.connect() as connection:
+                result = connection.execute( text(_sql_statement), {"study": self.market_report, "base_year": self.base_year})
+                connection.commit()
+        except Exception as e:
+            print(f"Error executing SQL statement: {e}")
+
+        _market_shares = self.market_shares.rename(columns={'Industry': 'ParentCategory','Region':'Category'})
+        _market_shares['GrandParentCategory']= _market_shares['GrandParentCategory']=0
+        _market_shares.to_sql('StudySizesCountryModel', self.db_engine_market_data, if_exists='replace', index=False)
+        return
+
+    def publish_market_forecast(self):
+        sql_statement = """
+            DELETE FROM [dbo].[StudyForecastsCountryModel]
+            WHERE ([Study] = :study) AND ([BaseYear] = :base_year)
+            """
+        try:
+            with self.db_engine_market_data.connect() as connection:
+                result = connection.execute(text(sql_statement), {"study": self.market_report, "base_year": self.base_year})
+                connection.commit()
+        except Exception as e:
+            print(f"Error executing SQL statement: {e}")
+
+        _market_forecast = self.market_forecast.rename(columns={'Industry': 'GrandParentCategory', 'Region': 'Category', 'Country': 'ParentCategory'})
+        _market_forecast.to_sql('StudyForecastsCountryModel', self.db_engine_market_data, if_exists='replace', index=False)
+        return
+
+    def __init__(self, db_engine, report, base_year, market_shares, market_forecast):
+        self.market_report = report
+        self.base_year = base_year
+        self.market_shares = market_shares
+        self.market_forecast = market_forecast
+        self.db_engine_market_data = db_engine
+
+
 class Country_Model_Generation:
     marketStudy = "AC Drives Low Voltage"
     baseYear:str = "2023"
     dump = False
     db_cxcn = None
+    db_cxcn_economic_research = None
 
     def generate_market_shares(self):
         # Economic Tables from Analyst Research
         #  - build Lists Countries, Industries and Regions included in the Economic analysis
-        economic_research = CountryEconomicResearch(self.db_cxcn, self.baseYear)
+        economic_research = CountryEconomicResearch(self.db_cxcn_economic_research, self.baseYear)
         gIndustryList = economic_research.get_IndustryList()
         gRegionList = economic_research.get_RegionList()
 
@@ -78,6 +127,7 @@ class Country_Model_Generation:
         # 'Step-5
         #    '** Assemble Regional Industry values computed with knowns
         country_model_market_share = ukRxI.merge(kRxI, on=['Company', 'Region','Industry'], how='left')
+        country_model_market_share['Size_y']  = country_model_market_share['Size_y'] .fillna(0)
         country_model_market_share['Size'] = (country_model_market_share  ['Size_x'] + country_model_market_share ['Size_y'])
         country_model_market_share = country_model_market_share.drop(['Size_x','Size_y'],axis=1)
         country_model_market_share['Study']= self.marketStudy
@@ -88,7 +138,7 @@ class Country_Model_Generation:
     def generate_forecast(self):
        # Economic Tables from Analyst Research
         #  - build Lists Countries, Industries and Regions included in the Economic analysis
-        economic_research = CountryEconomicResearch(self.db_cxcn, self.baseYear)
+        economic_research = CountryEconomicResearch(self.db_cxcn_economic_research, self.baseYear)
         gRegion_x_Country = economic_research.get_Region_X_Country_Table()
         gIndustryList = economic_research.get_IndustryList()
         gCountryList = economic_research.get_CountryList()
@@ -133,12 +183,14 @@ class Country_Model_Generation:
         # **   Combine Known Country Values with Computed Unknown Estimates
         country_model_forecast = country_known_forecast.get_Merge_Knowns(_ukCxI, _kCxI)
         country_model_forecast['Study'] = self.marketStudy
+        country_model_forecast['BaseYear'] = self.baseYear
         return country_model_forecast
 
-    def __init__(self, cxcn,  market_study, year):
+    def __init__(self, cxcn, cxcn_economic_research, market_study, year):
         self.marketStudy = market_study
         self.baseYear = year
         self.db_cxcn = cxcn
+        self.db_cxcn_economic_research = cxcn_economic_research
 
 
 

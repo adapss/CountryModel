@@ -7,7 +7,8 @@ from myCountryModelPackages.MarketReportRetrieval import *
 
 country_model_shares = st.session_state['share_country_model']
 country_model_forecast = st.session_state['forecast_country_model']
-db_cxcn = st.session_state['db_cxcn']
+db_cxcn = st.session_state['db_cxcn_market_research']
+
 market_report = st.session_state['market_report']
 base_year = st.session_state['base_year']
 

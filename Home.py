@@ -3,6 +3,9 @@ import time
 import pandas as pd
 import pyodbc
 import streamlit as st
+
+from myCountryModelPackages.sqlTableRetrieve import sql_MiraWIP_Connection
+
 st.set_page_config(layout="wide")
 
 from myCountryModelPackages.CountryModel_Generation import *
@@ -16,10 +19,17 @@ selected_base_year = None
 if __name__ == '__main__':
     st.title("Country Model Generator")
     st.write("This application is designed to generated a Country Model from an previously published World Wide market Report.")
-    db_cxcn = sqlConnection().get_connection()
-    st.session_state['db_cxcn'] = db_cxcn
 
-    market_reports = MarketReports(db_cxcn)
+    # Two connections are provided so that we can generate models from worldwide data in the MiraWIP.
+    # However, the Economic Research is always in the MiraLite database
+    db_cxcn_economic_research = sql_MiraLite_connection().get_connection()
+    db_cxcn_market_reports = sql_MiraWIP_Connection().get_connection()
+    db_engine_market_reports = sql_MiraWIP_Connection().get_engine()
+
+    st.session_state['db_cxcn_market_research'] = db_cxcn_market_reports
+    st.session_state['db_cxcn_economic_research'] = db_cxcn_economic_research
+
+    market_reports = MarketReports(db_cxcn_market_reports)
     report_list = market_reports.get_report_list()
     report_list = report_list.sort_values(by='Study', ascending=True)
     base_year_list = market_reports.get_base_year_list().sort_values(ascending=False)
@@ -55,22 +65,25 @@ if __name__ == '__main__':
     with col1:
         if st.session_state.button: #st.button('Create Country Model'):
            with st.spinner("Loading data..."):
-                country_model = Country_Model_Generation( db_cxcn, selected_report, selected_base_year)
+                country_model = Country_Model_Generation( db_cxcn_market_reports, db_cxcn_economic_research,selected_report, selected_base_year)
                 share_model = country_model.generate_market_shares()
                 st.session_state['share_country_model'] =share_model
 
                 forecast_model = country_model.generate_forecast()
                 st.session_state['forecast_country_model'] = forecast_model
 
-                sql_market_data = MarketReportData(db_cxcn, selected_report, selected_base_year)
-                sql_country_model_size = sql_market_data.get_country_model_size()
-                sql_country_model_forecast = sql_market_data.get_country_model_forecast()
+                # sql_market_data = MarketReportData(db_cxcn_MiraWIP, selected_report, selected_base_year)
+                # sql_country_model_size = sql_market_data.get_country_model_size()
+                # sql_country_model_forecast = sql_market_data.get_country_model_forecast()
+                publish_model = Country_Model_Publish(db_engine_market_reports, selected_report,selected_base_year, share_model, forecast_model)
                 with col1:
                     st.write("Market Shares")
                     st.write(share_model)
+                    publish_model.publish_market_shares()
                 with col2:
                     st.write("Market Forecast")
                     st.write(forecast_model)
+                    publish_model.publish_market_forecast()
 
 
 

@@ -106,10 +106,12 @@ class Report_CountryKnowns_Market_Size:
         _kRegion_Total = self.country_known_size.groupby(['Company', 'Region'])['Size'].sum().reset_index()
         _company_X_region = company_X_region.groupby(['Company', 'Region'])['Size'].sum().reset_index()
         _merge_study_knowns = _company_X_region.merge(_kRegion_Total, on=['Company', 'Region'], how='left')
+        _merge_study_knowns['Size_y'] = _merge_study_knowns['Size_y'].fillna(0)
         _merge_sRxI = _merge_study_knowns.merge(sRxIp, on=['Company', 'Region'], how='left')
         _merge_sRxI['kRemove_Size'] = (_merge_sRxI['Size_x'] - _merge_sRxI['Size_y']) * _merge_sRxI['Size']
         _merge_sRxI = _merge_sRxI.drop(['Size_x', 'Size_y','Size'], axis=1)
         _merge_sRxI.rename(columns={'kRemove_Size': 'Size'}, inplace=True)
+        _merge_sRxI = _merge_sRxI[_merge_sRxI['Size'].notna()]
         return _merge_sRxI
 
     def get_kRxI(self, kCxIp):
@@ -119,6 +121,7 @@ class Report_CountryKnowns_Market_Size:
         _kRxI = _kRxI.drop(['Size_x', 'Size_y', 'Industry_x'], axis=1)
         _kRxI.rename(columns={'Industry_y': 'Industry'}, inplace=True)
         kRxI = _kRxI.groupby(['Company', 'Region','Industry'])['Size'].sum().reset_index()
+        kRxI = kRxI[kRxI['Size'].notna()]
         return kRxI
 
     def get_kCxIp(self, company_X_industry, gCC, economic_research):
@@ -134,6 +137,7 @@ class Report_CountryKnowns_Market_Size:
         new_kCxIp = pd.merge(indRevForCountry,indRev_country_total,on=['Company','Country'])
         new_kCxIp['Size'] = np.where(new_kCxIp['Size_y'] == 0, 0, new_kCxIp['Size_x'] / new_kCxIp['Size_y'])
         new_kCxIp = new_kCxIp.drop(['Size_x','Size_y'], axis=1)
+        new_kCxIp = new_kCxIp[new_kCxIp['Size'].notna()]
         return new_kCxIp
 
     def get_country_known_list(self,economic_research):
