@@ -14,6 +14,16 @@ from myCountryModelPackages.CountryModel_Forecast import *
 from myCountryModelPackages.CountryModel_MarketSize import *
 from myCountryModelPackages.Economic_Research import *
 
+
+# Country_Model_Publish  - used to push a generated country model to the database
+#  Instantiate the class with references to the to
+#       db_engine - connection to the database
+#       report - report name
+#       base_year
+#       Market Share dataframe
+#       Forecast dataframe
+# Then you have to call the "publish" methods.
+
 class Country_Model_Publish:
     db_engine_market_data = None
     market_report = None
