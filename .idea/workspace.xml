@@ -6,7 +6,11 @@
   <component name="ChangeListManager">
     <list default="true" id="a7e4021d-836e-4dc6-b32e-6cca4ddc913b" name="Changes" comment="Version 2">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Home.py" beforeDir="false" afterPath="$PROJECT_DIR$/Home.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/myCountryModelPackages/CountryModel_Generation.py" beforeDir="false" afterPath="$PROJECT_DIR$/myCountryModelPackages/CountryModel_Generation.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/myCountryModelPackages/Economic_Research.py" beforeDir="false" afterPath="$PROJECT_DIR$/myCountryModelPackages/Economic_Research.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/myCountryModelPackages/sqlTableRetrieve.py" beforeDir="false" afterPath="$PROJECT_DIR$/myCountryModelPackages/sqlTableRetrieve.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/Economic.py" beforeDir="false" afterPath="$PROJECT_DIR$/pages/Economic.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -145,7 +149,15 @@
       <option name="project" value="LOCAL" />
       <updated>1748465168065</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Version 2">
+      <option name="closed" value="true" />
+      <created>1748533497421</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1748533497421</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -176,6 +188,11 @@
           <url>file://$PROJECT_DIR$/pages/Verification.py</url>
           <line>15</line>
           <option name="timeStamp" value="70" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/pages/Economic.py</url>
+          <line>27</line>
+          <option name="timeStamp" value="103" />
         </line-breakpoint>
       </breakpoints>
       <default-breakpoints>

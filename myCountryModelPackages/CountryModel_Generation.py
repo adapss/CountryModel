@@ -14,6 +14,28 @@ from myCountryModelPackages.CountryModel_Forecast import *
 from myCountryModelPackages.CountryModel_MarketSize import *
 from myCountryModelPackages.Economic_Research import *
 
+class CountryModelComparisonTest:
+    market_share_generated = None
+    market_share_vba = None
+    market_forecast_generated = None
+    market_forecast_vba = None
+
+    def market_share_comparison(self):
+        market_share_comparison  = self.market_share_generated.merge(self.market_share_vba, on=['BaseYear', 'Study','Company','Region','Segment','Industry'],how='left')
+        market_share_comparison['Diff'] = abs(market_share_comparison['Size_x'] - market_share_comparison['Size_y'])
+        return market_share_comparison
+
+    def market_forecast_comparison(self):
+        market_forecast_comparison  = self.market_forecast_generated.merge(self.market_forecast_vba, on=['BaseYear','Year', 'Study','Region','Segment','Country','Industry'],how='left')
+        market_forecast_comparison['Diff'] = abs(market_forecast_comparison['Forecast_x'] - market_forecast_comparison['Forecast_y'])
+        return market_forecast_comparison
+
+    def __init__(self, market_share_generated, market_share_vba, forecast_generated, forecasted_vba ):
+        self.market_share_generated = market_share_generated
+        self.market_share_vba = market_share_vba
+        self.market_forecast_generated = forecast_generated
+        self.market_forecast_vba = forecasted_vba
+
 
 # Country_Model_Publish  - used to push a generated country model to the database
 #  Instantiate the class with references to the to
@@ -23,7 +45,6 @@ from myCountryModelPackages.Economic_Research import *
 #       Market Share dataframe
 #       Forecast dataframe
 # Then you have to call the "publish" methods.
-
 class Country_Model_Publish:
     db_engine_market_data = None
     market_report = None
@@ -77,12 +98,12 @@ class Country_Model_Generation:
     baseYear:str = "2023"
     dump = False
     db_cxcn = None
-    db_cxcn_economic_research = None
+    # db_cxcn_economic_research = None
 
     def generate_market_shares(self):
         # Economic Tables from Analyst Research
         #  - build Lists Countries, Industries and Regions included in the Economic analysis
-        economic_research = CountryEconomicResearch(self.db_cxcn_economic_research, self.baseYear)
+        economic_research = CountryEconomicResearch(self.baseYear)
         gIndustryList = economic_research.get_IndustryList()
         gRegionList = economic_research.get_RegionList()
 
@@ -148,7 +169,7 @@ class Country_Model_Generation:
     def generate_forecast(self):
        # Economic Tables from Analyst Research
         #  - build Lists Countries, Industries and Regions included in the Economic analysis
-        economic_research = CountryEconomicResearch(self.db_cxcn_economic_research, self.baseYear)
+        economic_research = CountryEconomicResearch(self.baseYear)
         gRegion_x_Country = economic_research.get_Region_X_Country_Table()
         gIndustryList = economic_research.get_IndustryList()
         gCountryList = economic_research.get_CountryList()
@@ -196,11 +217,11 @@ class Country_Model_Generation:
         country_model_forecast['BaseYear'] = self.baseYear
         return country_model_forecast
 
-    def __init__(self, cxcn, cxcn_economic_research, market_study, year):
+    def __init__(self, cxcn, market_study, year):
         self.marketStudy = market_study
         self.baseYear = year
         self.db_cxcn = cxcn
-        self.db_cxcn_economic_research = cxcn_economic_research
+
 
 
 

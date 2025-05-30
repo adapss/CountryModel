@@ -9,13 +9,26 @@ from myCountryModelPackages.sqlTableRetrieve import *
 
 class CountryEconomicResearch:
     economic_data = None
-    connection = None
+    economic_data_vba = None
+   # connection = None
     year = None
 
-    query_economic_research = \
-        "SELECT [BaseYear],[Country],[Region],[Industry],[AutomationDegree],[IndustryFraction], [CountryWeight],[RangeDate] FROM [dbo].[CountryEconomicData]" \
-        " WHERE [SetName] = '" + "Economic Model" + "' " \
-        " AND [BaseYear]= '"  #+ baseYear + "'"
+    def get_Economic_Comparison(self):
+        economic_research_compare = None
+        self.economic_data_vba = self.get_VBA_Generated_EconomicTable()
+        economic_research_compare = self.economic_data.merge(self.economic_data_vba,on = ['BaseYear', 'Region','Country','Industry'], how='left')
+        economic_research_compare['Delta'] = abs(economic_research_compare['CountryWeight_x'] - economic_research_compare['CountryWeight_y'])
+        return economic_research_compare
+
+    def get_VBA_Generated_EconomicTable(self):
+        db_cxcn_economic_research = sql_MiraLite_connection().get_connection()
+        query_economic_research = \
+            f"SELECT [BaseYear],[Country],[Region],[Industry],[AutomationDegree],[IndustryFraction], [CountryWeight],[RangeDate] FROM [dbo].[CountryEconomicData]" \
+            f" WHERE [SetName] = '" + "Economic Model" + "' " \
+            f" AND [BaseYear]  = '{self.year}' "
+        self.economic_data_vba = pd.read_sql(query_economic_research, db_cxcn_economic_research)
+        self.economic_data_vba = self.economic_data_vba.drop(['RangeDate', 'AutomationDegree'], axis=1)
+        return self.economic_data_vba
 
     def get_EconomicTable(self):
         return self.economic_data
@@ -68,17 +81,13 @@ class CountryEconomicResearch:
     def get_CountryList(self):
         return self.economic_data['Country'].drop_duplicates()
 
-    def getConnection(self):
-        print(self.myConnection)
+    #def getConnection(self):
+     #   print(self.myConnection)
 
-    def __init__(self,cxcn,year):
-        self.connection = cxcn
+    def __init__(self,year):
+        # self.connection = cxcn
         self.year = year
-        # sqlQuery = f"{self.query_economic_research}{self.year}'"
-        # self.economic_data = pd.read_sql(sqlQuery, self.connection)
-        # self.economic_data = self.economic_data.rename(columns={'Total': 'Size'})
-        # self.economic_data = self.economic_data.drop(['RangeDate', 'AutomationDegree'], axis=1)
-        self.economic_data = EconomicResearchData(self.year).get_EconomicResearch()
+        self.economic_data = Economic_Research_Create(self.year).get_EconomicResearch()
 
 # Generates the GDP table used for the Economic Research.  It does require a List of Countries that are to be used in each region
 # The reason for the list of countries is so that we can exclude countries that are NOT used in the Country Model.
@@ -140,21 +149,15 @@ class GDP_X_COUNTRY:
 #           Automation Degree  = what degree of automation in that industry/country combination
 #       CountryModel_IndustryGDP
 #           IndustrialGDP_Fraction  =  GDP by country is a fractional multiplier of the total country GDP
-class EconomicResearchData:
+class Economic_Research_Create:
     year = None
     country_model_industry_gdp_fraction = None
     country_model_industry_automation_degree = None
     economic_research_data = None
     gdp_x_country = None
 
-
-    def get_Economic_Comparison(self):
-        economic_research_compare = None
-        db_cxcn_economic_research = sql_MiraLite_connection().get_connection()
-        economic_research = CountryEconomicResearch(db_cxcn_economic_research, self.year).get_EconomicTable()
-        economic_research_compare = economic_research.merge(self.economic_research_data,on = ['BaseYear', 'Region','Country','Industry'], how='left')
-        economic_research_compare['Delta'] = abs(economic_research_compare['CountryWeight_x'] - economic_research_compare['CountryWeight_y'])
-        return economic_research_compare
+    def get_gdp_x_country(self):
+        return self.gdp_x_country
 
     def get_EconomicResearch(self):
         return self.economic_research_data
@@ -193,3 +196,4 @@ class EconomicResearchData:
         self.economic_research_data = self.economic_research_data.merge(self.country_model_industry_automation_degree,on = ['BaseYear', 'Region','Country'], how='left')
         self.economic_research_data['CountryWeight'] = self.economic_research_data['GDP'] * self.economic_research_data['IndustrialGDP_Fraction'] * self.economic_research_data['IndustryFraction']* self.economic_research_data['AutomationDegree']
         self.economic_research_data = self.economic_research_data.drop(['GDP', 'IndustrialGDP_Fraction', 'AutomationDegree'], axis=1)
+
