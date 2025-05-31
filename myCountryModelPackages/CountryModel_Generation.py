@@ -66,7 +66,17 @@ class Country_Model_Publish:
 
         _market_shares = self.market_shares.rename(columns={'Industry': 'ParentCategory','Region':'Category'})
         _market_shares['GrandParentCategory']= _market_shares['GrandParentCategory']=0
-        _market_shares.to_sql('StudySizesCountryModel', self.db_engine_market_data, if_exists='replace', index=False)
+        #_market_shares['SizeKey']=_market_shares['BaseYear']+"~"+_market_shares['Study']+"~"+_market_shares['Company']+"~"+_market_shares['Segment']+"~"+_market_shares['Category']+"~"+_market_shares['ParentCategory']+"~"+_market_shares['GrandParentCategory']
+        _market_shares['SizeKey'] = (
+                _market_shares['BaseYear'].astype(str) + "~" +
+                _market_shares['Study'].astype(str) + "~" +
+                _market_shares['Company'].astype(str) + "~" +
+                _market_shares['Segment'].astype(str) + "~" +
+                _market_shares['Category'].astype(str) + "~" +
+                _market_shares['ParentCategory'].astype(str) + "~" +
+                _market_shares['GrandParentCategory'].astype(str)
+                )
+        _market_shares.to_sql('StudySizesCountryModel', self.db_engine_market_data, if_exists='append', index=False)
         return
 
     def publish_market_forecast(self):
@@ -82,7 +92,15 @@ class Country_Model_Publish:
             print(f"Error executing SQL statement: {e}")
 
         _market_forecast = self.market_forecast.rename(columns={'Industry': 'GrandParentCategory', 'Region': 'Category', 'Country': 'ParentCategory'})
-        _market_forecast.to_sql('StudyForecastsCountryModel', self.db_engine_market_data, if_exists='replace', index=False)
+        _market_forecast[('ForecastKey')] = (
+                _market_forecast['BaseYear'].astype(str) + "~" +
+                _market_forecast['Study'].astype(str) + "~" +
+                _market_forecast['Segment'].astype(str) + "~" +
+                _market_forecast['Category'].astype(str) + "~" +
+                _market_forecast['ParentCategory'].astype(str) + "~" +
+                _market_forecast['GrandParentCategory'].astype(str)
+                )
+        _market_forecast.to_sql('StudyForecastsCountryModel', self.db_engine_market_data, if_exists='append', index=False)
         return
 
     def __init__(self, db_engine, report, base_year, market_shares, market_forecast):

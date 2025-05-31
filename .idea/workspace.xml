@@ -4,7 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a7e4021d-836e-4dc6-b32e-6cca4ddc913b" name="Changes" comment="Version 3&#10;Validation Version fully tested.  Compares CountryModelGenerator with VBA Generated Country Models" />
+    <list default="true" id="a7e4021d-836e-4dc6-b32e-6cca4ddc913b" name="Changes" comment="Version 3&#10;Validation Version fully tested.  Compares CountryModelGenerator with VBA Generated Country Models">
+      <change afterPath="$PROJECT_DIR$/pages/BaseYear_Generate_All.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Home.py" beforeDir="false" afterPath="$PROJECT_DIR$/Home.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/myCountryModelPackages/CountryModel_Generation.py" beforeDir="false" afterPath="$PROJECT_DIR$/myCountryModelPackages/CountryModel_Generation.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/Verification.py" beforeDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -55,6 +61,10 @@
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\SSpada\ARC Advisory Group\Product Development - Documents\PythonProjects\CountryModel_StreamLit\myCountryModelPackages" />
       <recent name="C:\Users\SSpada\ARC Advisory Group\Product Development - Documents\PythonProjects\CountryModel_StreamLit" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\SSpada\ARC Advisory Group\Product Development - Documents\PythonProjects\CountryModel_StreamLit\pages" />
+      <recent name="C:\Users\SSpada\ARC Advisory Group\Product Development - Documents\PythonProjects\CountryModel_StreamLit\myCountryModelPackages" />
     </key>
   </component>
   <component name="RunManager">
@@ -166,7 +176,15 @@
       <option name="project" value="LOCAL" />
       <updated>1748630847617</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Version 3&#10;Validation Version fully tested.  Compares CountryModelGenerator with VBA Generated Country Models">
+      <option name="closed" value="true" />
+      <created>1748631014777</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1748631014777</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -189,16 +207,6 @@
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
-        <line-breakpoint suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/pages/Verification.py</url>
-          <line>34</line>
-          <option name="timeStamp" value="69" />
-        </line-breakpoint>
-        <line-breakpoint suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/pages/Verification.py</url>
-          <line>15</line>
-          <option name="timeStamp" value="70" />
-        </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/pages/Economic.py</url>
           <line>27</line>
