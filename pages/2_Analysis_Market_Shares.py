@@ -14,12 +14,10 @@ def warning_message():
     return
 
 if 'base_year' not in st.session_state:
-    st.session_state.base_year = None
     warning_message()
     st.stop()
 
 if 'share_country_model' not in st.session_state:
-    st.session_state.share_country_model = None
     warning_message()
     st.stop()
 else:

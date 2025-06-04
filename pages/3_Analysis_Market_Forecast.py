@@ -15,12 +15,10 @@ def warning_message():
     return
 from myCountryModelPackages.Economic_Research import *
 if 'base_year' not in st.session_state:
-    st.session_state.base_year = None
     warning_message()
     st.stop()
 
 if 'forecast_country_model' not in st.session_state:
-    st.session_state.forecast_country_model = None
     warning_message()
     st.stop()
 else:
