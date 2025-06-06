@@ -4,7 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a7e4021d-836e-4dc6-b32e-6cca4ddc913b" name="Changes" comment="Version 4&#10;Fully function App with Generation, Analysis, and Economic Editing">
+    <list default="true" id="a7e4021d-836e-4dc6-b32e-6cca4ddc913b" name="Changes" comment="Version 4.1&#10;Minor fix to error catching in the Analyze tabs&#10;Fully function App with Generation, Analysis, and Economic Editing">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Home.py" beforeDir="false" afterPath="$PROJECT_DIR$/Home.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MiraAdmin1(CountryModelTrace) (version 1).xlsm" beforeDir="false" afterPath="$PROJECT_DIR$/MiraAdmin1(CountryModelTrace) (version 1).xlsm" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/myCountryModelPackages/CountryModel_Generation.py" beforeDir="false" afterPath="$PROJECT_DIR$/myCountryModelPackages/CountryModel_Generation.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/myCountryModelPackages/sqlTableRetrieve.py" beforeDir="false" afterPath="$PROJECT_DIR$/myCountryModelPackages/sqlTableRetrieve.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/2_Analysis_Market_Shares.py" beforeDir="false" afterPath="$PROJECT_DIR$/pages/2_Analysis_Market_Shares.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/3_Analysis_Market_Forecast.py" beforeDir="false" afterPath="$PROJECT_DIR$/pages/3_Analysis_Market_Forecast.py" afterDir="false" />
     </list>
@@ -39,21 +44,21 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Python.CountryModel_Generation.executor&quot;: &quot;Debug&quot;,
-    &quot;Python.Home.executor&quot;: &quot;Debug&quot;,
-    &quot;Python.app.executor&quot;: &quot;Debug&quot;,
-    &quot;Python.sqlTableRetrieve.executor&quot;: &quot;Debug&quot;,
-    &quot;Python.streamlit.executor&quot;: &quot;Debug&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/SSpada/ARC Advisory Group/Product Development - Documents/PythonProjects/CountryModel_StreamLit/pages&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.externalDependencies&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Python.CountryModel_Generation.executor": "Debug",
+    "Python.Home.executor": "Debug",
+    "Python.app.executor": "Debug",
+    "Python.sqlTableRetrieve.executor": "Debug",
+    "Python.streamlit.executor": "Debug",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "main",
+    "ignore.virus.scanning.warn.message": "true",
+    "last_opened_file_path": "C:/Users/SSpada/ARC Advisory Group/Product Development - Documents/PythonProjects/CountryModel_StreamLit",
+    "settings.editor.selected.configurable": "preferences.externalDependencies"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\SSpada\ARC Advisory Group\Product Development - Documents\PythonProjects\CountryModel_StreamLit\pages" />
@@ -198,7 +203,15 @@
       <option name="project" value="LOCAL" />
       <updated>1749057403467</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="Version 4.1&#10;Minor fix to error catching in the Analyze tabs&#10;Fully function App with Generation, Analysis, and Economic Editing">
+      <option name="closed" value="true" />
+      <created>1749058070239</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1749058070239</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -218,25 +231,16 @@
     <MESSAGE value="Version 3&#10;Validation Version fully tested.  Compares CountryModelGenerator with VBA Generated Country Models" />
     <MESSAGE value="Version 3&#10;fixed major issue with publication of the tables into the database." />
     <MESSAGE value="Version 4&#10;Fully function App with Generation, Analysis, and Economic Editing" />
-    <option name="LAST_COMMIT_MESSAGE" value="Version 4&#10;Fully function App with Generation, Analysis, and Economic Editing" />
+    <MESSAGE value="Version 4.1&#10;Minor fix to error catching in the Analyze tabs&#10;Fully function App with Generation, Analysis, and Economic Editing" />
+    <option name="LAST_COMMIT_MESSAGE" value="Version 4.1&#10;Minor fix to error catching in the Analyze tabs&#10;Fully function App with Generation, Analysis, and Economic Editing" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/pages/5_Adjust_IndustryWeights.py</url>
-          <line>38</line>
+          <line>63</line>
           <option name="timeStamp" value="162" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/pages/5_Adjust_IndustryWeights.py</url>
-          <line>47</line>
-          <option name="timeStamp" value="163" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/pages/5_Adjust_IndustryWeights.py</url>
-          <line>46</line>
-          <option name="timeStamp" value="167" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/pages/8_Generate_All_BaseYear.py</url>
@@ -250,8 +254,43 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/pages/7_Adjust_Regional_Remainder.py</url>
-          <line>39</line>
-          <option name="timeStamp" value="219" />
+          <line>43</line>
+          <option name="timeStamp" value="244" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/pages/6_Adjust_GDP_Fractions.py</url>
+          <line>59</line>
+          <option name="timeStamp" value="258" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/myCountryModelPackages/Economic_Research.py</url>
+          <line>322</line>
+          <option name="timeStamp" value="259" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/myCountryModelPackages/Economic_Research.py</url>
+          <line>331</line>
+          <option name="timeStamp" value="260" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/myCountryModelPackages/Economic_Research.py</url>
+          <line>326</line>
+          <option name="timeStamp" value="261" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/myCountryModelPackages/Economic_Research.py</url>
+          <line>327</line>
+          <option name="timeStamp" value="262" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/myCountryModelPackages/CountryModel_Generation.py</url>
+          <line>67</line>
+          <option name="timeStamp" value="283" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/myCountryModelPackages/CountryModel_Generation.py</url>
+          <line>66</line>
+          <option name="timeStamp" value="284" />
         </line-breakpoint>
       </breakpoints>
       <default-breakpoints>

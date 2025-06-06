@@ -24,7 +24,7 @@ if 'forecast_country_model' not in st.session_state:
 else:
     country_model_forecast = st.session_state['forecast_country_model']
 
-if country_model_forecast.empty:
+if country_model_forecast is None:
     warning_message()
     st.stop()
 

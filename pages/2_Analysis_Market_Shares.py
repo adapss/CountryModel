@@ -23,7 +23,7 @@ if 'share_country_model' not in st.session_state:
 else:
     country_model_shares = st.session_state['share_country_model']
 
-if country_model_shares.empty:
+if country_model_shares is None:
     warning_message()
     st.stop()
 
