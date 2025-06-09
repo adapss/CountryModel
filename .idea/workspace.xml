@@ -4,11 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a7e4021d-836e-4dc6-b32e-6cca4ddc913b" name="Changes" comment="Version 4.2&#10;incorporated session state keys in all modules;  reduced the number of database retrievals in the Adjust_xxx pages&#10;Minor fix to error catching in the Analyze tabs&#10;Fully function App with Generation, Analysis, and Economic Editing">
+    <list default="true" id="a7e4021d-836e-4dc6-b32e-6cca4ddc913b" name="Changes" comment="Version 4.3&#10;Adjust_Automation degree : cleaned up flags to display table and added a remove duplicates function.&#10;incorporated session state keys in all modules;  reduced the number of database retrievals in the Adjust_xxx pages&#10;Minor fix to error catching in the Analyze tabs&#10;Fully function App with Generation, Analysis, and Economic Editing">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Home.py" beforeDir="false" afterPath="$PROJECT_DIR$/Home.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/myCountryModelPackages/sqlTableRetrieve.py" beforeDir="false" afterPath="$PROJECT_DIR$/myCountryModelPackages/sqlTableRetrieve.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/8_Generate_All_BaseYear.py" beforeDir="false" afterPath="$PROJECT_DIR$/pages/8_Generate_All_BaseYear.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/5_Adjust_IndustryWeights.py" beforeDir="false" afterPath="$PROJECT_DIR$/pages/5_Adjust_IndustryWeights.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -216,7 +214,23 @@
       <option name="project" value="LOCAL" />
       <updated>1749234234747</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="Version 4.3&#10;Adjust_Automation degree : cleaned up flags to display table and added a remove duplicates function.&#10;incorporated session state keys in all modules;  reduced the number of database retrievals in the Adjust_xxx pages&#10;Minor fix to error catching in the Analyze tabs&#10;Fully function App with Generation, Analysis, and Economic Editing">
+      <option name="closed" value="true" />
+      <created>1749499361425</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1749499361425</updated>
+    </task>
+    <task id="LOCAL-00015" summary="Version 4.3&#10;Adjust_Automation degree : cleaned up flags to display table and added a remove duplicates function.&#10;incorporated session state keys in all modules;  reduced the number of database retrievals in the Adjust_xxx pages&#10;Minor fix to error catching in the Analyze tabs&#10;Fully function App with Generation, Analysis, and Economic Editing">
+      <option name="closed" value="true" />
+      <created>1749499381655</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1749499381655</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -238,7 +252,8 @@
     <MESSAGE value="Version 4&#10;Fully function App with Generation, Analysis, and Economic Editing" />
     <MESSAGE value="Version 4.1&#10;Minor fix to error catching in the Analyze tabs&#10;Fully function App with Generation, Analysis, and Economic Editing" />
     <MESSAGE value="Version 4.2&#10;incorporated session state keys in all modules;  reduced the number of database retrievals in the Adjust_xxx pages&#10;Minor fix to error catching in the Analyze tabs&#10;Fully function App with Generation, Analysis, and Economic Editing" />
-    <option name="LAST_COMMIT_MESSAGE" value="Version 4.2&#10;incorporated session state keys in all modules;  reduced the number of database retrievals in the Adjust_xxx pages&#10;Minor fix to error catching in the Analyze tabs&#10;Fully function App with Generation, Analysis, and Economic Editing" />
+    <MESSAGE value="Version 4.3&#10;Adjust_Automation degree : cleaned up flags to display table and added a remove duplicates function.&#10;incorporated session state keys in all modules;  reduced the number of database retrievals in the Adjust_xxx pages&#10;Minor fix to error catching in the Analyze tabs&#10;Fully function App with Generation, Analysis, and Economic Editing" />
+    <option name="LAST_COMMIT_MESSAGE" value="Version 4.3&#10;Adjust_Automation degree : cleaned up flags to display table and added a remove duplicates function.&#10;incorporated session state keys in all modules;  reduced the number of database retrievals in the Adjust_xxx pages&#10;Minor fix to error catching in the Analyze tabs&#10;Fully function App with Generation, Analysis, and Economic Editing" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -275,7 +290,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/pages/5_Adjust_IndustryWeights.py</url>
-          <line>155</line>
+          <line>165</line>
           <option name="timeStamp" value="296" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
@@ -285,27 +300,22 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/pages/5_Adjust_IndustryWeights.py</url>
-          <line>87</line>
-          <option name="timeStamp" value="333" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/pages/5_Adjust_IndustryWeights.py</url>
-          <line>65</line>
+          <line>76</line>
           <option name="timeStamp" value="334" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/pages/5_Adjust_IndustryWeights.py</url>
-          <line>124</line>
+          <line>135</line>
           <option name="timeStamp" value="335" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/pages/5_Adjust_IndustryWeights.py</url>
-          <line>63</line>
+          <line>74</line>
           <option name="timeStamp" value="336" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/pages/5_Adjust_IndustryWeights.py</url>
-          <line>64</line>
+          <line>75</line>
           <option name="timeStamp" value="337" />
         </line-breakpoint>
       </breakpoints>

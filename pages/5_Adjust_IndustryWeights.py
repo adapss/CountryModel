@@ -17,44 +17,55 @@ st.write( "")
 st.write("The Economic Research table can be modified and is pushed back to the data base.")
 
 @st.cache_data
-def get_base_year_list():
+def __get_base_year_list():
     return EconomicResearchFactorsRanges().get_industry_weights_research_years()
-base_year_list = list(get_base_year_list())
+base_year_list = list(__get_base_year_list())
 
-if f"{key_prefix}duplicate_value_flag" not in session_state:
-    st.session_state[f"{key_prefix}duplicate_value_flag"] = False
-if f"{key_prefix}base_year_select_value" not in session_state:
-    st.session_state[f"{key_prefix}base_year_select_value"] = st.session_state.base_year
-if f"{key_prefix}region_select_value" not in session_state:
-    all_regions = list(EconomicResearchFactorsRanges().get_industry_weights_research_regions(st.session_state.base_year))
-    st.session_state[f"{key_prefix}region_list"] = all_regions
-    st.session_state[f"{key_prefix}region_select_value" ] = max(all_regions)
-if f"{key_prefix}country_select_value" not in session_state:
-    country_default = max(list(EconomicResearchFactorsRanges().get_countries_from_industry_weights_research(st.session_state[f"{key_prefix}base_year_select_value"],st.session_state[f"{key_prefix}region_select_value"])))
-    st.session_state[f"{key_prefix}country_select_value"] = country_default
+@st.cache_data
+def __get_region_list(year):
+    return list(EconomicResearchFactorsRanges().get_industry_weights_research_regions(st.session_state.base_year))
 
-# Initialize session state for previous selections with current values if not set
-if f"{key_prefix}prev_base_year" not in st.session_state:
-    st.session_state[f"{key_prefix}prev_base_year"] = st.session_state[f"{key_prefix}base_year_select_value"]
-if f"{key_prefix}prev_region" not in st.session_state:
-    st.session_state[f"{key_prefix}prev_region"] = st.session_state[f"{key_prefix}region_select_value"]
-if f"{key_prefix}prev_country" not in st.session_state:
-    st.session_state[f"{key_prefix}prev_country"] = st.session_state[f"{key_prefix}country_select_value"]
-if 'automation_degree_table' not in session_state:
-    st.session_state.automation_degree_table = Economic_Research_Factors(st.session_state[f"{key_prefix}base_year_select_value"]).get_automation_degree_country(st.session_state[f"{key_prefix}country_select_value"])
+@st.cache_data
+def __get_country_list (year, region):
+    return list(EconomicResearchFactorsRanges().get_countries_from_industry_weights_research(st.session_state[f"{key_prefix}base_year_select_value"],st.session_state[f"{key_prefix}region_select_value"]))
 
-if 'selection_committed_weights' not in st.session_state:
-    st.session_state.selection_committed_weights = False
+with (st.spinner("Initializing page selections")):
+    if f"{key_prefix}duplicate_value_flag" not in session_state:
+        st.session_state[f"{key_prefix}duplicate_value_flag"] = False
+    if f"{key_prefix}base_year_select_value" not in session_state:
+        st.session_state[f"{key_prefix}base_year_select_value"] = st.session_state.base_year
+    if f"{key_prefix}region_select_value" not in session_state:
+        all_regions = __get_region_list(st.session_state.base_year)
+        #list(EconomicResearchFactorsRanges().get_industry_weights_research_regions(st.session_state.base_year))
+        st.session_state[f"{key_prefix}region_list"] = all_regions
+        st.session_state[f"{key_prefix}region_select_value" ] = max(all_regions)
+    if f"{key_prefix}country_select_value" not in session_state:
+        country_default =  max(__get_country_list(st.session_state[f"{key_prefix}base_year_select_value"],st.session_state[f"{key_prefix}region_select_value"]))
+        #max(list(EconomicResearchFactorsRanges().get_countries_from_industry_weights_research(st.session_state[f"{key_prefix}base_year_select_value"],st.session_state[f"{key_prefix}region_select_value"])))
+        st.session_state[f"{key_prefix}country_select_value"] = country_default
 
-if 'show_research_weights' not in st.session_state:
-    st.session_state.show_research_weights = False
+    # Initialize session state for previous selections with current values if not set
+    if f"{key_prefix}prev_base_year" not in st.session_state:
+        st.session_state[f"{key_prefix}prev_base_year"] = st.session_state[f"{key_prefix}base_year_select_value"]
+    if f"{key_prefix}prev_region" not in st.session_state:
+        st.session_state[f"{key_prefix}prev_region"] = st.session_state[f"{key_prefix}region_select_value"]
+    if f"{key_prefix}prev_country" not in st.session_state:
+        st.session_state[f"{key_prefix}prev_country"] = st.session_state[f"{key_prefix}country_select_value"]
+    if 'automation_degree_table' not in session_state:
+        st.session_state.automation_degree_table = Economic_Research_Factors(st.session_state[f"{key_prefix}base_year_select_value"]).get_automation_degree_country(st.session_state[f"{key_prefix}country_select_value"])
 
-if 'discard_changes' not in st.session_state:
-    st.session_state.discard_changes = False
-    st.session_state.show_research_weights = False
+    if 'selection_committed_weights' not in st.session_state:
+        st.session_state.selection_committed_weights = False
 
-if 'save_changes' not in st.session_state:
-    st.session_state.save_changes = False
+    if 'show_research_weights' not in st.session_state:
+        st.session_state.show_research_weights = False
+
+    if 'discard_changes' not in st.session_state:
+        st.session_state.discard_changes = False
+        st.session_state.show_research_weights = False
+
+    if 'save_changes' not in st.session_state:
+        st.session_state.save_changes = False
 
 def discard_changes_button():
     st.session_state.discard_changes = not st.session_state.discard_changes
@@ -123,8 +134,6 @@ def display_economic_research():
     with clean_duplicates:
         if st.session_state[f"{key_prefix}duplicate_value_flag"]:
             st.button('Clean Duplicates', on_click=clean_duplicates_button)
-
-
 # columns
 base_year_selection_col, region_selection_col, country_selection_col, col4 = st.columns(4)
 status =st.session_state.show_research_weights
@@ -140,7 +149,8 @@ if not commit_status:
         st.error("No regions available for the selected base year.")
         st.stop()
     # Get country list based on base year and region
-    country_list = list(EconomicResearchFactorsRanges().get_countries_from_industry_weights_research(st.session_state[f"{key_prefix}base_year_select_value"], st.session_state[f"{key_prefix}region_select_value"]))
+    country_list =  __get_country_list(st.session_state[f"{key_prefix}base_year_select_value"],st.session_state[f"{key_prefix}region_select_value"])
+    #list(EconomicResearchFactorsRanges().get_countries_from_industry_weights_research(st.session_state[f"{key_prefix}base_year_select_value"], st.session_state[f"{key_prefix}region_select_value"]))
     if not country_list:
         st.error("No countries available for the selected region.")
         st.stop()
@@ -157,10 +167,9 @@ if not commit_status:
        #     st.session_state[f"{key_prefix}region_list"] = list(EconomicResearchFactorsRanges().get_industry_weights_research_regions(st.session_state[f"{key_prefix}base_year_select_value"]))
         matching_index =  st.session_state[f"{key_prefix}region_list"].index(st.session_state[f"{key_prefix}region_select_value"])
         st.selectbox('Region', st.session_state[f"{key_prefix}region_list"], index = matching_index, key=f"{key_prefix}region_select_value")
-    with country_selection_col:
-        country_list = \
-            list(EconomicResearchFactorsRanges().get_countries_from_industry_weights_research(st.session_state[f"{key_prefix}base_year_select_value"],st.session_state[f"{key_prefix}region_select_value"]))
-
+    with (country_selection_col):
+        country_list = __get_country_list(st.session_state[f"{key_prefix}base_year_select_value"],st.session_state[f"{key_prefix}region_select_value"])
+        #list(EconomicResearchFactorsRanges().get_countries_from_industry_weights_research(st.session_state[f"{key_prefix}base_year_select_value"],st.session_state[f"{key_prefix}region_select_value"]))
         if not st.session_state[f"{key_prefix}country_select_value"] in country_list:
             st.session_state[f"{key_prefix}country_select_value"] = country_list[0]
             debug_country = st.session_state[f"{key_prefix}country_select_value"]
