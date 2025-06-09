@@ -1,6 +1,5 @@
-import streamlit as st
 from myCountryModelPackages.sqlTableRetrieve import *
-from myCountryModelPackages.MarketReportRetrieval import *
+from myCountryModelPackages.sqlTableRetrieve import initialize_global_session_states
 
 st.set_page_config(layout="wide")
 
@@ -22,23 +21,24 @@ def display_page_info():
         This effectively allows you to reduce the GDP of a country if you think the GDP is not representative of the Automation in that country"
     st.markdown("<h3 style='font-size:16pt;'>" + text_message + "</h3>", unsafe_allow_html=True)
 
-if 'initialized' not in st.session_state:
-    st.session_state.initialized = False
+if 'global_session_states_initialized' not in st.session_state:
+    st.session_state.global_session_states_initialized = False
 
 if __name__ == '__main__':
     display_page_info()
-    if not st.session_state.initialized:
-        with st.spinner("Initializing..."):
-            market_report_db_cxcn = DatabaseConnections().get_MiraLite_Connection()
-            if 'db_cxcn_market_research' not in st.session_state:
-                st.session_state.db_cxcn_market_research = market_report_db_cxcn
-            if 'db_engine_publication' not in st.session_state:
-                _db_engine = DatabaseConnections().get_MiraLite_engine()
-                st.session_state.db_engine_publication = _db_engine
-            if 'base_year' not in st.session_state:
-                base_year_list = MarketReports(st.session_state.db_cxcn_market_research).get_base_year_list().sort_values(ascending=False)
-                st.session_state.base_year = base_year_list.max()
-
+    if not st.session_state.global_session_states_initialized:
+        with st.spinner("Initializing global variables used across pages .."):
+            initialize_global_session_states()
+#            market_report_db_cxcn = DatabaseConnections().get_MiraLite_Connection()
+#            if 'db_cxcn_market_research' not in st.session_state:
+#                st.session_state.db_cxcn_market_research = market_report_db_cxcn
+#            if 'db_engine_publication' not in st.session_state:
+#                _db_engine = DatabaseConnections().get_MiraLite_engine()
+#                st.session_state.db_engine_publication = _db_engine
+#            if 'base_year' not in st.session_state:
+#                base_year_list = MarketReports(st.session_state.db_cxcn_market_research).get_base_year_list().sort_values(ascending=False)
+#                st.session_state.base_year = base_year_list.max()
+#
 
 
 

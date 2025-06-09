@@ -38,14 +38,15 @@ def click_button():
      st.session_state.button = not st.session_state.button
 
  # Display the Report List
-with col3:
-     # st.button('Create Country Model') #st.caption("Press the button to generate Country Model tables")
-     st.button('Start Model Generation for Selected Base Year', on_click=click_button)
+
 with col1:
      # st.write('Market Report Selection:')
      #selected_base_year = st.selectbox(f'Select Base Year', base_year_list)
      selected_base_year = st.selectbox('', base_year_list)
      st.session_state['base_year'] = selected_base_year
+with col3:
+    # st.button('Create Country Model') #st.caption("Press the button to generate Country Model tables")
+    st.button('Start Model Generation for Selected Base Year', on_click=click_button)
 
  # Add buttons for user actions
 col1, col2,col3 = st.columns(3)
