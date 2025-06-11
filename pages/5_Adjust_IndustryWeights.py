@@ -8,13 +8,17 @@ key_prefix = "Industry_Weights_"
 
 
 st.set_page_config(layout="wide")
-st.title("Economic Research - Industry Weights and Automation Degree by Country")
-st.write( "This page is intended to create a sandbox where you can modify the Economic Research table.  \
+st.title("Economic Research")
+text_caption = "Industry Weights and Automation Degree by Country"
+st.markdown("<h3 style='font-size:24pt;'>" + text_caption + "</h3>", unsafe_allow_html=True)
+text_caption = "This page is intended to create a sandbox where you can modify the Economic Research table.  \
     You can modify the weightings for each country industry.  Then run the country model, analyze results \
     before publishing to the database.  Once you are satisfied, then the Economic Research will be published and the Country Model \
-    for that report will be published as well.")
+    for that report will be published as well."
+st.markdown("<h3 style='font-size:16pt;'>" + text_caption + "</h3>", unsafe_allow_html=True)
 st.write( "")
-st.write("The Economic Research table can be modified and is pushed back to the data base.")
+text_caption = "The Economic Research table can be modified and is pushed back to the data base."
+st.markdown("<h3 style='font-size:16pt;'>" + text_caption + "</h3>", unsafe_allow_html=True)
 
 @st.cache_data
 def __get_base_year_list():

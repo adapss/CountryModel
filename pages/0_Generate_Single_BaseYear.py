@@ -87,31 +87,59 @@ with generate_report_col:
 
 col1, col2,col3 = st.columns(3)
 
-with col1:
+with (col1):
     if st.session_state[f"{key_prefix}generate_model_flag"]:
-       with st.spinner("Generating Country Models and Publishing to the database..."):
-            st.session_state[f"{key_prefix}generate_model_flag"] = False
-            country_model = Country_Model_Generation(st.session_state.db_cxcn_market_research, st.session_state[f"{key_prefix}market_report_select_value"], st.session_state[f"{key_prefix}base_year_select_value"])
-            country_share_model = country_model.generate_market_shares()
-            st.session_state['share_country_model'] =country_share_model
+#with st.spinner("Generating Country Models and Publishing to the database..."):
+       st.session_state[f"{key_prefix}generate_model_flag"] = False
+       country_model = \
+           Country_Model_Generation(st.session_state.db_cxcn_market_research,
+                                    st.session_state[f"{key_prefix}market_report_select_value"],
+                                    st.session_state[f"{key_prefix}base_year_select_value"]
+                                    )
+       valid_report_message = country_model.validate_world_wide_report()
+       if  valid_report_message == "":
+           with st.spinner("Generating Country Models and Publishing to the database..."):
+               country_share_model = country_model.generate_market_shares()
+               st.session_state['share_country_model'] =country_share_model
 
-            country_forecast_model = country_model.generate_forecast()
-            st.session_state['forecast_country_model'] = country_forecast_model
-            publish_model = Country_Model_Publish(st.session_state.db_engine_publication, st.session_state[f"{key_prefix}market_report_select_value"], st.session_state[f"{key_prefix}base_year_select_value"], country_share_model, country_forecast_model)
-            #sql_market_data = MarketReportData(DatabaseConnections().get_MiraLite_Connection(), selected_report, st.session_state[f"{key_prefix}selected_base_year"])
-            #sql_country_model_size = sql_market_data.get_country_model_size()
-            #sql_country_model_forecast = sql_market_data.get_country_model_forecast()
-            #country_model_comparison = CountryModelComparisonTest(country_share_model, sql_country_model_size, country_forecast_model, sql_country_model_forecast)
-            with col1:
-                st.write("Market Shares")
-                st.write(country_share_model)
-                st.spinner("Publishing Country Market Share Model to the Database")
-                publish_model.publish_market_shares()
+               country_forecast_model = country_model.generate_forecast()
+               st.session_state['forecast_country_model'] = country_forecast_model
+               publish_model = \
+                   Country_Model_Publish(st.session_state.db_engine_publication,
+                                         st.session_state[f"{key_prefix}market_report_select_value"],
+                                         st.session_state[f"{key_prefix}base_year_select_value"],
+                                         country_share_model, country_forecast_model)
+       else:
+           #st.write(valid_report_message)
+           # Create a single column layout
+           warning_col = st.columns(1)[0]  # Access the first (and only) column
+           with col2:
+               CountryModelRemove(st.session_state.db_engine_publication,
+                                 st.session_state[f"{key_prefix}market_report_select_value"],
+                                 st.session_state[f"{key_prefix}base_year_select_value"]).delete_country_model()
+               warning_message = 'Unable to Generate Country Model due to the following reasons: \n' + valid_report_message
+               st.markdown(
+                   "<div style='color: #856404; background-color: #fff3cd; padding: 10px; border-radius: 5px; font-size: 20px; white-space: pre-wrap;'>" +
+                   warning_message +
+                   "</div>",
+                   unsafe_allow_html=True
+               )
+               st.stop()
 
-            with col2:
-                st.write("Market Forecast")
-                st.write(country_forecast_model)
-                st.spinner("Publishing Country Model Forecast to the Database")
-                publish_model.publish_market_forecast()
+#sql_market_data = MarketReportData(DatabaseConnections().get_MiraLite_Connection(), selected_report, st.session_state[f"{key_prefix}selected_base_year"])
+       #sql_country_model_size = sql_market_data.get_country_model_size()
+       #sql_country_model_forecast = sql_market_data.get_country_model_forecast()
+       #country_model_comparison = CountryModelComparisonTest(country_share_model, sql_country_model_size, country_forecast_model, sql_country_model_forecast)
+       with col1:
+           st.write("Market Shares")
+           st.write(country_share_model)
+           st.spinner("Publishing Country Market Share Model to the Database")
+           publish_model.publish_market_shares()
+
+       with col2:
+           st.write("Market Forecast")
+           st.write(country_forecast_model)
+           st.spinner("Publishing Country Model Forecast to the Database")
+           publish_model.publish_market_forecast()
 
 

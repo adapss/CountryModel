@@ -4,7 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a7e4021d-836e-4dc6-b32e-6cca4ddc913b" name="Changes" comment="Version 4.4&#10;Added more caching to improve response.&#10;Adjust_Automation degree : cleaned up flags to display table and added a remove duplicates function.&#10;incorporated session state keys in all modules;  reduced the number of database retrievals in the Adjust_xxx pages&#10;Minor fix to error catching in the Analyze tabs&#10;Fully function App with Generation, Analysis, and Economic Editing" />
+    <list default="true" id="a7e4021d-836e-4dc6-b32e-6cca4ddc913b" name="Changes" comment="Version 4.4&#10;Added more caching to improve response.&#10;Adjust_Automation degree : cleaned up flags to display table and added a remove duplicates function.&#10;incorporated session state keys in all modules;  reduced the number of database retrievals in the Adjust_xxx pages&#10;Minor fix to error catching in the Analyze tabs&#10;Fully function App with Generation, Analysis, and Economic Editing">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/myCountryModelPackages/CountryModel_Generation.py" beforeDir="false" afterPath="$PROJECT_DIR$/myCountryModelPackages/CountryModel_Generation.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/0_Generate_Single_BaseYear.py" beforeDir="false" afterPath="$PROJECT_DIR$/pages/0_Generate_Single_BaseYear.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/5_Adjust_IndustryWeights.py" beforeDir="false" afterPath="$PROJECT_DIR$/pages/5_Adjust_IndustryWeights.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/8_Generate_All_BaseYear.py" beforeDir="false" afterPath="$PROJECT_DIR$/pages/8_Generate_All_BaseYear.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -235,7 +241,15 @@
       <option name="project" value="LOCAL" />
       <updated>1749503497806</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="Version 4.4&#10;Added more caching to improve response.&#10;Adjust_Automation degree : cleaned up flags to display table and added a remove duplicates function.&#10;incorporated session state keys in all modules;  reduced the number of database retrievals in the Adjust_xxx pages&#10;Minor fix to error catching in the Analyze tabs&#10;Fully function App with Generation, Analysis, and Economic Editing">
+      <option name="closed" value="true" />
+      <created>1749503752805</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1749503752805</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -296,7 +310,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/pages/5_Adjust_IndustryWeights.py</url>
-          <line>165</line>
+          <line>169</line>
           <option name="timeStamp" value="296" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
@@ -306,23 +320,28 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/pages/5_Adjust_IndustryWeights.py</url>
-          <line>76</line>
+          <line>80</line>
           <option name="timeStamp" value="334" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/pages/5_Adjust_IndustryWeights.py</url>
-          <line>135</line>
+          <line>139</line>
           <option name="timeStamp" value="335" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/pages/5_Adjust_IndustryWeights.py</url>
-          <line>74</line>
+          <line>78</line>
           <option name="timeStamp" value="336" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/pages/5_Adjust_IndustryWeights.py</url>
-          <line>75</line>
+          <line>79</line>
           <option name="timeStamp" value="337" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/myCountryModelPackages/MarketReportRetrieval.py</url>
+          <line>53</line>
+          <option name="timeStamp" value="341" />
         </line-breakpoint>
       </breakpoints>
       <default-breakpoints>

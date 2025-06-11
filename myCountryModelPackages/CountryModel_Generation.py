@@ -1,15 +1,15 @@
-from email.policy import default
-from itertools import groupby
-import sys
-import pyodbc
-import pandas as pd
-import numpy as np
-import warnings
-from sqlalchemy import create_engine
-from sqlalchemy import text
+#from email.policy import default
+#import sys
+#import pyodbc
+#import pandas as pd
+#import numpy as np
+#import warnings
+#from sqlalchemy import create_engine
+#from sqlalchemy import text
+#from sqlalchemy.util import to_list
 
-from myCountryModelPackages.sqlTableRetrieve import *
-from myCountryModelPackages.MarketReportRetrieval import *
+#from myCountryModelPackages.sqlTableRetrieve import *
+#from myCountryModelPackages.MarketReportRetrieval import *
 from myCountryModelPackages.CountryModel_Forecast import *
 from myCountryModelPackages.CountryModel_MarketSize import *
 from myCountryModelPackages.Economic_Research import *
@@ -45,6 +45,39 @@ class CountryModelComparisonTest:
 #       Market Share dataframe
 #       Forecast dataframe
 # Then you have to call the "publish" methods.
+
+_sql_delete_market_share_statement = """
+        DELETE FROM [dbo].[StudySizesCountryModel]
+        WHERE [Study] = :study AND [BaseYear] = :base_year
+        """
+_sql_delete_market_forecast_statement = """
+        DELETE FROM [dbo].[StudyForecastsCountryModel]
+        WHERE ([Study] = :study) AND ([BaseYear] = :base_year)
+        """
+
+class CountryModelRemove:
+
+    def delete_country_model(self):
+        try:
+            with self.db_engine_market_data.connect() as connection:
+                connection.execute( text(_sql_delete_market_share_statement), {"study": self.market_report, "base_year": self.base_year})
+                connection.commit()
+        except Exception as e:
+            print(f"Error executing SQL statement: {e}")
+
+        try:
+            with self.db_engine_market_data.connect() as connection:
+                connection.execute(text(_sql_delete_market_forecast_statement), {"study": self.market_report, "base_year": self.base_year})
+                connection.commit()
+        except Exception as e:
+            print(f"Error executing SQL statement: {e}")
+        return
+    def __init__(self, db_engine, report, base_year):
+        self.market_report = report
+        self.base_year = base_year
+        self.db_engine_market_data = db_engine
+
+
 class Country_Model_Publish:
     db_engine_market_data = None
     market_report = None
@@ -53,13 +86,9 @@ class Country_Model_Publish:
     market_forecast = None
 
     def publish_market_shares(self):
-        _sql_statement = """
-            DELETE FROM [dbo].[StudySizesCountryModel]
-            WHERE [Study] = :study AND [BaseYear] = :base_year
-            """
         try:
             with self.db_engine_market_data.connect() as connection:
-                result = connection.execute( text(_sql_statement), {"study": self.market_report, "base_year": self.base_year})
+                connection.execute( text(_sql_delete_market_share_statement), {"study": self.market_report, "base_year": self.base_year})
                 connection.commit()
         except Exception as e:
             print(f"Error executing SQL statement: {e}")
@@ -82,13 +111,9 @@ class Country_Model_Publish:
         return
 
     def publish_market_forecast(self):
-        sql_statement = """
-            DELETE FROM [dbo].[StudyForecastsCountryModel]
-            WHERE ([Study] = :study) AND ([BaseYear] = :base_year)
-            """
         try:
             with self.db_engine_market_data.connect() as connection:
-                result = connection.execute(text(sql_statement), {"study": self.market_report, "base_year": self.base_year})
+                connection.execute(text(_sql_delete_market_forecast_statement), {"study": self.market_report, "base_year": self.base_year})
                 connection.commit()
         except Exception as e:
             print(f"Error executing SQL statement: {e}")
@@ -115,11 +140,38 @@ class Country_Model_Publish:
 
 
 class Country_Model_Generation:
-    marketStudy = "AC Drives Low Voltage"
+    marketStudy:str = "AC Drives Low Voltage"
     baseYear:str = "2023"
     dump = False
     db_cxcn = None
-    # db_cxcn_economic_research = None
+
+    # this method determines if a worldwide report can be used to generate a country model
+    # Couple of checks:
+    #   - determine if CountryKnown table has been loaded
+    #   - worldwide report has World Region segmentation with all region {Asia, EMEA, LA, and NA}
+    #   - worldwide report has an Industry segmentation
+    # return value will provide a detailed on what elements were missing.
+    def validate_world_wide_report(self):
+        validation_message = ""
+        queryCountryKnown = f"SELECT [Study], [BaseYear],[Country],[Industry],[Company], [Size] FROM [dbo].[CountrySizes]" \
+                            f" WHERE   (([Study] = '{self.marketStudy}') AND ([BaseYear] =  {self.baseYear}))" \
+                            f" ORDER BY [Study], [BaseYear], [Company], [Country], [Industry]"
+        country_known_size = pd.read_sql(queryCountryKnown, self.db_cxcn)
+        if country_known_size.empty:
+            validation_message += "- Country Known Table Not Available \n\n"
+        market_forecast = MarketReportData(self.db_cxcn, self.marketStudy, self.baseYear).get_worldwide_forecast()
+        market_forecast = market_forecast.loc[market_forecast['Year'] == int(self.baseYear)]
+        region_list = market_forecast.loc[market_forecast['Segment'] == "World Region", 'Category'].tolist()
+        required_regions = ['North America', 'EMEA', 'Asia', 'Latin America']
+        # Check if all required values are present in the column
+        all_regions_present = set(required_regions).issubset(set(region_list))
+        if not all_regions_present:
+            validation_message +=  "- Region List Does Not Include all Regions \n\n "
+        industry_list = market_forecast.loc[market_forecast['Segment'] == "Industry",'Category'].to_list()
+        if not industry_list:
+            validation_message = "- Industry segmentation not included in the market report.\n\n"
+
+        return validation_message
 
     def generate_market_shares(self):
         # Economic Tables from Analyst Research
@@ -160,13 +212,13 @@ class Country_Model_Generation:
 
         #'Step-4c
         #    '** Make list of known countries, counting the number of industries known.
-        #   '**   If industry details are known, country total will be in "Other In_kRxI = gCompanyCountryKnown.loc[(gCompanyCountryKnown['Industry']=="Other Industries"),['Region','Country','Company','Industry','Size']]
+        #   '**   If industry details are known, country total will be in Other In_kRxI = gCompanyCountryKnown.loc[(gCompanyCountryKnown['Industry']=="Other Industries"),['Region','Country','Company','Industry','Size']]
 
         #     indRevForCountry = gProductByCompanyByIndustryByYr(indKey) * gCC(ciKey)
         # Build a dataframe identified as kCxIp  === known Country X Industry (%)
         kCxIp = CountryKnown_Size_Data.get_kCxIp(company_by_industry_base_year, gCC, economic_research)
         # Step-4d
-        #    - Roll up CountryByIndustry knowns to RegionByIndustry,
+        #    - Roll up CountryByIndustry known to RegionByIndustry,
         #    - computing industry values when only "Other Industries" is known
         # Build a "kRxI"  == known Region by Industry table. for each company
         #     kRxI  == [Company] [region] [Industry] [Size]
@@ -176,8 +228,8 @@ class Country_Model_Generation:
         #   - Second pass if a report has identified specific industries in the Country Known table then the algorithm will build the table with those.
         kRxI = CountryKnown_Size_Data.get_kRxI( kCxIp)
 
-        # 'Step-5
-        #    '** Assemble Regional Industry values computed with knowns
+        # Step-5
+        #    ** Assemble Regional Industry values computed with known
         country_model_market_share = ukRxI.merge(kRxI, on=['Company', 'Region','Industry'], how='left')
         country_model_market_share['Size_y']  = country_model_market_share['Size_y'] .fillna(0)
         country_model_market_share['Size'] = (country_model_market_share  ['Size_x'] + country_model_market_share ['Size_y'])
@@ -224,8 +276,8 @@ class Country_Model_Generation:
         _ukCxI = country_known_forecast.get_ukCxI(_ukRxI_country_model_forecast , _ukCpRxI_country_model_forecast)
 
         # CMF-Step-6
-        #    '** Compute Country by Industry for country known values
-        #    '**   Compute an industry distribution to use when only the country total is known
+        #    ** Compute Country by Industry for country known values
+        #    **   Compute an industry distribution to use when only the country total is known
         _kCxIp = country_known_forecast.get_kCxIp(market_ww_forecast_x_industry, gCC)
 
         # CMF-Step-7

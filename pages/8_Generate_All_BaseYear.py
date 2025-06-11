@@ -61,12 +61,20 @@ with col1:
             base_year_reports = base_year_reports.drop(['BaseYear'],axis=1)
             for report in base_year_reports['Study']:
                 country_model = Country_Model_Generation(market_report_db_cxcn, report, selected_base_year)
-                country_share_model = country_model.generate_market_shares()
-                country_forecast_model = country_model.generate_forecast()
-                publish_model = Country_Model_Publish(publication_db_engine, report, selected_base_year,
-                country_share_model, country_forecast_model)
-                publish_model.publish_market_shares()
-                publish_model.publish_market_forecast()
-                st.write(report)
+                valid_report_message = country_model.validate_world_wide_report()
+                if valid_report_message == "":
+                    country_share_model = country_model.generate_market_shares()
+                    country_forecast_model = country_model.generate_forecast()
+                    publish_model = Country_Model_Publish(publication_db_engine, report, selected_base_year,
+                    country_share_model, country_forecast_model)
+                    publish_model.publish_market_shares()
+                    publish_model.publish_market_forecast()
+                    st.write(report)
+                else:
+                    st.warning(report + " Country Model not generated due to the following reasons: \n" + valid_report_message )
+                    CountryModelRemove(
+                        st.session_state.db_engine_publication,
+                        report,
+                        selected_base_year).delete_country_model()
 
 
