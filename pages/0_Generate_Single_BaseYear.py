@@ -79,7 +79,7 @@ with market_report_col:
     filtered_df = report_list[report_list['BaseYear'] == st.session_state[f"{key_prefix}base_year_select_value"]]
     filtered_df = filtered_df.drop(['BaseYear'], axis=1)
     st.selectbox('Select Report', filtered_df['Study'].tolist() ,index = 0, key = f"{key_prefix}market_report_select_value")
-    st.session_state['market_report'] = st.session_state[f"{key_prefix}base_year_select_value"]
+    st.session_state['market_report'] = st.session_state[f"{key_prefix}market_report_select_value"]
 with generate_report_col:
     st.button('Start Model Generation for Selected Report',
         on_click=click_button,

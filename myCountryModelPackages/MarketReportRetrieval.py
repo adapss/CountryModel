@@ -3,6 +3,9 @@ import warnings
 import pyodbc
 import pandas as pd
 import numpy as np
+import time
+import sqlalchemy
+import streamlit as st
 
 warnings.filterwarnings('ignore')
 
@@ -34,6 +37,24 @@ class MarketReports:
             f"AND ([Category] LIKE '{categoryName}')" \
             f"ORDER BY [BaseYear]"
         self.market_reports = pd.read_sql(self.sql_query_market_size, self.connection)
+        try:
+            start_time = time.time()
+            df = pd.read_sql(self.sql_query_market_size, self.connection)
+            elapsed_time = time.time() - start_time
+            # st.write("Query executed successfully in {:.2f} seconds.".format(elapsed_time))
+            status = "success"
+        except sqlalchemy.exc.OperationalError as e:
+            st.write("Operational error:", e)
+            status = "timeout or busy"
+        except sqlalchemy.exc.ProgrammingError as e:
+            st.write("Programming error:", e)
+            status = "syntax or logic error"
+        except Exception as e:
+            st.write("Unexpected error:", e)
+            status = "unknown error"
+
+        print("Query status:", status)
+
         self.market_reports = self.market_reports[['BaseYear', 'Study']].drop_duplicates()
         self.base_year_list = self.market_reports['BaseYear'].drop_duplicates()
 

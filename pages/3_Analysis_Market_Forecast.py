@@ -29,7 +29,7 @@ if country_model_forecast is None:
     st.stop()
 
 st.title("Country Model Forecast Analysis " )
-title_caption = st.session_state['market_report'] + " - "+ str(st.session_state['base_year'])
+title_caption = str(st.session_state['market_report']) + " - "+ str(st.session_state['base_year'])
 st.markdown("<h3 style='font-size:24pt;'>" + title_caption + "</h3>", unsafe_allow_html=True)
 
 if 'button' not in st.session_state:
