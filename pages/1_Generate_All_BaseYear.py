@@ -1,13 +1,8 @@
-
 import streamlit as st
-from myCountryModelPackages.CountryModelEvaluationTools import *
-from myCountryModelPackages.MarketReportRetrieval import *
-# from pages.Economic import db_cxcn
-from myCountryModelPackages.CountryModel_Generation import *
-from myCountryModelPackages.MarketReportRetrieval import MarketReports
-from myCountryModelPackages.sqlTableRetrieve import *
-from myCountryModelPackages.MarketReportRetrieval import *
-from myCountryModelPackages.CountryModelEvaluationTools import *
+from app.myCountryModelPackages.CountryModel_Generation import *
+from app.myCountryModelPackages.MarketReportRetrieval import MarketReports
+from app.myCountryModelPackages.sqlTableRetrieve import *
+
 
 st.title("Country Model Generator for All Reports in a Base Year")
 st.write("You are updating all the reports from the selected base year. Generate a Country Model from an previously published World Wide market Report.")
@@ -28,8 +23,8 @@ st.session_state['db_cxcn_market_research'] = market_report_db_cxcn
 market_reports = MarketReports(market_report_db_cxcn)
 report_list = market_reports.get_report_list()
 report_list = report_list.sort_values(by='Study', ascending=True)
-base_year_list = market_reports.get_base_year_list().sort_values(ascending=False)
-# Add buttons for user actions
+base_year_list = sorted(market_reports.get_base_year_list(), reverse=True )
+
 col1, col2, col3 = st.columns(3)
 
 if 'button' not in st.session_state:
@@ -37,21 +32,15 @@ if 'button' not in st.session_state:
 def click_button():
      st.session_state.button = not st.session_state.button
 
- # Display the Report List
-
 with col1:
-     # st.write('Market Report Selection:')
-     #selected_base_year = st.selectbox(f'Select Base Year', base_year_list)
      selected_base_year = st.selectbox('', base_year_list)
      st.session_state['base_year'] = selected_base_year
+
 with col3:
-    # st.button('Create Country Model') #st.caption("Press the button to generate Country Model tables")
     st.button('Start Model Generation for Selected Base Year', on_click=click_button)
 
- # Add buttons for user actions
+
 col1, col2,col3 = st.columns(3)
- #with col1:
- #   st.caption("Press the button to generate Country Model tables")
 
 with col1:
     if st.session_state.button:  # st.button('Create Country Model'):

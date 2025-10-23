@@ -1,7 +1,8 @@
 import streamlit as st
-from myCountryModelPackages.CountryModel_Generation import *
-from myCountryModelPackages.sqlTableRetrieve import *
-from myCountryModelPackages.MarketReportRetrieval import *
+from app.myCountryModelPackages.CountryModel_Generation import *
+from app.myCountryModelPackages.sqlTableRetrieve import *
+from app.myCountryModelPackages.MarketReportRetrieval import *
+from app.myCountryModelPackages.CM_SessionStates import initialize_global_session_states
 
 st.set_page_config(layout="wide")
 
@@ -42,7 +43,8 @@ if st.session_state[f"{key_prefix}selected_base_year_prev"] is None or st.sessio
     market_reports = MarketReports(st.session_state.db_cxcn_market_research)
     report_list = market_reports.get_report_list()
     st.session_state[f"{key_prefix}report_list"] = report_list.sort_values(by='Study', ascending=True)
-    st.session_state[f"{key_prefix}base_year_list"] = market_reports.get_base_year_list().sort_values(ascending=False)
+    st.session_state[f"{key_prefix}base_year_list"] = \
+        sorted(market_reports.get_base_year_list(),reverse=True)
     st.session_state[f"{key_prefix}selected_base_year_prev"] = st.session_state[f"{key_prefix}base_year_select_value"]
 
 if f"{key_prefix}market_report_select_value" not in st.session_state:
@@ -98,9 +100,9 @@ with (col1):
                                     )
        valid_report_message = country_model.validate_world_wide_report()
        if  valid_report_message == "":
-           with st.spinner("Generating Country Models and Publishing to the database..."):
+           with st.spinner("Generating Country Model and Publishing to the database..."):
                country_share_model = country_model.generate_market_shares()
-               st.session_state['share_country_model'] =country_share_model
+               st.session_state['share_country_model'] = country_share_model
 
                country_forecast_model = country_model.generate_forecast()
                st.session_state['forecast_country_model'] = country_forecast_model

@@ -1,5 +1,8 @@
+import time
 import streamlit as st
-from myCountryModelPackages.Economic_Research import *
+from app.myCountryModelPackages.Economic_Research import *
+from app.myCountryModelPackages.CM_SessionStates import initialize_global_session_states
+import numpy as np
 
 initialize_global_session_states()
 
@@ -32,6 +35,7 @@ if 'show_research' not in st.session_state:
 
 if 'discard_changes' not in st.session_state:
     st.session_state.discard_changes = False
+    st.session_state.show_research = True
 
 if 'save_changes' not in st.session_state:
     st.session_state.save_changes = False
@@ -39,6 +43,9 @@ if 'save_changes' not in st.session_state:
 def discard_changes_button():
     st.session_state.discard_changes = not st.session_state.discard_changes
     st.session_state.selection_committed_reg_rem = False
+    st.session_state.save_changes = False
+    st.session_state.show_research = True
+
 
 def save_changes_button():
     st.session_state.save_changes = not st.session_state.save_changes
@@ -52,30 +59,49 @@ def save_changes_button():
 
 def display_economic_research():
     #st.session_state.show_research = False
-    remainder_table, save_button, discard_changes = st.columns([2, 1, 1])
-    with (remainder_table):
+    remainder_table, = st.columns(1) # , save_button, discard_changes = st.columns([2, 1, 1])
+    with remainder_table:
         with st.spinner("Loading data..."):
             economic_factors = Economic_Research_Factors(st.session_state.base_year_select_value)
+            discard_triggered = st.session_state.get("discard_changes", False)
+            if discard_triggered:
+                st.session_state.discard_changes = False
+            editor_key = st.session_state.get("editor_key", "data_editor_key")
             gdp_remainders = economic_factors.get_regional_remainder_region(st.session_state.region_select_value)
             gdp_remainders['RemainderSize'] = gdp_remainders['RemainderSize'] * 100.0
+            gdp_remainders['RemainderSize'] = (
+                    np.ceil(gdp_remainders['RemainderSize'] * 100) / 100
+            )
             st.write("GDP Regional Remainders as a Percentage of the Total Market")
-            revised_gdp_remainders = \
-                st.data_editor(
+            with st.form("edit_form"):
+                revised_gdp_remainders = st.data_editor(
                     gdp_remainders,
+                    key=editor_key,
                     hide_index=True,
                     column_order=("Country", "RemainderSize"),
                     column_config={
                         "Country": st.column_config.TextColumn("Country", disabled=True, width="medium"),
                         "RemainderSize": st.column_config.NumberColumn(
-                            "RemainderSize", format="%.2f%%", min_value=0.0, max_value=100.0, step=0.1, width="small"
+                            "RemainderSize(%)", format="%.2f%%", min_value=0.0, max_value=100.0, step=0.01, width="small"
                         )
                     }
                 )
-            st.session_state.automation_gdp = revised_gdp_remainders
-    with save_button:
-        st.button('Save', on_click=save_changes_button)
-    with discard_changes:
-        st.button('Discard', on_click=discard_changes_button)
+                form_col1, form_col2 = st.columns(2)
+                with form_col1:
+                    apply_changes = st.form_submit_button("Apply Changes")
+
+                with form_col2:
+                    discard_changes = st.form_submit_button("Discard Changes")
+
+            # ✅ Handle actions AFTER the form block
+    if apply_changes:
+        st.session_state.automation_gdp = revised_gdp_remainders
+        save_changes_button()  # Your function
+
+    if discard_changes:
+        st.session_state.editor_key = f"data_editor_key_{int(time.time())}"
+        discard_changes_button()
+        st.rerun()
 
 # Initialize session state for previous selections with current values if not set
 if 'prev_base_year' not in st.session_state:
@@ -83,15 +109,13 @@ if 'prev_base_year' not in st.session_state:
 if 'prev_region' not in st.session_state:
     st.session_state.prev_region = st.session_state.get('region')
 
-base_year_selection, region_selection, retrieve_selection = st.columns(3)
+base_year_selection, region_selection = st.columns([1,3])   #, retrieve_selection
 
 commit_status = st.session_state.selection_committed_reg_rem
 if not commit_status:
-    # base_year_list = list(get_base_year_list())
     if not base_year_list:
         st.error("No base years available.")
         st.stop()
-    # Initialize session state for base year
     if 'base_year' not in st.session_state:
         st.session_state.base_year = base_year_list[0]
     # Get region list based on base year
@@ -105,7 +129,6 @@ if not commit_status:
     if 'region' not in st.session_state:
         st.session_state.region = region_list[0]
 
-    # UI layout
     with base_year_selection:
         st.session_state.bae_year = st.selectbox('Base Year', base_year_list, index=base_year_list.index(st.session_state.base_year), key='base_year_select_value')
     with region_selection:
@@ -128,22 +151,12 @@ if not st.session_state.show_research:
 show_display_button = not st.session_state.selection_committed_reg_rem
 
 def commit_selection():
-    st.session_state.selection_committed_reg_rem = True
     st.session_state.show_research = True
     st.session_state.prev_base_year = st.session_state.base_year
     st.session_state.prev_region = st.session_state.region
 
-with retrieve_selection:
-    if not st.session_state.selection_committed_reg_rem:
-        st.button('Retrieve GDP Factors', on_click=commit_selection)
+temp = st.session_state.show_research
+display_economic_research()
 
-if st.session_state.show_research:
-    #year = st.session_state.base_year
-    #region = st.session_state.region
-    display_economic_research()
-    # ✅ Now that the table is shown, update previous selections
-    st.session_state.prev_base_year = st.session_state.base_year
-    st.session_state.prev_region = st.session_state.region
-    st.session_state.show_research = False
 
 

@@ -1,6 +1,6 @@
 import streamlit as st
-from myCountryModelPackages.Economic_Research import *
-from myCountryModelPackages.sqlTableRetrieve import *
+from app.myCountryModelPackages.Economic_Research import *
+from app.myCountryModelPackages.sqlTableRetrieve import *
 st.title("Economic Research Analysis")
 st.write( \
     "This page is for validation and visualization of the Economic Research and GDP tables  These tables are generated dynamically so this was used to compre the results \

@@ -1,15 +1,18 @@
+import time
 import streamlit as st
-from myCountryModelPackages.Economic_Research import *
+from app.myCountryModelPackages.Economic_Research import *
+from app.myCountryModelPackages.CM_SessionStates import initialize_global_session_states
+import numpy as np
 
 initialize_global_session_states()
 
 st.set_page_config(layout="wide")
-st.title("Economic Research -  GDP Fractions by Country ")
-st.write( "Economic Research GDP Fractions table is a set of weightings for each country.  This will allow to manipulate the size of the Country GDP. \
+st.title("Economic Research -  GDP Scalar by Country ")
+st.write( "Economic Research GDP Scalar is applied to each country individually (Fractional values are only allowed).  This  allow to manipulation of the  Country GDP for model generation. \
           The equation below is how the overall Country weight is calculated.")
-st.write( " countryWeight = (gdp * industrialGdpFraction) * (industryFraction *automationDegree)" )
+st.write( " countryWeight = (gdp * industrialGdpScalar) * (industryFraction *automationDegree)" )
 st.write( "")
-st.write("The GDP Fractions can be modified and is pushed back to the data base.")
+st.write("The GDP Scalars can be modified and is pushed back to the data base.")
 
 key_prefix = "GDP_Fractions_"
 @st.cache_data
@@ -68,33 +71,57 @@ def save_changes_button():
 
 def display_economic_research():
     #st.session_state.show_research = False
-    economic_table, save_button, discard_changes = st.columns([2, 1, 1])
+    economic_table, = st.columns(1) #save_button, discard_changes = st.columns([2, 1, 1])
     with (economic_table):
         with st.spinner("Loading data..."):
             economic_factors = Economic_Research_Factors(st.session_state[f"{key_prefix}base_year_select_value"])
+            discard_triggered = st.session_state.get("discard_changes", False)
+            if discard_triggered:
+                st.session_state.discard_changes = False
+
+                # ✅ Dynamic key logic
+            editor_key = st.session_state.get("editor_key", "data_editor_key")
             automation_gdp = economic_factors.get_industry_gdp_fraction_region(st.session_state[f"{key_prefix}region_select_value"])
             automation_gdp['IndustrialGDP_Fraction'] = automation_gdp['IndustrialGDP_Fraction'] * 100.0
+            automation_gdp['IndustrialGDP_Fraction'] = (
+                    np.ceil(automation_gdp['IndustrialGDP_Fraction'] * 100) / 100
+            )
             st.write("Automation GDP by Region")
-            revised_automation_gdp = \
-                st.data_editor(
-                    automation_gdp,
-                    hide_index=True,
-                    column_order=("Country", "Industry", "IndustrialGDP_Fraction"),
-                    column_config={
-                        "Country": st.column_config.TextColumn("Country", disabled=True, width="medium"),
-                        "Industry": st.column_config.TextColumn("Industry", disabled=True, width="medium"),
-                        "IndustrialGDP_Fraction": st.column_config.NumberColumn(
-                            "IndustrialGDP_Fraction", format="%.2f%%", min_value=0.0, max_value=100.0, step=0.1, width="small"
-                        )
-                    }
-                )
-            st.session_state.automation_gdp = revised_automation_gdp
-    with save_button:
-        st.button('Save Modifications', on_click=save_changes_button)
-    with discard_changes:
-        st.button('Discard', on_click=discard_changes_button)
+            with st.form("edit_form"):
+                revised_automation_gdp = st.data_editor(
+                       automation_gdp,
+                       key=editor_key,
+                       hide_index=True,
+                       column_order=("Country", "Industry", "IndustrialGDP_Fraction"),
+                       column_config={
+                           "Country": st.column_config.TextColumn("Country", disabled=True, width="medium"),
+                           "Industry": st.column_config.TextColumn("Industry", disabled=True, width="medium"),
+                           "IndustrialGDP_Fraction": st.column_config.NumberColumn(
+                               "IndustrialGDP_Fraction(%)", format="%.2f%%", min_value=0.0, max_value=100.0, step=0.01, width="small"
+                           )
+                       }
+                       )
+                form_col1, form_col2 = st.columns(2)
+                with form_col1:
+                    apply_changes = st.form_submit_button("Apply Changes")
 
-base_year_selection, region_selection, retrieve_selection = st.columns(3)
+                with form_col2:
+                    discard_changes = st.form_submit_button("Discard Changes")
+
+#        st.session_state.automation_gdp = revised_automation_gdp
+#    with save_button:
+#        st.button('Save Modifications', on_click=save_changes_button)
+#    with discard_changes:
+#        st.button('Discard', on_click=discard_changes_button)
+    if apply_changes:
+            st.session_state.automation_gdp = revised_automation_gdp
+            save_changes_button()  # Your function
+    if discard_changes:
+        st.session_state.editor_key = f"data_editor_key_{int(time.time())}"
+        discard_changes_button()
+        st.rerun()
+
+base_year_selection, region_selection = st.columns([0.5,1])
 
 commit_status = st.session_state[f"{key_prefix}selection_committed"]
 if not commit_status:
@@ -125,7 +152,7 @@ if not commit_status:
             'Region',
             region_list,
             #index=region_list.index(st.session_state[f"{key_prefix}prev_region"]),
-            key=f"{key_prefix}region_select_value"  # This is the key used to track the widget's state
+            key=f"{key_prefix}region_select_value"
         )
         my_region_selected = st.session_state[f"{key_prefix}region_select_value"]
 
@@ -144,14 +171,10 @@ if not st.session_state[f"{key_prefix}show_research"]:
 show_display_button = not st.session_state[f"{key_prefix}selection_committed"]
 
 def commit_selection():
-    st.session_state[f"{key_prefix}selection_committed"] = True
+   # st.session_state[f"{key_prefix}selection_committed"] = True
     st.session_state[f"{key_prefix}show_research"] = True
     st.session_state[f"{key_prefix}prev_base_year"] = st.session_state[f"{key_prefix}base_year_select_value"]
     st.session_state[f"{key_prefix}prev_region"] = st.session_state[f"{key_prefix}region_select_value"]
-
-with retrieve_selection:
-    if not st.session_state[f"{key_prefix}selection_committed"]:
-        st.button('Retrieve GDP Factors', on_click=commit_selection)
 
 # Handle commit after rerun
 ##if st.session_state.get("commit_triggered", False):
@@ -162,9 +185,11 @@ with retrieve_selection:
 #    st.session_state.prev_country = st.session_state['country']
 #    st.session_state.commit_triggered = False  # Reset the trigger
 
-if st.session_state[f"{key_prefix}show_research"]:
-    display_economic_research()
-    st.session_state[f"{key_prefix}prev_base_year"] = st.session_state[f"{key_prefix}base_year_select_value"]
-    st.session_state[f"{key_prefix}prev_region"] = st.session_state[f"{key_prefix}region_select_value"]
-    st.session_state[f"{key_prefix}show_research"] = False
+temp = st.session_state[f"{key_prefix}show_research"]
+display_economic_research()
+#if st.session_state[f"{key_prefix}show_research"]:
+#    display_economic_research()
+#    st.session_state[f"{key_prefix}prev_base_year"] = st.session_state[f"{key_prefix}base_year_select_value"]
+#    st.session_state[f"{key_prefix}prev_region"] = st.session_state[f"{key_prefix}region_select_value"]
+#    st.session_state[f"{key_prefix}show_research"] = False
 

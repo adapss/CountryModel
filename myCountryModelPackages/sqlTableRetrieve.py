@@ -1,42 +1,9 @@
 import warnings
 import pyodbc
 from sqlalchemy import create_engine
-import streamlit as st
-from myCountryModelPackages.sqlTableRetrieve import *
-from myCountryModelPackages.MarketReportRetrieval import *
 
 warnings.filterwarnings('ignore')
 
-
-def __is_in_scope_global_session_states():
-    if 'db_cxcn_market_research' not in st.session_state or 'db_engine_publication' not in st.session_state or 'base_year' not in st.session_state:
-        return False
-    else:
-        return True
-
-def initialize_global_session_states():
-    if not __is_in_scope_global_session_states():
-        market_report_db_cxcn = DatabaseConnections().get_MiraLite_Connection()
-        if 'db_cxcn_market_research' not in st.session_state:
-            st.session_state.db_cxcn_market_research = market_report_db_cxcn
-        if 'db_engine_publication' not in st.session_state:
-            _db_engine = DatabaseConnections().get_MiraLite_engine()
-            st.session_state.db_engine_publication = _db_engine
-        if 'base_year' not in st.session_state:
-            base_year_list = MarketReports(
-            st.session_state.db_cxcn_market_research).get_base_year_list().sort_values(
-            ascending=False)
-            st.session_state.base_year = base_year_list.max()
-        if 'global_session_states_initialized' not in st.session_state:
-            st.session_state.global_session_states_initialized = True
-        st.session_state.global_session_states_initialized = True
-    return
-
-
-class GlobalSessionStates:
-
-    def __init__(self):
-        empty = None
 
 # Database Connections and Engines
 #
@@ -47,6 +14,9 @@ class DatabaseConnections:
     driver = '{ODBC Driver 18 for SQL Server}'
     _password = 'Reverb19!'
     _driver = 'ODBC Driver 18 for SQL Server'
+
+    def __init__(self):
+        empty = None
 
     # Connections used with Pandas Library
     def __get_connection(self,data_base):
@@ -86,8 +56,7 @@ class DatabaseConnections:
     def get_MiraIndustry_engine(self):
         return self.__get_engine('MiraIndustry')
 
-    def __init__(self):
-        empty = None
+
 
 
 

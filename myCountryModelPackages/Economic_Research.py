@@ -1,11 +1,6 @@
-import sys
-import warnings
-import pyodbc
 import pandas as pd
-import numpy as np
-from sqlalchemy import create_engine
 from sqlalchemy import text
-from myCountryModelPackages.sqlTableRetrieve import *
+from app.myCountryModelPackages.sqlTableRetrieve import DatabaseConnections
 
 class CountryEconomicResearch:
     economic_data = None
@@ -140,7 +135,7 @@ class GDP_X_COUNTRY:
         self.country_gdp_annual['GDP'] = self.country_gdp_annual['Revenues'] + (self.country_gdp_annual['RemainderSize']*self.country_gdp_annual['RegionTotal'])
         self.country_gdp_annual = self.country_gdp_annual.drop(['Revenues','RemainderSize','RegionTotal'], axis=1)
         self.country_gdp_annual['Region'] = self.country_gdp_annual['Region'].str.strip()
-        self.country_gdp_annual['Country'] = self.country_gdp_annual[('Country')].str.strip()
+        self.country_gdp_annual['Country'] = self.country_gdp_annual['Country'].str.strip()
 
 # The Economic Research is generated dynamically in this class.
 #  Required are two tables:
@@ -171,6 +166,14 @@ class Economic_Research_Create:
     def __init__(self, year):
         self.connection = DatabaseConnections().get_MiraIndustry_Connection()
         self.year = year
+        sql_statement_industry_fractions = \
+            f"SELECT [BaseYear],[Region], [Country],[Industry], [IndustryFraction] FROM [dbo].[CountryModel_IndustryFraction] " \
+            f"WHERE [BaseYear] = '{self.year}' " \
+            f"ORDER BY [Region], [Country] "
+        self.country_model_industry_fraction = pd.read_sql(sql_statement_industry_fractions, self.connection)
+        self.country_model_industry_fraction['Region'] = self.country_model_industry_fraction['Region'].str.strip()
+        self.country_model_industry_fraction['Country'] = self.country_model_industry_fraction['Country'].str.strip()
+        self.country_model_industry_fraction['Industry'] = self.country_model_industry_fraction['Industry'].str.strip()
 
         sql_statement_industryGDP = \
             f"SELECT [BaseYear],[Region],[Country],[IndustrialGDP_Fraction] FROM [dbo].[CountryModel_IndustryGDP] " \
@@ -183,18 +186,23 @@ class Economic_Research_Create:
         country_list = self.country_model_industry_gdp_fraction.drop(['BaseYear', 'IndustrialGDP_Fraction'], axis=1)
         self.gdp_x_country = GDP_X_COUNTRY(year, country_list).get_country_gdp()
         self.gdp_x_country.rename(columns={'Year': 'BaseYear'}, inplace=True)
+
         sql_statement_automation_degree = \
-            f"SELECT [BaseYear],[Region], [Country],[Industry],[AutomationDegree], [IndustryFraction] FROM [dbo].[CountryModel_AutomationDegree] " \
+            f"SELECT [BaseYear],[Region], [Country],[Industry],[AutomationDegree] FROM [dbo].[CountryModel_AutomationDegree] " \
             f"WHERE [BaseYear] = '{self.year}' " \
             f"ORDER BY [Region], [Country] "
         self.country_model_industry_automation_degree = pd.read_sql(sql_statement_automation_degree, self.connection)
         self.country_model_industry_automation_degree['Region'] = self.country_model_industry_automation_degree['Region'].str.strip()
         self.country_model_industry_automation_degree['Country'] = self.country_model_industry_automation_degree['Country'].str.strip()
         self.country_model_industry_automation_degree['Industry'] = self.country_model_industry_automation_degree['Industry'].str.strip()
+
         self.economic_research_data = self.gdp_x_country.merge(self.country_model_industry_gdp_fraction,on = ['BaseYear', 'Region','Country'], how='left')
         self.economic_research_data ['IndustrialGDP_Fraction'] = self.economic_research_data ['IndustrialGDP_Fraction'].fillna(1)
         self.economic_research_data = self.economic_research_data.merge(self.country_model_industry_automation_degree,on = ['BaseYear', 'Region','Country'], how='left')
+        self.economic_research_data = self.economic_research_data.merge(self.country_model_industry_fraction,on = ['BaseYear', 'Region','Country','Industry'], how='left')
+
         self.economic_research_data['CountryWeight'] = self.economic_research_data['GDP'] * self.economic_research_data['IndustrialGDP_Fraction'] * self.economic_research_data['IndustryFraction']* self.economic_research_data['AutomationDegree']
+
         self.economic_research_data = self.economic_research_data.drop(['GDP', 'IndustrialGDP_Fraction', 'AutomationDegree'], axis=1)
 
 # EconomicResearchFactorsRanges
@@ -203,6 +211,9 @@ class Economic_Research_Create:
 class EconomicResearchFactorsRanges:
     connection = None
 
+    def __init__(self):
+        db_connection = DatabaseConnections()
+        self.connection = db_connection.get_MiraIndustry_Connection()
 
     def __get_gdp_regional_remainder_table(self):
         year = "%"
@@ -225,25 +236,49 @@ class EconomicResearchFactorsRanges:
     def __get_automation_degree_table(self):
         year = "%"
         sql_statement_automation_degree = \
-            f"SELECT [BaseYear],[Region], [Country],[Industry],[AutomationDegree], [IndustryFraction] FROM [dbo].[CountryModel_AutomationDegree] " \
+            f"SELECT [BaseYear],[Region], [Country],[Industry],[AutomationDegree] FROM [dbo].[CountryModel_AutomationDegree] " \
             f"WHERE [BaseYear] LIKE '{year}' " \
             f"ORDER BY [Region], [Country] "
         _industry_automation_degree = pd.read_sql(sql_statement_automation_degree, self.connection)
         return _industry_automation_degree
+
+    def __get_industry_weight_table(self):
+        year = "%"
+        sql_statement_industry_weights = \
+            f"SELECT [BaseYear],[Region], [Country],[Industry],[IndustryFraction] FROM [dbo].[CountryModel_IndustryFraction] " \
+            f"WHERE [BaseYear] LIKE '{year}' " \
+            f"ORDER BY [Region], [Country] "
+        _industry_fractions = pd.read_sql(sql_statement_industry_weights, self.connection)
+        return _industry_fractions
+
+    #******* get_economic_research_years
+    # There are 4 tables which need to be validated that they are all populated with the same range in years.
+    #   - gdp data by country
+    #   - automation degree
+    #   - industry Weights
+    #   - gdp remainders
+    #  the intersection of the years of the Economic research will determine what years of market reports can be modeled.
+    def get_economic_research_years(self):
+        gdp_years = self.get_gdp_research_years()
+        automation_degree_years = self.get_industry_weights_research_years()
+        industry_years = self.get_industry_weights_research_years()
+        gdp_remainders_years = self.get_gdp_regional_remainder_research_years()
+        intersection_years = set(gdp_years) & set(industry_years) & set(gdp_remainders_years)
+        return list(intersection_years)
 
     def get_gdp_regional_remainder_research_years(self):
         _industry_gdp = self.__get_gdp_regional_remainder_table()
         _industry_gdp = _industry_gdp.drop(['Region','Country','RemainderSize'],axis=1)
         base_year_list = _industry_gdp['Year'].drop_duplicates()
         base_year_list = base_year_list.sort_values(ascending=False)
-        return base_year_list
+        return base_year_list.to_list()
 
     def get_gdp_research_years(self):
         _industry_gdp = self.__get_automation_gdp_table()
         _industry_gdp = _industry_gdp.drop(['Region','Country','IndustrialGDP_Fraction'],axis=1)
         base_year_list = _industry_gdp['BaseYear'].drop_duplicates()
         base_year_list = base_year_list.sort_values(ascending=False)
-        return base_year_list
+        return base_year_list.to_list()
 
     def get_regions_from_regional_remainder(self, year):
         _gdp_remainders= self.__get_gdp_regional_remainder_table()
@@ -270,30 +305,29 @@ class EconomicResearchFactorsRanges:
         return country_list
 
     def get_industry_weights_research_years(self):
-        _industry_automation_degree = self.__get_automation_degree_table()
-        _industry_automation_degree = _industry_automation_degree.drop(['Region','Country','Industry','AutomationDegree','IndustryFraction'],axis=1)
-        base_year_list = _industry_automation_degree['BaseYear'].drop_duplicates()
+        _industry_weights = self.__get_industry_weight_table()
+        _industry_weights = _industry_weights.drop(['Region','Country','Industry','IndustryFraction'],axis=1)
+        base_year_list = _industry_weights['BaseYear'].drop_duplicates()
         base_year_list = base_year_list.sort_values(ascending=False)
-        return base_year_list
+        return base_year_list.to_list()
 
     def get_industry_weights_research_regions(self, year):
-        _industry_automation_degree = self.__get_automation_degree_table()
-        _industry_automation_degree = _industry_automation_degree[(_industry_automation_degree['BaseYear'] == year)]
-        _industry_automation_degree = _industry_automation_degree.drop(['BaseYear','Country','Industry','AutomationDegree','IndustryFraction'],axis=1)
-        region_list = _industry_automation_degree['Region'].drop_duplicates()
+        _industry_weights = self.__get_industry_weight_table()
+        _industry_weights =  _industry_weights[( _industry_weights['BaseYear'] == year)]
+        _industry_weights =  _industry_weights.drop(['BaseYear','Country','Industry','IndustryFraction'],axis=1)
+        region_list =  _industry_weights['Region'].drop_duplicates()
         region_list = region_list.sort_values(ascending=False)
-        return region_list
+        return region_list.to_list()
 
     def get_countries_from_industry_weights_research(self, year, region):
-        _industry_automation_degree = self.__get_automation_degree_table()
-        _industry_automation_degree = _industry_automation_degree[(_industry_automation_degree['BaseYear']==year) & (_industry_automation_degree['Region']==region)]
-        _industry_automation_degree = _industry_automation_degree.drop(['BaseYear','Region','Industry','AutomationDegree','IndustryFraction'],axis=1)
-        country_list = _industry_automation_degree['Country'].drop_duplicates()
+        _industry_weights = self.__get_industry_weight_table()
+        _industry_weights = _industry_weights[(_industry_weights['BaseYear']==year) & (_industry_weights['Region']==region)]
+        _industry_weights = _industry_weights.drop(['BaseYear','Region','Industry','IndustryFraction'],axis=1)
+        country_list = _industry_weights['Country'].drop_duplicates()
         country_list = country_list.sort_values(ascending=False)
         return country_list
 
-    def __init__(self):
-        self.connection = DatabaseConnections().get_MiraIndustry_Connection()
+
 
 # EconomicResearchFactorsPublish - support write of a Economic Factors dataframes to the database
 # These are the methods available:
@@ -303,58 +337,243 @@ class EconomicResearchFactorsRanges:
 #
 class EconomicResearchFactorsPublish():
     db_engine_economic_research = None
+    db_connection = None
 
-    def publish_industry_weights(self,automation_factors, year, region, country):
+    # Archive -(TGF = Technology Group Factors) by Version Key
+    def archive_techgroup_economic_research(self, version:int, version_comment:str):
+        sql_statement_cm_versions = \
+            f"SELECT [Version],[Comment], [Modified],[VersionKey] FROM [dbo].[CMV_TGF_VersionManagement] " \
+            f"ORDER BY [Version],[Modified] "
+        version_table = pd.read_sql(sql_statement_cm_versions, self.db_connection)
+
+        if version in version_table['Version'].values:
+            raise ValueError(f"Version {version} already exists in CMV_VersionManagement.")
+
+        new_version_table = pd.DataFrame({
+            'Version': [version],
+            'Comment': [version_comment],
+            'Modified': [pd.Timestamp.now()]
+        })
+
+        new_version_table.to_sql('CMV_TGF_VersionManagement', self.db_engine_economic_research, if_exists='append',
+                             index=False)
+
+        query = """
+        SELECT TOP 1 VersionKey
+        FROM [dbo].[CMV_TGF_VersionManagement]
+        WHERE Version = ? AND Comment = ?
+        ORDER BY Modified DESC
+        """
+        cursor = self.db_connection.cursor()
+        cursor.execute(query, (int(version), str(version_comment)))
+        version_key = cursor.fetchone()[0]
+
+        # Automation Degree by Country X Industry Archiving
+        sql_statement_automation_degree = \
+            f"SELECT [BaseYear],[Region], [Country],[Industry],[AutomationDegree], [TechnologyGroupID] FROM [dbo].[CountryModel_AutomationDegree] " \
+            f"ORDER BY [Region], [Country] "
+
+        automation_degree = pd.read_sql(sql_statement_automation_degree, self.db_connection)
+        automation_degree['VersionKey'] = version_key
+        automation_degree.to_sql('CMV_TGF_AutomationDegree', self.db_engine_economic_research, if_exists='append',
+                                 index=False)
+
+        # Industrial GDP Multiplier archiving
+        sql_statement_industry_GDP_fraction = \
+            f"SELECT [BaseYear],[Region], [Country],[IndustrialGDP_Fraction], [TechnologyGroupID] FROM [dbo].[CountryModel_IndustryGDP] " \
+            f"ORDER BY [Region], [Country] "
+        industry_gdp = pd.read_sql(sql_statement_industry_GDP_fraction, self.db_connection)
+        industry_gdp['VersionKey'] = version_key
+        industry_gdp.to_sql('CMV_TGF_IndustryGDP', self.db_engine_economic_research, if_exists='append',
+                                  index=False)
+        return "Version Created"
+
+    # Archive the Universal Economic Factors which include the IndustryFraction and GDP Remainder tables
+    def archive_uef_economic_research(self, version:int, version_comment:str):
+        sql_statement_cm_versions = \
+            f"SELECT [Version],[Comment], [Modified],[VersionKey] FROM [dbo].[CMV_UEF_VersionManagement] " \
+            f"ORDER BY [Version],[Modified] "
+        version_table = pd.read_sql(sql_statement_cm_versions, self.db_connection)
+
+        if version in version_table['Version'].values:
+            raise ValueError(f"Version {version} already exists in CMV_UEF_VersionManagement.")
+
+        new_version_table = pd.DataFrame({
+            'Version': [version],
+            'Comment': [version_comment],
+            'Modified': [pd.Timestamp.now()]
+        })
+
+        new_version_table.to_sql('CMV_UEF_VersionManagement', self.db_engine_economic_research, if_exists='append',
+                             index=False)
+
+        query = """
+        SELECT TOP 1 VersionKey
+        FROM [dbo].[CMV_UEF_VersionManagement]
+        WHERE Version = ? AND Comment = ?
+        ORDER BY Modified DESC
+        """
+        cursor = self.db_connection.cursor()
+        cursor.execute(query, (int(version), str(version_comment)))
+        version_key = cursor.fetchone()[0]
+
+        # Industry Fraction by Country X Industry Archiving
+        sql_statement_industry_fraction = \
+            f"SELECT [BaseYear],[Region], [Country],[Industry],[IndustryFraction] FROM [dbo].[CountryModel_IndustryFraction] " \
+            f"ORDER BY [Region], [Country] "
+        industry_fractions = pd.read_sql(sql_statement_industry_fraction, self.db_connection)
+        industry_fractions['VersionKey'] = version_key
+        industry_fractions.to_sql('CMV_UEF_IndustryFraction', self.db_engine_economic_research, if_exists='append',
+                                 index=False)
+
+        # GDP remainders by region, for those regions where we don't have all the countries.
+        sql_statement_GDP_rem = \
+            f"SELECT [Year],[Region], [Country],[RemainderSize] FROM [dbo].[FinancialMetrics_GDP_Region_Remainder] " \
+            f"ORDER BY [Region], [Country] "
+        gdp_rem = pd.read_sql(sql_statement_GDP_rem, self.db_connection)
+        gdp_rem['VersionKey'] = version_key
+        gdp_rem.to_sql('CMV_UEF_GDP_Remainder', self.db_engine_economic_research, if_exists='append',
+                                  index=False)
+        return "Version Created"
+
+    # Restore -(Universal Economic Factors) by Version Key
+    def restore_version_uef_economic_research(self, versionKey:int):
+
+        # Industry Fraction by Country X Industry Archiving
+        sql_statement_industry_fraction = \
+            f"SELECT [BaseYear],[Region], [Country],[Industry],[IndustryFraction] FROM [dbo].[CMV_UEF_IndustryFraction] " \
+            f"WHERE [VersionKey] = '{versionKey}' " \
+            f"ORDER BY [Region], [Country] "
+        industry_fractions = pd.read_sql(sql_statement_industry_fraction, self.db_connection)
+        industry_fractions.to_sql('CountryModel_IndustryFraction', self.db_engine_economic_research, if_exists='replace',
+                                 index=False)
+
+        # GDP remainders by region, for those regions where we don't have all the countries.
+        sql_statement_GDP_rem = \
+            f"SELECT [Year],[Region], [Country],[RemainderSize] FROM [dbo].[CMV_UEF_GDP_Remainder] " \
+            f"WHERE [VersionKey] = '{versionKey}' " \
+            f"ORDER BY [Region], [Country] "
+        gdp_rem = pd.read_sql(sql_statement_GDP_rem, self.db_connection)
+        gdp_rem.to_sql('FinancialMetrics_GDP_Region_Remainder', self.db_engine_economic_research, if_exists='replace',
+                                  index=False)
+        return "Restore Completed"
+
+    # Restore -(TGF = Technology Group Factors) by Version Key
+    def restore_version_techgroup_economic_research(self, versionKey:int):
+
+        # Automation Degree by Country X Industry Archiving (TGF = Technology Group Factors)
+        sql_statement_automation_degree = \
+            f"SELECT [BaseYear],[Region], [Country],[Industry],[AutomationDegree], [TechnologyGroupID] FROM [dbo].[CMV_TGF_AutomationDegree] " \
+            f"WHERE [VersionKey] = '{versionKey}' " \
+            f"ORDER BY [Region], [Country] "
+
+        automation_degree = pd.read_sql(sql_statement_automation_degree, self.db_connection)
+        automation_degree.to_sql('CountryModel_AutomationDegree', self.db_engine_economic_research, if_exists='replace',
+                                 index=False)
+
+        # Industrial GDP Multiplier archiving (TGF = Technology Group Factors)
+        sql_statement_industry_GDP_fraction = \
+            f"SELECT [BaseYear],[Region], [Country],[IndustrialGDP_Fraction], [TechnologyGroupID] FROM [dbo].[CMV_TGF_IndustryGDP] " \
+            f"WHERE [VersionKey] = '{versionKey}' " \
+            f"ORDER BY [Region], [Country] "
+        industry_gdp = pd.read_sql(sql_statement_industry_GDP_fraction, self.db_connection)
+        industry_gdp.to_sql('CountryModel_IndustryGDP', self.db_engine_economic_research, if_exists='replace',
+                                  index=False)
+
+        return "Restore Completed"
+
+    # Version Management Table for Technology Group Economic Factors
+    def get_latest_version_techgroup_economic_research(self):
+        sql_statement_cm_versions = \
+            f"SELECT [Version],[Comment], [Modified],[VersionKey] FROM [dbo].[CMV_TGF_VersionManagement] " \
+            f"ORDER BY [Version],[Modified] "
+        version_table = pd.read_sql(sql_statement_cm_versions, self.db_connection)
+        latest_version =  version_table['Version'].max() if not version_table.empty else None
+        return latest_version
+
+    # Version Management Table for Universal Economic Factors
+    def get_latest_version_uef_research(self):
+        sql_statement_cm_versions = \
+            f"SELECT [Version],[Comment], [Modified],[VersionKey] FROM [dbo].[CMV_UEF_VersionManagement] " \
+            f"ORDER BY [Version],[Modified] "
+        version_table = pd.read_sql(sql_statement_cm_versions, self.db_connection)
+        latest_version =  version_table['Version'].max() if not version_table.empty else None
+        return latest_version
+
+    def get_techgroup_version_table_economic_research(self):
+        sql_statement_cm_versions = \
+            f"SELECT [Version],[Comment], [Modified],[VersionKey] FROM [dbo].[CMV_TGF_VersionManagement] " \
+            f"ORDER BY [Version],[Modified] "
+        version_table = pd.read_sql(sql_statement_cm_versions, self.db_connection)
+        return version_table
+
+    def get_uef_version_table_economic_research(self):
+        sql_statement_cm_versions = \
+            f"SELECT [Version],[Comment], [Modified],[VersionKey] FROM [dbo].[CMV_UEF_VersionManagement] " \
+            f"ORDER BY [Version],[Modified] "
+        version_table = pd.read_sql(sql_statement_cm_versions, self.db_connection)
+        return version_table
+
+    def publish_industry_weights(self,industry_weights, year, region, country):
         sql_statement = """
-            DELETE FROM [dbo].[CountryModel_AutomationDegree]
-            WHERE ([Region] = :region) AND ([BaseYear] = :base_year)AND ([Country] = :country)
-            """
+              DELETE FROM [dbo].[CountryModel_IndustryFraction]
+              WHERE [Region] = :region AND [BaseYear] = :year AND [Country] = :country
+          """
         try:
-            with self.db_engine_economic_research.connect() as connection:
-                result = connection.execute(text(sql_statement), { "base_year": year, "region": region, "country": country})
-                connection.commit()
+            with self.db_engine_economic_research.begin() as connection:  # begin() ensures atomic transaction
+                connection.execute(text(sql_statement), {"year": year, "region": region, "country": country})
+                industry_factors = industry_weights.applymap(lambda x: x.strip() if isinstance(x, str) else x)
+                industry_factors.to_sql('CountryModel_IndustryFraction', connection, if_exists='append', index=False)
         except Exception as e:
             print(f"Error executing SQL statement: {e}")
-        automation_factors = automation_factors.applymap(lambda x: x.strip() if isinstance(x, str) else x)
-        automation_factors.to_sql('CountryModel_AutomationDegree', self.db_engine_economic_research, if_exists='append', index=False)
+        return
+
+    def publish_automation_degree(self,automation_degree, year, region, country):
+        sql_statement = """
+                DELETE FROM [dbo].[CountryModel_AutomationDegree]
+                WHERE [Region] = :region AND [BaseYear] = :year AND [Country] = :country
+            """
+        try:
+             with self.db_engine_economic_research.begin() as connection:
+                connection.execute(text(sql_statement), {"year": year, "region": region, "country": country})
+                automation_factors = automation_degree.applymap(lambda x: x.strip() if isinstance(x, str) else x)
+                automation_factors.to_sql('CountryModel_AutomationDegree', connection, if_exists='append', index=False)
+        except Exception as e:
+            print(f"Error executing SQL statement: {e}")
         return
 
     def publish_region_gdp_fraction(self, gdp_fractions, year, region):
         sql_statement = """
-               DELETE FROM [dbo].[CountryModel_IndustryGDP]
-               WHERE ([Region] = :region) AND ([BaseYear] = :base_year)
-               """
+                DELETE FROM [dbo].[CountryModel_IndustryGDP]
+                WHERE [Region] = :region AND [BaseYear] = :year
+            """
         try:
-            with self.db_engine_economic_research.connect() as connection:
-                result = connection.execute(text(sql_statement),
-                                            {"base_year": year, "region": region})
-                connection.commit()
+            with self.db_engine_economic_research.begin() as connection:
+                connection.execute(text(sql_statement), {"year": year, "region": region})
+                gdp_fractions = gdp_fractions.applymap(lambda x: x.strip() if isinstance(x, str) else x)
+                gdp_fractions.to_sql('CountryModel_IndustryGDP', connection, if_exists='append', index=False)
         except Exception as e:
             print(f"Error executing SQL statement: {e}")
-        gdp_fractions =  gdp_fractions.applymap(lambda x: x.strip() if isinstance(x, str) else x)
-        gdp_fractions.to_sql('CountryModel_IndustryGDP', self.db_engine_economic_research, if_exists='append',
-                                  index=False)
         return
 
     def publish_regional_gdp_remainders(self, gdp_remainders, year, region):
         sql_statement = """
-               DELETE FROM [dbo].[FinancialMetrics_GDP_Region_Remainder]
-               WHERE ([Region] = :region) AND ([Year] = :base_year)
-               """
+                DELETE FROM [dbo].[FinancialMetrics_GDP_Region_Remainder]
+                WHERE [Region] = :region AND [Year] = :year
+            """
         try:
-            with self.db_engine_economic_research.connect() as connection:
-                result = connection.execute(text(sql_statement),
-                                            {"base_year": year, "region": region})
-                connection.commit()
+            with self.db_engine_economic_research.begin() as connection:
+                connection.execute(text(sql_statement), {"year": year, "region": region})
+                gdp_remainders = gdp_remainders.applymap(lambda x: x.strip() if isinstance(x, str) else x)
+                gdp_remainders.to_sql('FinancialMetrics_GDP_Region_Remainder', connection, if_exists='append',
+                                      index=False)
         except Exception as e:
             print(f"Error executing SQL statement: {e}")
-        gdp_remainders =  gdp_remainders.applymap(lambda x: x.strip() if isinstance(x, str) else x)
-        gdp_remainders.to_sql('FinancialMetrics_GDP_Region_Remainder', self.db_engine_economic_research, if_exists='append',
-                                  index=False)
         return
 
     def __init__(self):
         self.db_engine_economic_research = DatabaseConnections().get_MiraIndustry_engine()
+        self.db_connection = DatabaseConnections().get_MiraIndustry_Connection()
 
 # EconomicResearchFactors - Used to pull the tables for the Economic Research
 #   There are 3 tables which are integral to the Country Model generation:
@@ -372,14 +591,20 @@ class EconomicResearchFactorsPublish():
 #
 class Economic_Research_Factors:
     year = None
+    country_model_industry_fraction = None
     country_model_industry_gdp_fraction = None
     country_model_industry_automation_degree = None
     regional_remainders = None
     economic_research_data = None
     gdp_x_country = None
 
+
     def get_automation_degree(self):
         return self.country_model_industry_automation_degree
+
+    def get_industry_fractions_country(self,country):
+        _industry_fractions = self.country_model_industry_fraction[(self.country_model_industry_fraction['Country'] == country)]
+        return _industry_fractions
 
     def get_automation_degree_country(self,country):
         _automation_degree = self.country_model_industry_automation_degree[(self.country_model_industry_automation_degree['Country'] == country)]
@@ -402,8 +627,13 @@ class Economic_Research_Factors:
     def __init__(self, year):
         self.connection = DatabaseConnections().get_MiraIndustry_Connection()
         self.year = year
+        sql_statement_industry_fraction = \
+            f"SELECT [BaseYear],[Region], [Country],[Industry],[IndustryFraction] FROM [dbo].[CountryModel_IndustryFraction] " \
+            f"WHERE [BaseYear] = '{self.year}' " \
+            f"ORDER BY [Region], [Country] "
+        self.country_model_industry_fraction = pd.read_sql(sql_statement_industry_fraction, self.connection)
         sql_statement_automation_degree = \
-            f"SELECT [BaseYear],[Region], [Country],[Industry],[AutomationDegree], [IndustryFraction] FROM [dbo].[CountryModel_AutomationDegree] " \
+            f"SELECT [BaseYear],[Region], [Country],[Industry],[AutomationDegree] FROM [dbo].[CountryModel_AutomationDegree] " \
             f"WHERE [BaseYear] = '{self.year}' " \
             f"ORDER BY [Region], [Country] "
         self.country_model_industry_automation_degree = pd.read_sql(sql_statement_automation_degree, self.connection)
@@ -412,8 +642,8 @@ class Economic_Research_Factors:
             f"WHERE [BaseYear] = '{self.year}' " \
             f"ORDER BY [Country] "
         self.country_model_industry_gdp_fraction = pd.read_sql(sql_statement_industryGDP, self.connection)
-        sql_statement_automation_degree = \
+        sql_statement_regional_rem = \
             f"SELECT [Year],[Region], [Country],[RemainderSize] FROM [dbo].[FinancialMetrics_GDP_Region_Remainder] " \
             f"WHERE [Year] = '{self.year}' " \
             f"ORDER BY [Region], [Country] "
-        self.regional_remainders = pd.read_sql(sql_statement_automation_degree, self.connection)
+        self.regional_remainders = pd.read_sql(sql_statement_regional_rem, self.connection)

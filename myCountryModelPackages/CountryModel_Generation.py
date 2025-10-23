@@ -10,9 +10,9 @@
 
 #from myCountryModelPackages.sqlTableRetrieve import *
 #from myCountryModelPackages.MarketReportRetrieval import *
-from myCountryModelPackages.CountryModel_Forecast import *
-from myCountryModelPackages.CountryModel_MarketSize import *
-from myCountryModelPackages.Economic_Research import *
+from app.myCountryModelPackages.CountryModel_Forecast import *
+from app.myCountryModelPackages.CountryModel_MarketSize import *
+from app.myCountryModelPackages.Economic_Research import *
 
 class CountryModelComparisonTest:
     market_share_generated = None

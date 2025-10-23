@@ -22,7 +22,7 @@ class MarketReports:
         return self.market_reports
 
     def get_base_year_list(self):
-        return self.market_reports['BaseYear'].drop_duplicates()
+        return self.base_year_list    #market_reports['BaseYear'].drop_duplicates()
 
     def __init__(self,cxcn ):
         worldSegment = "World Region"
@@ -36,10 +36,11 @@ class MarketReports:
             f"WHERE   ([Study] LIKE '{marketStudy}') AND ([BaseYear] LIKE  '{year}') AND (([Segment] LIKE '{worldSegment}')  OR ([Segment] LIKE '{industrySegment}'))" \
             f"AND ([Category] LIKE '{categoryName}')" \
             f"ORDER BY [BaseYear]"
-        self.market_reports = pd.read_sql(self.sql_query_market_size, self.connection)
+        # self.market_reports = pd.read_sql(self.sql_query_market_size, self.connection)
         try:
             start_time = time.time()
-            df = pd.read_sql(self.sql_query_market_size, self.connection)
+            self.market_reports = pd.read_sql(self.sql_query_market_size, self.connection)
+            # df = pd.read_sql(self.sql_query_market_size, self.connection)
             elapsed_time = time.time() - start_time
             # st.write("Query executed successfully in {:.2f} seconds.".format(elapsed_time))
             status = "success"
@@ -55,8 +56,17 @@ class MarketReports:
 
         print("Query status:", status)
 
+        self.base_year_list =  \
+            sorted(
+            self.market_reports['BaseYear'].drop_duplicates().tolist(),
+            reverse=True
+        )
+
+        self.base_year_list = self.market_reports['BaseYear'].drop_duplicates().tolist()
         self.market_reports = self.market_reports[['BaseYear', 'Study']].drop_duplicates()
-        self.base_year_list = self.market_reports['BaseYear'].drop_duplicates()
+
+
+
 
 # MarketReportData class is used to pull market report data from either the worldwide or country model tables in the SQL database.
 # Currently, it only allows for one market report retrieval at a time.  Although this could easily be extended.
