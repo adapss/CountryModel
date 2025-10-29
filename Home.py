@@ -1,11 +1,11 @@
 import streamlit as st
 
-from myCountryModelPackages.CM_SessionStates import initialize_global_session_states
+from app.myCountryModelPackages.CM_SessionStates import initialize_global_session_states
 
 st.set_page_config(layout="wide")
 
 def display_page_info():
-    st.markdown("<h1 style='text-align: center;'>Country Model Generator - V7.0</h1>", unsafe_allow_html=True)
+    st.markdown("<h1 style='text-align: center;'>Country Model Generator - V8.0</h1>", unsafe_allow_html=True)
     text_message = "This application is designed to generate a Country Model from a published World Wide market Report.  \
                   Access to all the Country Model Economic Factors can be modified in several of the tabs on the left "
     st.markdown("<h3 style='font-size:14pt;'>" + text_message + "</h3>", unsafe_allow_html=True)
@@ -15,7 +15,9 @@ def display_page_info():
         <li>Automation Degree and GDP Country Multiplier Partitioned by Technology Group </li>
         <li>Industry Fractions and GDP Regional Remainders are NOT partitioned, but considered a Common Economic Profile </li>
         <li>Version Management by Technology Group tables or Common Economic Profile Tables   </li>
-        <li>Restore by Version for Technology Groups and/or Common Economic Profile</li>
+        <li>Restore Partitions by Version for Technology Groups and/or Common Economic Profile</li>
+        <li>Product Description Table with Technology Groups</li>
+        <li>Copy All Country Model Parameters from one Year to another.  Primarily for New Year creation, but useful for other situations.</li>
     </ul>
     <h3 style='font-size:16pt;'>Please note: There is only one Technology Group and it is a default group for all reports.  </h3>
     """, unsafe_allow_html=True)
