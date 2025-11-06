@@ -65,9 +65,6 @@ class MarketReports:
         self.base_year_list = self.market_reports['BaseYear'].drop_duplicates().tolist()
         self.market_reports = self.market_reports[['BaseYear', 'Study']].drop_duplicates()
 
-
-
-
 # MarketReportData class is used to pull market report data from either the worldwide or country model tables in the SQL database.
 # Currently, it only allows for one market report retrieval at a time.  Although this could easily be extended.
 class MarketReportData:
@@ -108,6 +105,17 @@ class MarketReportData:
         country_model_data = pd.read_sql(sql_query_market_forecast, self.connection)
         country_model_data = country_model_data.rename(columns={'Category': 'Region', 'ParentCategory': 'Country','GrandParentCategory': 'Industry'})
         return country_model_data
+
+    def get_country_known_sizes_list(self):
+        queryCountryKnown = f"SELECT [Study], [BaseYear],[Country],[Industry],[Company], [Size] FROM [dbo].[CountrySizes]" \
+                            f" WHERE   (([Study] = '{self.market_report}') AND ([BaseYear] =  {self.base_year}))" \
+                            f" ORDER BY [Study], [BaseYear], [Company], [Country], [Industry]"
+        country_known_size = pd.read_sql(queryCountryKnown, self.connection)
+        if country_known_size.empty:
+            return None
+        country_known_summary = country_known_size.groupby('Country', as_index=False)['Size'].sum()
+        country_known_summary['Country'] = country_known_summary['Country'].str.strip()
+        return country_known_summary
 
     def __init__(self,cxcn, market_report, base_year ):
         self.connection = cxcn

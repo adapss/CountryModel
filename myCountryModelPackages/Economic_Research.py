@@ -1,12 +1,69 @@
-import pandas as pd
+import streamlit as st
+from myCountryModelPackages.global_constants import *
 from sqlalchemy import text
-from app.myCountryModelPackages.sqlTableRetrieve import DatabaseConnections
+from myCountryModelPackages.sqlTableRetrieve import DatabaseConnections
+from myCountryModelPackages.ProductTechnologyGroup import *
 
+_GS_key_prefix = global_session_states_key()
+
+def _fetch_industry_gdp( year: int, tg_id: int):
+    connection = DatabaseConnections().get_MiraIndustry_Connection()
+    query = f"""
+        SELECT [BaseYear], [Region], [Country], [IndustrialGDP_Fraction]
+        FROM [dbo].[CountryModel_IndustryGDP]
+        WHERE [BaseYear] = '{year}' AND [TechnologyGroupID] = '{tg_id}'
+        ORDER BY [Country]
+    """
+    return pd.read_sql(query, connection)
+
+def _fetch_automation_degree( year: int, tg_id: int):
+    connection = DatabaseConnections().get_MiraIndustry_Connection()
+    query = f"""
+        SELECT [BaseYear],[Region], [Country],[Industry],[AutomationDegree] FROM [dbo].[CountryModel_AutomationDegree]
+        WHERE [BaseYear] = '{year}' AND [TechnologyGroupID] = '{tg_id}' 
+        ORDER BY [Region], [Country] 
+    """
+    ad = pd.read_sql(query, connection)
+    ad  = ad.apply(lambda col: col.str.strip() if col.dtype == "object" else col)
+    return ad
+
+def _fetch_industry_fraction_all_country( year: int):
+    connection = DatabaseConnections().get_MiraIndustry_Connection()
+    query = f"""
+        SELECT [BaseYear],[Region], [Country],[Industry],[IndustryFraction] FROM [dbo].[CountryModel_IndustryFraction]
+        WHERE [BaseYear] = '{year}' 
+        ORDER BY [Region], [Country] 
+    """
+    return pd.read_sql(query, connection)
+
+def _fetch_regional_rem( year: int):
+    connection = DatabaseConnections().get_MiraIndustry_Connection()
+    query = f"""
+        SELECT [Year],[Region],[Country],[RemainderSize] FROM [dbo].[FinancialMetrics_GDP_Region_Remainder]
+        WHERE [Year] = '{year}'
+        ORDER BY [Region], [Country] 
+    """
+    regional_rem = pd.read_sql(query, connection)
+    regional_rem = regional_rem.apply(lambda col: col.str.strip() if col.dtype == "object" else col)
+    return regional_rem
+
+# The Country Economic Research by Technology Group generates the Region and Country Character tables
+# use during the country model generation.  If the requested Technology Group is not available,  the DEFAULT technology group will be
+# applied in all the calculations.
+# This will first pull the Economic Research Create class to get the CountryWeight table.  Then that will be used to derive all the
+# character tables as needed.
+# This class never pulls data from the SQL database,
 class CountryEconomicResearch:
     economic_data = None
     economic_data_vba = None
    # connection = None
     year = None
+
+    def __init__(self,year, tg_id:int):
+        # self.connection = cxcn
+        self.year = year
+        self.technology_group_id = tg_id
+        self.economic_data = EconomicResearchCreate(self.year, self.technology_group_id).get_EconomicResearch()
 
     def get_Economic_Comparison(self):
         economic_research_compare = None
@@ -15,6 +72,7 @@ class CountryEconomicResearch:
         economic_research_compare['Delta'] = abs(economic_research_compare['CountryWeight_x'] - economic_research_compare['CountryWeight_y'])
         return economic_research_compare
 
+    # Originally used to compare that table generation in this class when first developing.  , no longer used
     def get_VBA_Generated_EconomicTable(self):
         db_cxcn_economic_research = DatabaseConnections().get_MiraLite_Connection()
         query_economic_research = \
@@ -79,10 +137,86 @@ class CountryEconomicResearch:
     #def getConnection(self):
      #   print(self.myConnection)
 
-    def __init__(self,year):
-        # self.connection = cxcn
+# The Economic Research by Technology Group is generated dynamically in this class.-
+# The economic research tables are combined to derive a CountryWeight for each Industry by using tables the Automation Degree, Industry GDP and Industry Fractions
+# Since this class is used to generate the country model data, it will use the DEFAULT technlogy group tables if the selected technology group is not available
+# for that year.#
+#  Required are two tables:
+#       CountryModel_AutomationDegree
+#           IndustryFraction = for each country list of industries and what weight is in the country
+#           Automation Degree  = what degree of automation in that industry/country combination
+#       CountryModel_IndustryGDP
+#           IndustrialGDP_Fraction  =  GDP by country is a fractional multiplier of the total country GDP
+class EconomicResearchCreate:
+    year = None
+    country_model_industry_gdp_fraction = None
+    country_model_industry_automation_degree = None
+    economic_research_data = None
+    gdp_x_country = None
+
+
+
+    def get_gdp_x_country(self):
+        return self.gdp_x_country
+
+    def get_EconomicResearch(self):
+        return self.economic_research_data
+
+    def get_industrial_gdp_fraction(self):
+        return self.country_model_industry_gdp_fraction
+
+    def get_industrial_automation_degree(self):
+        return self.country_model_industry_automation_degree
+
+    def __init__(self, year:int, technology_id:int):
+        self.connection = DatabaseConnections().get_MiraIndustry_Connection()
         self.year = year
-        self.economic_data = Economic_Research_Create(self.year).get_EconomicResearch()
+        self.tg_id = technology_id
+        self.msal_token = st.session_state[f"{_GS_key_prefix}msal_access_token"]
+
+
+        # Industry Fractions are Technology Independent
+        sql_statement_industry_fractions = \
+            f"SELECT [BaseYear],[Region], [Country],[Industry], [IndustryFraction] FROM [dbo].[CountryModel_IndustryFraction] " \
+            f"WHERE [BaseYear] = '{self.year}' " \
+            f"ORDER BY [Region], [Country] "
+        self.country_model_industry_fraction = pd.read_sql(sql_statement_industry_fractions, self.connection)
+        self.country_model_industry_fraction['Region'] = self.country_model_industry_fraction['Region'].str.strip()
+        self.country_model_industry_fraction['Country'] = self.country_model_industry_fraction['Country'].str.strip()
+        self.country_model_industry_fraction['Industry'] = self.country_model_industry_fraction['Industry'].str.strip()
+
+        #Industry GDP fraction by Country by Technology Group
+        self.country_model_industry_gdp_fraction = _fetch_industry_gdp(self.year, self.tg_id)
+        if self.country_model_industry_gdp_fraction.empty:
+            default_name, default_id = ProductDescriptionTable(self.msal_token).get_default_technology_group()
+            self.tg_id = default_id  # use the Default Technology Group, if the requested Technology Group is not available.
+            self.country_model_industry_gdp_fraction = _fetch_industry_gdp(self.year, self.tg_id)
+        self.country_model_industry_gdp_fraction['Region'] = self.country_model_industry_gdp_fraction['Region'].str.strip()
+        self.country_model_industry_gdp_fraction['Country'] = self.country_model_industry_gdp_fraction['Country'].str.strip()
+
+        country_list = self.country_model_industry_gdp_fraction.drop(['BaseYear', 'IndustrialGDP_Fraction'], axis=1)
+        self.gdp_x_country = GDP_X_COUNTRY(year, country_list).get_country_gdp()
+        self.gdp_x_country.rename(columns={'Year': 'BaseYear'}, inplace=True)
+
+        # Industry Automation Degree by Country by Technology Group
+        self.country_model_industry_automation_degree = _fetch_automation_degree(self.year, self.tg_id)
+        if self.country_model_industry_automation_degree.empty:
+            default_name, default_id = ProductDescriptionTable(self.msal_token).get_default_technology_group()
+            self.tg_id = default_id
+            _fetch_automation_degree(self.year, self.tg_id)
+
+        self.country_model_industry_automation_degree['Region'] = self.country_model_industry_automation_degree['Region'].str.strip()
+        self.country_model_industry_automation_degree['Country'] = self.country_model_industry_automation_degree['Country'].str.strip()
+        self.country_model_industry_automation_degree['Industry'] = self.country_model_industry_automation_degree['Industry'].str.strip()
+
+        self.economic_research_data = self.gdp_x_country.merge(self.country_model_industry_gdp_fraction,on = ['BaseYear', 'Region','Country'], how='left')
+        self.economic_research_data ['IndustrialGDP_Fraction'] = self.economic_research_data ['IndustrialGDP_Fraction'].fillna(1)
+        self.economic_research_data = self.economic_research_data.merge(self.country_model_industry_automation_degree,on = ['BaseYear', 'Region','Country'], how='left')
+        self.economic_research_data = self.economic_research_data.merge(self.country_model_industry_fraction,on = ['BaseYear', 'Region','Country','Industry'], how='left')
+
+        self.economic_research_data['CountryWeight'] = self.economic_research_data['GDP'] * self.economic_research_data['IndustrialGDP_Fraction'] * self.economic_research_data['IndustryFraction']* self.economic_research_data['AutomationDegree']
+
+        self.economic_research_data = self.economic_research_data.drop(['GDP', 'IndustrialGDP_Fraction', 'AutomationDegree'], axis=1)
 
 # Generates the GDP table used for the Economic Research.  It does require a List of Countries that are to be used in each region
 # The reason for the list of countries is so that we can exclude countries that are NOT used in the Country Model.
@@ -95,7 +229,6 @@ class GDP_X_COUNTRY:
 
     connection = None
     year = None
-
 
     def get_country_gdp(self):
         return self.country_gdp_annual
@@ -137,77 +270,8 @@ class GDP_X_COUNTRY:
         self.country_gdp_annual['Region'] = self.country_gdp_annual['Region'].str.strip()
         self.country_gdp_annual['Country'] = self.country_gdp_annual['Country'].str.strip()
 
-# The Economic Research is generated dynamically in this class.
-#  Required are two tables:
-#       CountryModel_AutomationDegree
-#           IndustryFraction = for each country list of industries and what weight is in the country
-#           Automation Degree  = what degree of automation in that industry/country combination
-#       CountryModel_IndustryGDP
-#           IndustrialGDP_Fraction  =  GDP by country is a fractional multiplier of the total country GDP
-class Economic_Research_Create:
-    year = None
-    country_model_industry_gdp_fraction = None
-    country_model_industry_automation_degree = None
-    economic_research_data = None
-    gdp_x_country = None
-
-    def get_gdp_x_country(self):
-        return self.gdp_x_country
-
-    def get_EconomicResearch(self):
-        return self.economic_research_data
-
-    def get_industrial_gdp_fraction(self):
-        return self.country_model_industry_gdp_fraction
-
-    def get_industrial_automation_degree(self):
-        return self.country_model_industry_automation_degree
-
-    def __init__(self, year):
-        self.connection = DatabaseConnections().get_MiraIndustry_Connection()
-        self.year = year
-        sql_statement_industry_fractions = \
-            f"SELECT [BaseYear],[Region], [Country],[Industry], [IndustryFraction] FROM [dbo].[CountryModel_IndustryFraction] " \
-            f"WHERE [BaseYear] = '{self.year}' " \
-            f"ORDER BY [Region], [Country] "
-        self.country_model_industry_fraction = pd.read_sql(sql_statement_industry_fractions, self.connection)
-        self.country_model_industry_fraction['Region'] = self.country_model_industry_fraction['Region'].str.strip()
-        self.country_model_industry_fraction['Country'] = self.country_model_industry_fraction['Country'].str.strip()
-        self.country_model_industry_fraction['Industry'] = self.country_model_industry_fraction['Industry'].str.strip()
-
-        sql_statement_industryGDP = \
-            f"SELECT [BaseYear],[Region],[Country],[IndustrialGDP_Fraction] FROM [dbo].[CountryModel_IndustryGDP] " \
-            f"WHERE [BaseYear] = '{self.year}' " \
-            f"ORDER BY [Country] "
-        self.country_model_industry_gdp_fraction = pd.read_sql(sql_statement_industryGDP, self.connection)
-        self.country_model_industry_gdp_fraction['Region'] = self.country_model_industry_gdp_fraction['Region'].str.strip()
-        self.country_model_industry_gdp_fraction['Country'] = self.country_model_industry_gdp_fraction['Country'].str.strip()
-
-        country_list = self.country_model_industry_gdp_fraction.drop(['BaseYear', 'IndustrialGDP_Fraction'], axis=1)
-        self.gdp_x_country = GDP_X_COUNTRY(year, country_list).get_country_gdp()
-        self.gdp_x_country.rename(columns={'Year': 'BaseYear'}, inplace=True)
-
-        sql_statement_automation_degree = \
-            f"SELECT [BaseYear],[Region], [Country],[Industry],[AutomationDegree] FROM [dbo].[CountryModel_AutomationDegree] " \
-            f"WHERE [BaseYear] = '{self.year}' " \
-            f"ORDER BY [Region], [Country] "
-        self.country_model_industry_automation_degree = pd.read_sql(sql_statement_automation_degree, self.connection)
-        self.country_model_industry_automation_degree['Region'] = self.country_model_industry_automation_degree['Region'].str.strip()
-        self.country_model_industry_automation_degree['Country'] = self.country_model_industry_automation_degree['Country'].str.strip()
-        self.country_model_industry_automation_degree['Industry'] = self.country_model_industry_automation_degree['Industry'].str.strip()
-
-        self.economic_research_data = self.gdp_x_country.merge(self.country_model_industry_gdp_fraction,on = ['BaseYear', 'Region','Country'], how='left')
-        self.economic_research_data ['IndustrialGDP_Fraction'] = self.economic_research_data ['IndustrialGDP_Fraction'].fillna(1)
-        self.economic_research_data = self.economic_research_data.merge(self.country_model_industry_automation_degree,on = ['BaseYear', 'Region','Country'], how='left')
-        self.economic_research_data = self.economic_research_data.merge(self.country_model_industry_fraction,on = ['BaseYear', 'Region','Country','Industry'], how='left')
-
-        self.economic_research_data['CountryWeight'] = self.economic_research_data['GDP'] * self.economic_research_data['IndustrialGDP_Fraction'] * self.economic_research_data['IndustryFraction']* self.economic_research_data['AutomationDegree']
-
-        self.economic_research_data = self.economic_research_data.drop(['GDP', 'IndustrialGDP_Fraction', 'AutomationDegree'], axis=1)
-
 # EconomicResearchFactorsRanges
 # Specifically to retrieve the ranges in the IndustryWeight table
-#
 class EconomicResearchFactorsRanges:
     connection = None
 
@@ -227,7 +291,7 @@ class EconomicResearchFactorsRanges:
     def __get_automation_gdp_table(self):
         year = "%"
         sql_statement_automation_gdp = \
-            f"SELECT [BaseYear],[Region], [Country],[IndustrialGDP_Fraction] FROM [dbo].[CountryModel_IndustryGDP] " \
+            f"SELECT [BaseYear],[Region], [Country],[IndustrialGDP_Fraction], [TechnologyGroupID] FROM [dbo].[CountryModel_IndustryGDP] " \
             f"WHERE [BaseYear] LIKE '{year}' " \
             f"ORDER BY [Region], [Country] "
         _industry_gdp = pd.read_sql(sql_statement_automation_gdp, self.connection)
@@ -236,7 +300,7 @@ class EconomicResearchFactorsRanges:
     def __get_automation_degree_table(self):
         year = "%"
         sql_statement_automation_degree = \
-            f"SELECT [BaseYear],[Region], [Country],[Industry],[AutomationDegree] FROM [dbo].[CountryModel_AutomationDegree] " \
+            f"SELECT [BaseYear],[Region], [Country],[Industry],[AutomationDegree], [TechnologyGroupID] FROM [dbo].[CountryModel_AutomationDegree] " \
             f"WHERE [BaseYear] LIKE '{year}' " \
             f"ORDER BY [Region], [Country] "
         _industry_automation_degree = pd.read_sql(sql_statement_automation_degree, self.connection)
@@ -251,36 +315,78 @@ class EconomicResearchFactorsRanges:
         _industry_fractions = pd.read_sql(sql_statement_industry_weights, self.connection)
         return _industry_fractions
 
+    def __getlist_financial_gdp_years(self):
+        sql_statement = \
+            f"SELECT [Year],[Region],[Country],[Revenues],[Quarter] FROM [dbo].[FinancialMetrics_Country] " \
+            f"ORDER BY [Country] "
+        country_gdp = pd.read_sql(sql_statement, self.connection)
+        country_gdp = country_gdp .drop(['Region', 'Revenues', 'Country'], axis=1)
+        country_gdp['Quarter'] =country_gdp['Quarter'].str.strip()
+        quarters_per_year = country_gdp.groupby('Year')['Quarter'].apply(set)
+
+        valid_year_list = [
+            year for year, quarters in quarters_per_year.items()
+            if {'Q1', 'Q2', 'Q3', 'Q4'}.issubset(quarters)
+        ]
+        valid_year_list = sorted(valid_year_list, reverse=True)
+        return valid_year_list
+
     #******* get_economic_research_years
-    # There are 4 tables which need to be validated that they are all populated with the same range in years.
+    # There are 5 tables which need to be validated that they are all populated with the same range in years.
+    # Four of the tables are used for the Country Model Parameters while the 5th table is Quarterly GDP from the Financials.
     #   - gdp data by country
     #   - automation degree
     #   - industry Weights
     #   - gdp remainders
+    #   - GDP quarterly data from the Financial tables.  (
     #  the intersection of the years of the Economic research will determine what years of market reports can be modeled.
     def get_economic_research_years(self):
-        gdp_years = self.get_gdp_research_years()
-        automation_degree_years = self.get_industry_weights_research_years()
-        industry_years = self.get_industry_weights_research_years()
-        gdp_remainders_years = self.get_gdp_regional_remainder_research_years()
-        intersection_years = set(gdp_years) & set(industry_years) & set(gdp_remainders_years)
+        gdp_years = self.getlist_cm_automation_gdp_research_years()
+        automation_degree_years = self.getlist_automation_degree_research_years()
+        industry_years = self.getlist_cm_industry_weights_research_years()
+        gdp_remainders_years = self.getlist_cm_gdp_regional_remainder_research_years()
+        financial_gdp_years = self.__getlist_financial_gdp_years()
+        intersection_years = set(gdp_years) & set(automation_degree_years) & set(industry_years) & set(gdp_remainders_years) & set(financial_gdp_years)
         return list(intersection_years)
 
-    def get_gdp_regional_remainder_research_years(self):
+    def getlist_automation_degree_research_years(self):
+        auto_degree = self.__get_automation_degree_table()
+        auto_degree = auto_degree.drop(['Region','Country','Industry','AutomationDegree','TechnologyGroupID'],axis=1)
+        base_year_list = auto_degree['BaseYear'].drop_duplicates()
+        base_year_list = base_year_list.sort_values(ascending=False)
+        return base_year_list.to_list()
+
+    def getlist_automation_degree_research_technology_groups(self, year: int):
+        auto_degree = self.__get_automation_degree_table()
+        auto_degree = auto_degree.drop(['Region','Country','Industry','AutomationDegree'],axis=1)
+        auto_degree = auto_degree[(auto_degree['BaseYear'] == year)]
+
+        tg_list = auto_degree['TechnologyGroupID'].dropna().drop_duplicates().astype(int).tolist()
+        tg_list = [int(x) for x in tg_list]  # if IDs should be integers
+
+        pdt = ProductDescriptionTable(st.session_state[f"{_GS_key_prefix}msal_access_token"])
+        all_tech_groups = pdt.technology_group_list_via_graph()
+        all_tech_groups['ID'] = all_tech_groups['ID'].astype(int)
+        filtered_tg =  all_tech_groups[ all_tech_groups['ID'].isin(tg_list )]
+        tg_filtered_list = filtered_tg['TechnologyGroup']
+        return tg_filtered_list .to_list()
+
+
+    def getlist_cm_gdp_regional_remainder_research_years(self):
         _industry_gdp = self.__get_gdp_regional_remainder_table()
         _industry_gdp = _industry_gdp.drop(['Region','Country','RemainderSize'],axis=1)
         base_year_list = _industry_gdp['Year'].drop_duplicates()
         base_year_list = base_year_list.sort_values(ascending=False)
         return base_year_list.to_list()
 
-    def get_gdp_research_years(self):
+    def getlist_cm_automation_gdp_research_years(self):
         _industry_gdp = self.__get_automation_gdp_table()
-        _industry_gdp = _industry_gdp.drop(['Region','Country','IndustrialGDP_Fraction'],axis=1)
+        _industry_gdp = _industry_gdp.drop(['Region','Country','IndustrialGDP_Fraction','TechnologyGroupID'],axis=1)
         base_year_list = _industry_gdp['BaseYear'].drop_duplicates()
         base_year_list = base_year_list.sort_values(ascending=False)
         return base_year_list.to_list()
 
-    def get_regions_from_regional_remainder(self, year):
+    def getlist_cm_regions_from_regional_remainder(self, year):
         _gdp_remainders= self.__get_gdp_regional_remainder_table()
         _gdp_remainders = _gdp_remainders[(_gdp_remainders['Year'] == year)]
         _gdp_remainders = _gdp_remainders.drop(['Year','Country','RemainderSize'],axis=1)
@@ -288,30 +394,44 @@ class EconomicResearchFactorsRanges:
         region_list = region_list.sort_values(ascending=False)
         return region_list
 
-    def get_gdp_research_regions(self, year):
+    def getlist_cm_gdp_research_regions(self, year):
         _industry_automation_gdp = self.__get_automation_gdp_table()
         _industry_automation_gdp = _industry_automation_gdp[(_industry_automation_gdp['BaseYear'] == year)]
-        _industry_automation_gdp = _industry_automation_gdp.drop(['BaseYear','Country','IndustrialGDP_Fraction'],axis=1)
+        _industry_automation_gdp = _industry_automation_gdp.drop(['BaseYear','Country','IndustrialGDP_Fraction','TechnologyGroupID'],axis=1)
         region_list = _industry_automation_gdp['Region'].drop_duplicates()
         region_list = region_list.sort_values(ascending=False)
         return region_list
 
-    def get_gdp_research_countries(self, year, region):
+    def getlist_cm_gdp_research_countries(self, year, region):
         _industry_automation_gdp = self.__get_automation_gdp_table()
         _industry_automation_gdp = _industry_automation_gdp[(_industry_automation_gdp['BaseYear']==year) & (_industry_automation_gdp['Region']==region)]
-        _industry_automation_gdp = _industry_automation_gdp.drop(['BaseYear','Region','IndustrialGDP_Fraction'],axis=1)
+        _industry_automation_gdp = _industry_automation_gdp.drop(['BaseYear','Region','IndustrialGDP_Fraction','TechnologyGroupID'],axis=1)
         country_list = _industry_automation_gdp['Country'].drop_duplicates()
         country_list = country_list.sort_values(ascending=False)
         return country_list
 
-    def get_industry_weights_research_years(self):
+    def getlist_cm_gdp_research_technology_groups(self, year):
+        _industry_automation_gdp = self.__get_automation_gdp_table()
+        _industry_automation_gdp = _industry_automation_gdp[(_industry_automation_gdp['BaseYear']==year)]
+        _industry_automation_gdp = _industry_automation_gdp.drop(['BaseYear','Region','Country','IndustrialGDP_Fraction'],axis=1)
+
+        tg_group_id_list = _industry_automation_gdp['TechnologyGroupID'].dropna().drop_duplicates().astype(int).tolist()
+
+        pdt = ProductDescriptionTable(st.session_state[f"{_GS_key_prefix}msal_access_token"])
+        all_tech_groups = pdt.technology_group_list_via_graph()
+        all_tech_groups['ID'] = all_tech_groups['ID'].astype(int)
+        filtered_tg =  all_tech_groups[ all_tech_groups['ID'].isin(tg_group_id_list )]
+        tg_list = filtered_tg['TechnologyGroup'].to_list()
+        return tg_list
+
+    def getlist_cm_industry_weights_research_years(self):
         _industry_weights = self.__get_industry_weight_table()
         _industry_weights = _industry_weights.drop(['Region','Country','Industry','IndustryFraction'],axis=1)
         base_year_list = _industry_weights['BaseYear'].drop_duplicates()
         base_year_list = base_year_list.sort_values(ascending=False)
         return base_year_list.to_list()
 
-    def get_industry_weights_research_regions(self, year):
+    def getlist_industry_weights_research_regions(self, year):
         _industry_weights = self.__get_industry_weight_table()
         _industry_weights =  _industry_weights[( _industry_weights['BaseYear'] == year)]
         _industry_weights =  _industry_weights.drop(['BaseYear','Country','Industry','IndustryFraction'],axis=1)
@@ -319,7 +439,7 @@ class EconomicResearchFactorsRanges:
         region_list = region_list.sort_values(ascending=False)
         return region_list.to_list()
 
-    def get_countries_from_industry_weights_research(self, year, region):
+    def getlist_countries_from_industry_weights_research_x_region(self, year, region):
         _industry_weights = self.__get_industry_weight_table()
         _industry_weights = _industry_weights[(_industry_weights['BaseYear']==year) & (_industry_weights['Region']==region)]
         _industry_weights = _industry_weights.drop(['BaseYear','Region','Industry','IndustryFraction'],axis=1)
@@ -327,6 +447,13 @@ class EconomicResearchFactorsRanges:
         country_list = country_list.sort_values(ascending=False)
         return country_list
 
+    def getlist_countries_from_industry_weights_research_all_regions(self, year):
+        _industry_weights = self.__get_industry_weight_table()
+        _industry_weights = _industry_weights[(_industry_weights['BaseYear']==year)]
+        _industry_weights = _industry_weights.drop(['BaseYear','Region','Industry','IndustryFraction'],axis=1)
+        country_list = _industry_weights['Country'].drop_duplicates().str.strip()
+        country_list = country_list.sort_values(ascending=False)
+        return country_list
 
 
 # EconomicResearchFactorsPublish - support write of a Economic Factors dataframes to the database
@@ -335,9 +462,56 @@ class EconomicResearchFactorsRanges:
 #   publish_country_gdp_fraction
 #   publish_regional_gdp_remainders
 #
-class EconomicResearchFactorsPublish():
+class EconomicResearchFactorsPublish:
     db_engine_economic_research = None
     db_connection = None
+
+
+    def copy_technology_group_economic_research(self, copy_year:int,copy_tg_id, dest_year:int , dest_tg_id:int ):
+        # Automation Degree by Country X Industry
+        sql_statement_automation_degree = f"""
+            SELECT [BaseYear], [Region], [Country], [Industry], [AutomationDegree], [TechnologyGroupID]
+            FROM [dbo].[CountryModel_AutomationDegree]
+            WHERE [BaseYear] = {copy_year} AND [TechnologyGroupID] = {copy_tg_id}
+            ORDER BY [BaseYear],[Region], [Country]
+        """
+        automation_degree = pd.read_sql(sql_statement_automation_degree, self.db_connection)
+        automation_degree['BaseYear'] = dest_year
+        automation_degree['TechnologyGroupID'] = dest_tg_id
+
+        delete_query = f"""
+            DELETE FROM CountryModel_AutomationDegree
+            WHERE BaseYear = {dest_year} AND TechnologyGroupID ={dest_tg_id}
+        """
+        cursor = self.db_connection.cursor()
+        cursor.execute(delete_query)
+        self.db_connection.commit()
+
+        automation_degree.to_sql('CountryModel_AutomationDegree', self.db_engine_economic_research, if_exists='append',
+                                 index=False)
+
+        # Industrial GDP Table
+        sql_statement_industry_gdp = f"""
+        SELECT [BaseYear], [Region], [Country], [IndustrialGDP_Fraction], [TechnologyGroupID]
+        FROM [dbo].[CountryModel_IndustryGDP]
+        WHERE [BaseYear] = {copy_year} AND [TechnologyGroupID] = {copy_tg_id}
+        ORDER BY [BaseYear], [Region], [Country]
+        """
+        industry_gdp = pd.read_sql(sql_statement_industry_gdp, self.db_connection)
+        industry_gdp['BaseYear'] = dest_year
+        industry_gdp['TechnologyGroupID'] =dest_tg_id
+
+        delete_query = f"""
+                 DELETE FROM CountryModel_IndustryGDP
+                 WHERE BaseYear = {dest_year} AND TechnologyGroupID ={dest_tg_id}
+            """
+        cursor = self.db_connection.cursor()
+        cursor.execute(delete_query)
+        self.db_connection.commit()
+        industry_gdp.to_sql('CountryModel_IndustryGDP', self.db_engine_economic_research, if_exists='append',
+                                  index=False)
+
+        return "Copy Complete"
 
     # Comprehensive Copy function for both Technology Group and Universal modeling parameters.
     # Either create a new year model or simply copy over existing modeling data
@@ -670,28 +844,30 @@ class EconomicResearchFactorsPublish():
             print(f"Error executing SQL statement: {e}")
         return
 
-    def publish_automation_degree(self,automation_degree, year, region, country):
+    def publish_automation_degree(self,automation_degree, tg_id:int, year:int, region:str, country:str ):
         sql_statement = """
                 DELETE FROM [dbo].[CountryModel_AutomationDegree]
-                WHERE [Region] = :region AND [BaseYear] = :year AND [Country] = :country
+                WHERE [TechnologyGroupID] = :TechGroup AND [Region] = :region AND [BaseYear] = :year AND [Country] = :country
             """
         try:
              with self.db_engine_economic_research.begin() as connection:
-                connection.execute(text(sql_statement), {"year": year, "region": region, "country": country})
+                connection.execute(text(sql_statement), {"TechGroup":tg_id, "year": year, "region": region, "country": country})
+                automation_degree['TechnologyGroupID'] = tg_id
                 automation_factors = automation_degree.applymap(lambda x: x.strip() if isinstance(x, str) else x)
                 automation_factors.to_sql('CountryModel_AutomationDegree', connection, if_exists='append', index=False)
         except Exception as e:
             print(f"Error executing SQL statement: {e}")
         return
 
-    def publish_region_gdp_fraction(self, gdp_fractions, year, region):
+    def publish_region_gdp_fraction(self, gdp_fractions, tg_id:int, year:int, region:str ):
         sql_statement = """
                 DELETE FROM [dbo].[CountryModel_IndustryGDP]
-                WHERE [Region] = :region AND [BaseYear] = :year
+                WHERE [TechnologyGroupID] = :TechGroup AND [Region] = :region AND [BaseYear] = :year
             """
         try:
             with self.db_engine_economic_research.begin() as connection:
-                connection.execute(text(sql_statement), {"year": year, "region": region})
+                connection.execute(text(sql_statement), {"TechGroup":tg_id, "year": year, "region": region})
+                gdp_fractions['TechnologyGroupID'] = tg_id
                 gdp_fractions = gdp_fractions.applymap(lambda x: x.strip() if isinstance(x, str) else x)
                 gdp_fractions.to_sql('CountryModel_IndustryGDP', connection, if_exists='append', index=False)
         except Exception as e:
@@ -717,7 +893,8 @@ class EconomicResearchFactorsPublish():
         self.db_engine_economic_research = DatabaseConnections().get_MiraIndustry_engine()
         self.db_connection = DatabaseConnections().get_MiraIndustry_Connection()
 
-# EconomicResearchFactors - Used to pull the tables for the Economic Research
+# EconomicResearchFactors by Technology Group- Used to pull the tables for the Economic Research
+# Warning: This will return an empty table for technology groups that are not available in the current year.
 #   There are 3 tables which are integral to the Country Model generation:
 #       Automation_Factors
 #       GDP_Fraction
@@ -744,48 +921,46 @@ class Economic_Research_Factors:
     def get_automation_degree(self):
         return self.country_model_industry_automation_degree
 
-    def get_industry_fractions_country(self,country):
+    def get_industry_fractions_country(self,country:str):
+        country = country.strip()
         _industry_fractions = self.country_model_industry_fraction[(self.country_model_industry_fraction['Country'] == country)]
         return _industry_fractions
 
-    def get_automation_degree_country(self,country):
+    def get_automation_degree_country(self,country:str):
+        country = country.strip()
         _automation_degree = self.country_model_industry_automation_degree[(self.country_model_industry_automation_degree['Country'] == country)]
         return _automation_degree
 
     def get_industry_gdp_fraction(self):
         return self.country_model_industry_gdp_fraction
 
-    def get_industry_gdp_fraction_region(self,region):
+    def get_industry_gdp_fraction_region(self, region:str):
+        region = region.strip()
         _automation_gdp = self.country_model_industry_gdp_fraction[(self.country_model_industry_gdp_fraction['Region'] == region)]
         return _automation_gdp
 
     def get_regional_remainder(self):
         return self.regional_remainders
 
-    def get_regional_remainder_region(self,region):
+    def get_regional_remainder_region(self,region:str):
+        region = region.strip()
         _region_remainders = self.regional_remainders[self.regional_remainders['Region']==region]
         return _region_remainders
 
-    def __init__(self, year):
+    def __init__(self, year:int, technology_group_id):
         self.connection = DatabaseConnections().get_MiraIndustry_Connection()
         self.year = year
-        sql_statement_industry_fraction = \
-            f"SELECT [BaseYear],[Region], [Country],[Industry],[IndustryFraction] FROM [dbo].[CountryModel_IndustryFraction] " \
-            f"WHERE [BaseYear] = '{self.year}' " \
-            f"ORDER BY [Region], [Country] "
-        self.country_model_industry_fraction = pd.read_sql(sql_statement_industry_fraction, self.connection)
-        sql_statement_automation_degree = \
-            f"SELECT [BaseYear],[Region], [Country],[Industry],[AutomationDegree] FROM [dbo].[CountryModel_AutomationDegree] " \
-            f"WHERE [BaseYear] = '{self.year}' " \
-            f"ORDER BY [Region], [Country] "
-        self.country_model_industry_automation_degree = pd.read_sql(sql_statement_automation_degree, self.connection)
-        sql_statement_industryGDP = \
-            f"SELECT [BaseYear],[Region],[Country],[IndustrialGDP_Fraction] FROM [dbo].[CountryModel_IndustryGDP] " \
-            f"WHERE [BaseYear] = '{self.year}' " \
-            f"ORDER BY [Country] "
-        self.country_model_industry_gdp_fraction = pd.read_sql(sql_statement_industryGDP, self.connection)
-        sql_statement_regional_rem = \
-            f"SELECT [Year],[Region], [Country],[RemainderSize] FROM [dbo].[FinancialMetrics_GDP_Region_Remainder] " \
-            f"WHERE [Year] = '{self.year}' " \
-            f"ORDER BY [Region], [Country] "
-        self.regional_remainders = pd.read_sql(sql_statement_regional_rem, self.connection)
+        self.tg_id = technology_group_id
+        self.msal_token = st.session_state[f"{_GS_key_prefix}msal_access_token"]
+
+        # TechGroup: Industry Automation Degree by Country by Technology Group
+        self.country_model_industry_automation_degree = _fetch_automation_degree(self.year, self.tg_id)
+
+        #TechGroup: Industry GDP fraction by Country by Technology Group
+        self.country_model_industry_gdp_fraction = _fetch_industry_gdp(self.year, self.tg_id)
+
+        # Universal Model Parameters - Industry Fraction
+        self.country_model_industry_fraction = _fetch_industry_fraction_all_country(self.year)
+
+        # Universal Model Parameters - Regional Remainders
+        self.regional_remainders = _fetch_regional_rem(self.year)

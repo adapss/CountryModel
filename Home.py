@@ -1,31 +1,31 @@
 import streamlit as st
 
-from app.myCountryModelPackages.CM_SessionStates import initialize_global_session_states
+from myCountryModelPackages.CM_SessionStates import global_session_states_initialize
 
 st.set_page_config(layout="wide")
 
 def display_page_info():
-    st.markdown("<h1 style='text-align: center;'>Country Model Generator - V8.0</h1>", unsafe_allow_html=True)
+    st.markdown("<h1 style='text-align: center;'>Country Model Generator - V9.8</h1>", unsafe_allow_html=True)
     text_message = "This application is designed to generate a Country Model from a published World Wide market Report.  \
-                  Access to all the Country Model Economic Factors can be modified in several of the tabs on the left "
+                  Country Model Economic Factors can be modified in several of the tabs on the left "
     st.markdown("<h3 style='font-size:14pt;'>" + text_message + "</h3>", unsafe_allow_html=True)
     st.markdown("""
     <h3 style='font-size:14pt;'>Recent Updates:</h3>
-    <ul style='font-size:14pt;'>
+    <ul style='font-size:12pt;'>
         <li>Automation Degree and GDP Country Multiplier Partitioned by Technology Group </li>
         <li>Industry Fractions and GDP Regional Remainders are NOT partitioned, but considered a Common Economic Profile </li>
         <li>Version Management by Technology Group tables or Common Economic Profile Tables   </li>
         <li>Restore Partitions by Version for Technology Groups and/or Common Economic Profile</li>
         <li>Product Description Table with Technology Groups</li>
         <li>Copy All Country Model Parameters from one Year to another.  Primarily for New Year creation, but useful for other situations.</li>
+        <li>Copy and Create Technology Groups from one Year to another.  </li>
     </ul>
-    <h3 style='font-size:16pt;'>Please note: There is only one Technology Group and it is a default group for all reports.  </h3>
+    <h3 style='font-size:12pt;'>Please note: Technology Group partitioning is now available for all reports.  </h3>
     """, unsafe_allow_html=True)
     st.markdown("""
-    <h3 style='font-size:16pt;'>Working On:</h3>
-    <ul style='font-size:14pt;'>
-        <li>Introduction of Technology Groups by Market Report</li>
-        <li>Technology Groups for each market report will be referenced from the Product Description List in the Research Center.t</li>
+    <h3 style='font-size:14pt;'>Working On:</h3>
+    <ul style='font-size:12pt;'>
+        <li>Waiting on Technology Group Testing before adding more features</li>
     </ul>
     """, unsafe_allow_html=True)
 
@@ -48,7 +48,7 @@ if __name__ == '__main__':
     display_page_info()
     if not st.session_state.global_session_states_initialized:
         with st.spinner("Initializing global variables and validating consistency of the Economic Model Factors ... please do not leave the page till complete."):
-            initialize_global_session_states()
+            global_session_states_initialize()
 
 
 

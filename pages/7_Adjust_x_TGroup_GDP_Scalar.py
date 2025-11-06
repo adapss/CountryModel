@@ -1,10 +1,11 @@
 import time
 import streamlit as st
-from app.myCountryModelPackages.Economic_Research import *
-from app.myCountryModelPackages.CM_SessionStates import initialize_global_session_states
+from myCountryModelPackages.Economic_Research import *
+from myCountryModelPackages.CM_SessionStates import global_session_states_initialize
 import numpy as np
 
-initialize_global_session_states()
+global_session_states_initialize()
+_GS_key_prefix = global_session_states_key()
 
 st.set_page_config(layout="wide")
 st.title("Economic Research -  GDP Scalar by Country ")
@@ -17,15 +18,29 @@ st.write("The GDP Scalars can be modified and is pushed back to the data base.")
 key_prefix = "GDP_Fractions_"
 @st.cache_data
 def get_base_year_list():
-    return EconomicResearchFactorsRanges().get_gdp_research_years()
+    return EconomicResearchFactorsRanges().getlist_cm_automation_gdp_research_years()
 base_year_list = list(get_base_year_list())
+
+def __get_technology_group_list(year:int):
+   # pdt = (ProductDescriptionTable(st.session_state[f"{_GS_key_prefix}msal_access_token"]))
+   # tg_list = pdt.technology_group_list_via_graph()
+   erfr = EconomicResearchFactorsRanges()
+   tg_list_gdp = erfr.getlist_cm_gdp_research_technology_groups(year)
+   tg_list_ad = erfr.getlist_automation_degree_research_technology_groups(year)
+   # tg_list = set(tg_list_ad) & set(tg_list_gdp)
+   return tg_list_ad
+
+if f"{key_prefix}tg_select_value" not in st.session_state:
+    st.session_state[f"{key_prefix}tg_select_value"] = "Default"
+    if f"{key_prefix}tg_id_value" not in st.session_state:
+        st.session_state[f"{key_prefix}tg_id_value"] = 0
 
 if f"{key_prefix}region" not in st.session_state:
     if st.session_state.base_year is None:
         default_year = max(base_year_list)
     else:
         default_year = st.session_state.base_year
-    all_regions = list(EconomicResearchFactorsRanges().get_regions_from_regional_remainder(default_year))
+    all_regions = list(EconomicResearchFactorsRanges().getlist_cm_regions_from_regional_remainder(default_year))
     st.session_state[f"{key_prefix}region"] = min(all_regions)
 
 if f"{key_prefix}region_select_value" not in st.session_state:
@@ -66,7 +81,12 @@ def save_changes_button():
     #country = st.session_state.country
     db_modified =  st.session_state.automation_gdp
     db_modified['IndustrialGDP_Fraction'] = db_modified['IndustrialGDP_Fraction'] / 100
-    EconomicResearchFactorsPublish().publish_region_gdp_fraction(db_modified, year, region )
+    EconomicResearchFactorsPublish().publish_region_gdp_fraction(
+        db_modified,
+        st.session_state[f"{key_prefix}tg_id_value"],
+        year,
+        region
+    )
     st.session_state[f"{key_prefix}selection_committed"] = False
 
 def display_economic_research():
@@ -74,7 +94,11 @@ def display_economic_research():
     economic_table, = st.columns(1) #save_button, discard_changes = st.columns([2, 1, 1])
     with (economic_table):
         with st.spinner("Loading data..."):
-            economic_factors = Economic_Research_Factors(st.session_state[f"{key_prefix}base_year_select_value"])
+            tech_group_name = st.session_state[f"{key_prefix}tg_select_value"]
+            pdt = ProductDescriptionTable(st.session_state[f"{_GS_key_prefix}msal_access_token"])
+            tech_id = pdt.lookup_technology_group_id(tech_group_name)
+            st.session_state[f"{key_prefix}tg_id_value"] = tech_id
+            economic_factors = Economic_Research_Factors(st.session_state[f"{key_prefix}base_year_select_value"],tech_id)
             discard_triggered = st.session_state.get("discard_changes", False)
             if discard_triggered:
                 st.session_state.discard_changes = False
@@ -121,7 +145,7 @@ def display_economic_research():
         discard_changes_button()
         st.rerun()
 
-base_year_selection, region_selection = st.columns([0.5,1])
+technology_selection_col, base_year_selection_col, region_selection_col = st.columns([3,1,2])
 
 commit_status = st.session_state[f"{key_prefix}selection_committed"]
 if not commit_status:
@@ -133,7 +157,7 @@ if not commit_status:
     if 'base_year' not in st.session_state:
         st.session_state.base_year = base_year_list[0]
     # Get region list based on base year
-    region_list = list(EconomicResearchFactorsRanges().get_gdp_research_regions(st.session_state.base_year))
+    region_list = list(EconomicResearchFactorsRanges().getlist_cm_gdp_research_regions(st.session_state.base_year))
     if not region_list:
         st.error("No regions available for the selected base year.")
         st.stop()
@@ -141,13 +165,18 @@ if not commit_status:
         st.session_state[f"{key_prefix}region"] = region_list[0]
 
     # UI layout
-    with base_year_selection:
+    with technology_selection_col:
+        technology_group_list = __get_technology_group_list(st.session_state[f"{key_prefix}base_year_select_value"])
+        st.selectbox('Technology Group', technology_group_list,
+                     key=f"{key_prefix}tg_select_value")
+
+    with base_year_selection_col:
         #st.session_state.base_year = st.selectbox('Base Year', base_year_list, index=base_year_list.index(st.session_state.base_year), key=f"{key_prefix}base_year_select_value")
         st.session_state.base_year = st.selectbox('Base Year', base_year_list,
                                                   #index=base_year_list.index(st.session_state.base_year),
                                                   key=f"{key_prefix}base_year_select_value")
-    with region_selection:
-        region_list = list(EconomicResearchFactorsRanges().get_gdp_research_regions(st.session_state.base_year))
+    with region_selection_col:
+        region_list = list(EconomicResearchFactorsRanges().getlist_cm_gdp_research_regions(st.session_state.base_year))
         st.session_state[f"{key_prefix}region"] = st.selectbox(
             'Region',
             region_list,

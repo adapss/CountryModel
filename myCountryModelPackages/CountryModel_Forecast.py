@@ -4,8 +4,8 @@ import pyodbc
 import pandas as pd
 import numpy as np
 
-from app.myCountryModelPackages.MarketReportRetrieval import *
-from app.myCountryModelPackages.Economic_Research import *
+from myCountryModelPackages.MarketReportRetrieval import *
+from myCountryModelPackages.Economic_Research import *
 
 warnings.filterwarnings('ignore')
 

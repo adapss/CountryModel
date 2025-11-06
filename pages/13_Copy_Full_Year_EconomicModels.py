@@ -1,8 +1,8 @@
 import streamlit as st
 
-from app.myCountryModelPackages.MarketReportRetrieval import *
-from app.myCountryModelPackages.Economic_Research import *
-from app.myCountryModelPackages.CM_SessionStates import initialize_global_session_states
+from myCountryModelPackages.MarketReportRetrieval import *
+from myCountryModelPackages.Economic_Research import *
+from myCountryModelPackages.CM_SessionStates import global_session_states_initialize
 
 st.set_page_config(layout="wide")
 
@@ -14,7 +14,7 @@ selected_base_year = None
 #   market_report_db_cxcn
 #       Used to pull the published worldwide market report data which also includes the source of Country Known
 
-initialize_global_session_states()
+global_session_states_initialize()
 
 if 'db_cxcn_market_research' not in st.session_state:
     _db_cxcn = DatabaseConnections().get_MiraLite_Connection()

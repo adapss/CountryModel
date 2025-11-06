@@ -1,7 +1,7 @@
 import streamlit as st
 import matplotlib.pyplot as plt
 
-from app.myCountryModelPackages.Economic_Research import *
+from myCountryModelPackages.Economic_Research import *
 
 def warning_message():
     warning_message = 'To use the Market Share Analysis a Country Model Needs to be Generated in the Single Study tab'

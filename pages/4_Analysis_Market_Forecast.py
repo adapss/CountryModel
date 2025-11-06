@@ -13,7 +13,7 @@ def warning_message():
         unsafe_allow_html=True
     )
     return
-from app.myCountryModelPackages.Economic_Research import *
+from myCountryModelPackages.Economic_Research import *
 if 'base_year' not in st.session_state:
     warning_message()
     st.stop()

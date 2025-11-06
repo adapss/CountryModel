@@ -3,9 +3,9 @@ from typing import Optional
 
 import streamlit as st
 from streamlit import session_state
-from app.myCountryModelPackages.Economic_Research import *
-from app.myCountryModelPackages.CM_SessionStates import initialize_global_session_states
-initialize_global_session_states()
+from myCountryModelPackages.Economic_Research import *
+from myCountryModelPackages.CM_SessionStates import global_session_states_initialize
+global_session_states_initialize()
 import numpy  as np
 
 key_prefix = "Industry_Weights_"
@@ -24,7 +24,7 @@ st.markdown("<h3 style='font-size:16pt;'>" + text_caption + "</h3>", unsafe_allo
 
 @st.cache_data
 def __get_base_year_list():
-    return EconomicResearchFactorsRanges().get_industry_weights_research_years()
+    return EconomicResearchFactorsRanges().getlist_cm_industry_weights_research_years()
 base_year_list = list(__get_base_year_list())
 
 @st.cache_data
@@ -38,7 +38,7 @@ def __get_region_list(year: Optional[int] = None):
                 return []
             year = st.session_state.base_year
 
-        regions = EconomicResearchFactorsRanges().get_industry_weights_research_regions(year)
+        regions = EconomicResearchFactorsRanges().getlist_industry_weights_research_regions(year)
 
         if not regions:
             st.warning(f"No regions found for year {year}.")
@@ -55,9 +55,12 @@ def __get_region_list(year: Optional[int] = None):
 
 @st.cache_data
 def __get_country_list (year, region):
-    return list(EconomicResearchFactorsRanges().get_countries_from_industry_weights_research(st.session_state[f"{key_prefix}base_year_select_value"],st.session_state[f"{key_prefix}region_select_value"]))
+    return list(EconomicResearchFactorsRanges().getlist_countries_from_industry_weights_research_x_region(st.session_state[f"{key_prefix}base_year_select_value"], st.session_state[f"{key_prefix}region_select_value"]))
 
-with (st.spinner("Initializing page selections")):
+with ((st.spinner("Initializing page selections"))):
+    if f"{key_prefix}tg_id_value" not in session_state:
+            st.session_state[f"{key_prefix}tg_id_value"] = 0
+
     if f"{key_prefix}duplicate_value_flag" not in session_state:
         st.session_state[f"{key_prefix}duplicate_value_flag"] = False
     if f"{key_prefix}base_year_select_value" not in session_state:
@@ -80,7 +83,11 @@ with (st.spinner("Initializing page selections")):
     if f"{key_prefix}prev_country" not in st.session_state:
         st.session_state[f"{key_prefix}prev_country"] = st.session_state[f"{key_prefix}country_select_value"]
     if 'industry_fraction_table' not in session_state:
-        st.session_state.industry_fraction_table = Economic_Research_Factors(st.session_state[f"{key_prefix}base_year_select_value"]).get_industry_fractions_country(st.session_state[f"{key_prefix}country_select_value"])
+        st.session_state.industry_fraction_table = \
+            Economic_Research_Factors(
+                st.session_state[f"{key_prefix}base_year_select_value"],
+                st.session_state[f"{key_prefix}tg_id_value"]
+            ).get_industry_fractions_country(st.session_state[f"{key_prefix}country_select_value"])
 
     if 'selection_committed_weights' not in st.session_state:
         st.session_state.selection_committed_weights = False
@@ -116,9 +123,13 @@ def _editor_table_change():
 def display_economic_research():
     #st.session_state.show_research_weights = False
     economic_table, = st.columns(1) #save_button, discard_changes, clean_duplicates = st.columns([3, 1, 1,1])
-    with economic_table:
+    with (economic_table):
         with st.spinner("Loading data..."):
-            economic_factors = Economic_Research_Factors(st.session_state[f"{key_prefix}base_year_select_value"])
+            economic_factors = \
+                Economic_Research_Factors(
+                    st.session_state[f"{key_prefix}base_year_select_value"],
+                    st.session_state[f"{key_prefix}tg_id_value"]
+                )
             #automation_degree = economic_factors.get_automation_degree_country(st.session_state[f"{key_prefix}country_select_value"])
             discard_triggered = st.session_state.get("discard_changes", False)
             if discard_triggered:

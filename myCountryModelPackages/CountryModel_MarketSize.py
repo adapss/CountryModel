@@ -4,7 +4,7 @@ import pyodbc
 import pandas as pd
 import numpy as np
 
-from app.myCountryModelPackages.Economic_Research import *
+from myCountryModelPackages.Economic_Research import *
 
 class Report_Market_Size_Data:
     market_size_data = None

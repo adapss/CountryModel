@@ -1,20 +1,21 @@
 import streamlit as st
-from app.myCountryModelPackages.CountryModel_Generation import *
-from app.myCountryModelPackages.sqlTableRetrieve import *
-from app.myCountryModelPackages.MarketReportRetrieval import *
-from app.myCountryModelPackages.CM_SessionStates import initialize_global_session_states
+from myCountryModelPackages.CountryModel_Generation import *
+from myCountryModelPackages.sqlTableRetrieve import *
+from myCountryModelPackages.MarketReportRetrieval import *
+from myCountryModelPackages.ProductTechnologyGroup import *
+from myCountryModelPackages.CM_SessionStates import global_session_states_initialize, global_session_states_key
 
 st.set_page_config(layout="wide")
 
 key_prefix = "SS_Generator_"
-
+_GS_key_prefix = global_session_states_key()
 selected_base_year = None
 # Two connections are provided so that there is flexibility to source the Worldwide Market study from a different
 # database than where it is finally published
 #   market_report_db_cxcn
 #       Used to pull the published worldwide market report data which also includes the source of Country Known
 
-initialize_global_session_states()
+global_session_states_initialize()
 
 if 'db_cxcn_market_research' not in st.session_state:
     _db_cxcn = DatabaseConnections().get_MiraLite_Connection()
@@ -24,20 +25,30 @@ if 'db_engine_publication' not in st.session_state:
     _db_engine = DatabaseConnections().get_MiraLite_engine()
     st.session_state.db_engine_publication = _db_engine
 
-#if f"{key_prefix}selected_base_year" not in st.session_state:
-#    st.session_state[f"{key_prefix}selected_base_year"] = st.session_state.base_year
+if f"{key_prefix}msal_access_token"  not in st.session_state:
+    graph_api = MSGraphTokens()
+    access_token = graph_api.generate_access_token()
+    st.session_state[f"{_GS_key_prefix}msal_access_token"] = access_token
+
+if f"{key_prefix}ProductDescriptionTable" not in st.session_state:
+    token = st.session_state[f"{_GS_key_prefix}msal_access_token"]
+    st.session_state[f"{key_prefix}ProductDescriptionTable"] = ProductDescriptionTable(token)
 
 if f"{key_prefix}base_year_list" not in st.session_state:
     st.session_state[f"{key_prefix}base_year_list"] = None
+
 if f"{key_prefix}report_list" not in st.session_state:
     st.session_state[f"{key_prefix}report_list"] = None
+
 if f"{key_prefix}selected_base_year_prev" not in st.session_state:
     st.session_state[f"{key_prefix}selected_base_year_prev"] = st.session_state.base_year
 
 if f"{key_prefix}base_year_select_value" not in st.session_state:
     st.session_state[f"{key_prefix}base_year_select_value"] = st.session_state.base_year
- #   st.session_state[f"{key_prefix}selected_base_year"] = st.session_state.base_year
     st.session_state[f"{key_prefix}selected_base_year_prev"]  = None
+
+if f"{key_prefix}technology_id_value" not in st.session_state:
+    st.session_state[f"{key_prefix}technology_id"] = None
 
 if st.session_state[f"{key_prefix}selected_base_year_prev"] is None or st.session_state[f"{key_prefix}base_year_select_value"] != st.session_state[f"{key_prefix}selected_base_year_prev"]:
     market_reports = MarketReports(st.session_state.db_cxcn_market_research)
@@ -62,44 +73,92 @@ if f"{key_prefix}generate_model_flag"not in st.session_state:
     st.session_state[f"{key_prefix}generate_model_flag"] = False
 
 st.title("Country Model Generator")
-text_message = "This application is designed to generate a Country Model from an previously published World Wide market Report. \
-        So the Worldwide market data is necessary, however it is recommended that you load the Country Known data as well.  \
+text_message = "This application is designed to generate a Country Model from a published World Wide market Report. \
+        Worldwide market  and Country Known data is necessary to run a model.  \
         Country Known data should be loaded in tandem with your worldwide report so that data is consistent."
 st.markdown("<h3 style='font-size:16pt;'>" + text_message + "</h3>", unsafe_allow_html=True)
 
-base_year_col, market_report_col, generate_report_col = st.columns(3)
+base_year_col, market_report_col, technology_group_col = st.columns([1,2,4])
 
-def click_button():
+def _start_model_generation():
     st.session_state[f"{key_prefix}generate_model_flag"] = True  #not st.session_state.button[f"{key_prefix}generate_model_button"]
 
 with base_year_col:
+    st.markdown("<h1 style='font-size:12pt;text-align: center;'>Base Year</h1>", unsafe_allow_html=True)
     st.selectbox('Select Base Year', st.session_state[f"{key_prefix}base_year_list"],key = f"{key_prefix}base_year_select_value")
     st.session_state['base_year'] =  st.session_state[f"{key_prefix}base_year_select_value"]
 
 with market_report_col:
+    st.markdown("<h1 style='font-size:12pt;text-align: center;'>Market Report</h1>", unsafe_allow_html=True)
     report_list = st.session_state[f"{key_prefix}report_list"]
     filtered_df = report_list[report_list['BaseYear'] == st.session_state[f"{key_prefix}base_year_select_value"]]
     filtered_df = filtered_df.drop(['BaseYear'], axis=1)
     st.selectbox('Select Report', filtered_df['Study'].tolist() ,index = 0, key = f"{key_prefix}market_report_select_value")
     st.session_state['market_report'] = st.session_state[f"{key_prefix}market_report_select_value"]
-with generate_report_col:
-    st.button('Start Model Generation for Selected Report',
-        on_click=click_button,
-        key = f"{key_prefix}generate_model_button")
+
+with technology_group_col:
+    pdt = st.session_state[f"{key_prefix}ProductDescriptionTable"]
+    technology_group_name,st.session_state[f"{key_prefix}technology_id"]  = pdt.get_market_study_technology_group(st.session_state['market_report'])
+    st.markdown("<h1 style='font-size:12pt;text-align: center;'>Information Panel <br></h1>", unsafe_allow_html=True)
+    st.markdown(f"""
+    <div style="border:1px solid #ccc; padding:4px; border-radius:5px; background-color:#f9f9f9; width:500px;">
+       <strong>Technology Group:   </strong> {technology_group_name}, <br><strong>Technology Group ID:</strong> {st.session_state[f"{key_prefix}technology_id"]}
+    </div>
+    """, unsafe_allow_html=True)
+    mrd = MarketReportData(st.session_state.db_cxcn_market_research,st.session_state['market_report'],st.session_state[f"{key_prefix}base_year_select_value"])
+    country_known_info = mrd.get_country_known_sizes_list()
+    economic_research= EconomicResearchFactorsRanges()
+    valid_countries = economic_research.getlist_countries_from_industry_weights_research_all_regions(st.session_state[f"{key_prefix}base_year_select_value"])
+    country_known_info = country_known_info[country_known_info['Country'].isin(valid_countries)]
+    text_message = "<br>The list of countries in the table are designated as KNOWN by the analyst. <br> \
+        Only, those countries which are available in the Economic Model are included.   \
+        The market size of these countries will NOT be modeled.  However the industry size will be distributed in each country according to the model. <br>"
+    st.markdown("<h3 style='font-size:14pt;'>" + text_message + "</h3>", unsafe_allow_html=True)
+    st.markdown("""
+    <style>
+    [data-testid="stDataFrame"] div[data-testid="stDataFrameCell"] {
+        font-size: 11px;       /* Smaller font */
+        padding: 2px 2px;      /* Reduce cell padding */
+    }
+    [data-testid="stDataFrame"] div[data-testid="stDataFrameRow"] {
+        height: 15px;          /* Reduce row height */
+    }
+    </style>
+    """, unsafe_allow_html=True)
+
+    styled_df = country_known_info.style.apply(
+        lambda x: ['background-color: #DCECD1' if i % 2 == 0 else 'background-color: #ffffff' for i in range(len(x))],
+        axis=0
+    )
+
+    st.dataframe(styled_df, use_container_width=True)
+
+with st.sidebar:
+    st.header("Generate Model")
+    st.button('Start',
+              on_click=_start_model_generation,
+              key=f"{key_prefix}generate_model_button")
 
 col1, col2,col3 = st.columns(3)
 
 with (col1):
     if st.session_state[f"{key_prefix}generate_model_flag"]:
-#with st.spinner("Generating Country Models and Publishing to the database..."):
        st.session_state[f"{key_prefix}generate_model_flag"] = False
+       base_year_value = st.session_state[f"{key_prefix}base_year_select_value"]
        country_model = \
            Country_Model_Generation(st.session_state.db_cxcn_market_research,
                                     st.session_state[f"{key_prefix}market_report_select_value"],
-                                    st.session_state[f"{key_prefix}base_year_select_value"]
+                                    base_year_value,
+                                    st.session_state[f"{key_prefix}technology_id"]
                                     )
        valid_report_message = country_model.validate_world_wide_report()
-       if  valid_report_message == "":
+
+       if base_year_value in st.session_state[f"{_GS_key_prefix }economic_model_years"]:
+            valid_economic_model = ""
+       else:
+           valid_economic_model = f"Economic Model Data not Available for: {st.session_state[f"{key_prefix}base_year_select_value"]}"
+
+       if  valid_report_message == "" and valid_economic_model == "":
            with st.spinner("Generating Country Model and Publishing to the database..."):
                country_share_model = country_model.generate_market_shares()
                st.session_state['share_country_model'] = country_share_model
@@ -112,26 +171,20 @@ with (col1):
                                          st.session_state[f"{key_prefix}base_year_select_value"],
                                          country_share_model, country_forecast_model)
        else:
-           #st.write(valid_report_message)
-           # Create a single column layout
-           warning_col = st.columns(1)[0]  # Access the first (and only) column
+           warning_col = st.columns(1)[0]
            with col2:
                CountryModelRemove(st.session_state.db_engine_publication,
                                  st.session_state[f"{key_prefix}market_report_select_value"],
                                  st.session_state[f"{key_prefix}base_year_select_value"]).delete_country_model()
-               warning_message = 'Unable to Generate Country Model due to the following reasons: \n' + valid_report_message
-               st.markdown(
-                   "<div style='color: #856404; background-color: #fff3cd; padding: 10px; border-radius: 5px; font-size: 20px; white-space: pre-wrap;'>" +
-                   warning_message +
-                   "</div>",
-                   unsafe_allow_html=True
-               )
+               st.markdown(f"""
+                   <h3 style='font-size:14pt;'>Unable to Generate Country Model due to the following reasons:</h3>
+                   <ul style='font-size:12pt;'>
+                       <li>Market Report: {valid_report_message}</li>
+                       <li>Economic Model: {valid_economic_model}</li>
+                   </ul>
+                   """, unsafe_allow_html=True)
                st.stop()
 
-#sql_market_data = MarketReportData(DatabaseConnections().get_MiraLite_Connection(), selected_report, st.session_state[f"{key_prefix}selected_base_year"])
-       #sql_country_model_size = sql_market_data.get_country_model_size()
-       #sql_country_model_forecast = sql_market_data.get_country_model_forecast()
-       #country_model_comparison = CountryModelComparisonTest(country_share_model, sql_country_model_size, country_forecast_model, sql_country_model_forecast)
        with col1:
            st.write("Market Shares")
            st.write(country_share_model)

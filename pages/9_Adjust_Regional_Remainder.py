@@ -1,10 +1,11 @@
 import time
 import streamlit as st
-from app.myCountryModelPackages.Economic_Research import *
-from app.myCountryModelPackages.CM_SessionStates import initialize_global_session_states
+from myCountryModelPackages.Economic_Research import *
+from myCountryModelPackages.CM_SessionStates import global_session_states_initialize
 import numpy as np
 
-initialize_global_session_states()
+key_prefix = "Region_Rem_"
+global_session_states_initialize()
 
 st.set_page_config(layout="wide")
 st.title("Economic Research -  GDP Regional Remainders ")
@@ -13,15 +14,18 @@ st.write("The GDP Regional Remainders can be modified and is pushed back to the 
 
 @st.cache_data
 def get_base_year_list():
-    return EconomicResearchFactorsRanges().get_gdp_regional_remainder_research_years()
+    return EconomicResearchFactorsRanges().getlist_cm_gdp_regional_remainder_research_years()
 base_year_list = list(get_base_year_list())
+
+if f"{key_prefix}tg_id_value" not in st.session_state:
+    st.session_state[f"{key_prefix}tg_id_value"] = 0
 
 if 'region' not in st.session_state:
     if st.session_state.base_year is None:
         default_year = max(base_year_list)
     else:
         default_year = st.session_state.base_year
-    all_regions = list(EconomicResearchFactorsRanges().get_regions_from_regional_remainder(default_year))
+    all_regions = list(EconomicResearchFactorsRanges().getlist_cm_regions_from_regional_remainder(default_year))
     st.session_state.region = min(all_regions)
 
 if 'automation_gdp' not in st.session_state:
@@ -62,7 +66,11 @@ def display_economic_research():
     remainder_table, = st.columns(1) # , save_button, discard_changes = st.columns([2, 1, 1])
     with remainder_table:
         with st.spinner("Loading data..."):
-            economic_factors = Economic_Research_Factors(st.session_state.base_year_select_value)
+            economic_factors = \
+                Economic_Research_Factors(
+                    st.session_state.base_year_select_value,
+                    st.session_state[f"{key_prefix}tg_id_value"]
+                )
             discard_triggered = st.session_state.get("discard_changes", False)
             if discard_triggered:
                 st.session_state.discard_changes = False
@@ -120,9 +128,9 @@ if not commit_status:
         st.session_state.base_year = base_year_list[0]
     # Get region list based on base year
     if 'base_year_select_value' not in st.session_state:
-        region_list = list(EconomicResearchFactorsRanges().get_regions_from_regional_remainder(st.session_state.base_year))
+        region_list = list(EconomicResearchFactorsRanges().getlist_cm_regions_from_regional_remainder(st.session_state.base_year))
     else:
-        region_list = list(EconomicResearchFactorsRanges().get_regions_from_regional_remainder(st.session_state.base_year_select_value))
+        region_list = list(EconomicResearchFactorsRanges().getlist_cm_regions_from_regional_remainder(st.session_state.base_year_select_value))
     if not region_list:
         st.error("No regions available for the selected base year.")
         st.stop()
@@ -132,7 +140,7 @@ if not commit_status:
     with base_year_selection:
         st.session_state.bae_year = st.selectbox('Base Year', base_year_list, index=base_year_list.index(st.session_state.base_year), key='base_year_select_value')
     with region_selection:
-        region_list = list(EconomicResearchFactorsRanges().get_regions_from_regional_remainder(st.session_state.base_year_select_value))
+        region_list = list(EconomicResearchFactorsRanges().getlist_cm_regions_from_regional_remainder(st.session_state.base_year_select_value))
         region_selected = st.session_state.region
         st.session_state.region = st.selectbox('Region', region_list, key = 'region_select_value')
 

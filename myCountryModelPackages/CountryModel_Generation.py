@@ -10,9 +10,9 @@
 
 #from myCountryModelPackages.sqlTableRetrieve import *
 #from myCountryModelPackages.MarketReportRetrieval import *
-from app.myCountryModelPackages.CountryModel_Forecast import *
-from app.myCountryModelPackages.CountryModel_MarketSize import *
-from app.myCountryModelPackages.Economic_Research import *
+from myCountryModelPackages.CountryModel_Forecast import *
+from myCountryModelPackages.CountryModel_MarketSize import *
+from myCountryModelPackages.Economic_Research import *
 
 class CountryModelComparisonTest:
     market_share_generated = None
@@ -142,8 +142,16 @@ class Country_Model_Publish:
 class Country_Model_Generation:
     marketStudy:str = "AC Drives Low Voltage"
     baseYear:str = "2023"
+    technology_group_id:int = None
     dump = False
     db_cxcn = None
+
+    def __init__(self, cxcn, market_study:str, year:int, tg_id:int):
+        self.marketStudy = market_study
+        self.baseYear = year
+        self.technology_group_id = tg_id
+        self.db_cxcn = cxcn
+
 
     # this method determines if a worldwide report can be used to generate a country model
     # Couple of checks:
@@ -176,7 +184,7 @@ class Country_Model_Generation:
     def generate_market_shares(self):
         # Economic Tables from Analyst Research
         #  - build Lists Countries, Industries and Regions included in the Economic analysis
-        economic_research = CountryEconomicResearch(self.baseYear)
+        economic_research = CountryEconomicResearch(self.baseYear, self.technology_group_id)
         gIndustryList = economic_research.get_IndustryList()
         gRegionList = economic_research.get_RegionList()
 
@@ -242,7 +250,7 @@ class Country_Model_Generation:
     def generate_forecast(self):
        # Economic Tables from Analyst Research
         #  - build Lists Countries, Industries and Regions included in the Economic analysis
-        economic_research = CountryEconomicResearch(self.baseYear)
+        economic_research = CountryEconomicResearch(self.baseYear, self.technology_group_id)
         gRegion_x_Country = economic_research.get_Region_X_Country_Table()
         gIndustryList = economic_research.get_IndustryList()
         gCountryList = economic_research.get_CountryList()
@@ -290,10 +298,7 @@ class Country_Model_Generation:
         country_model_forecast['BaseYear'] = self.baseYear
         return country_model_forecast
 
-    def __init__(self, cxcn, market_study, year):
-        self.marketStudy = market_study
-        self.baseYear = year
-        self.db_cxcn = cxcn
+
 
 
 
