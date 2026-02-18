@@ -77,13 +77,13 @@ class Report_Market_Size_Data:
         self.year = year
         self.sql_query_market_size = \
             f"SELECT  [SizeKey], [Study], [BaseYear], [Company], [Segment], [Category],[ParentCategory], [Size], [Fraction], [Units] FROM [dbo].[StudySizes]" \
-            f"WHERE   ([Study] = '{marketStudy}') AND ([BaseYear] =  {year}) AND (([Segment] LIKE '{worldSegment}')  OR ([Segment] LIKE '{industrySegment}'))" \
+            f"WHERE   ([Study] = '{marketStudy}') AND ([BaseYear] =  {year}) AND ([Units] =  'Revenues' ) AND (([Segment] LIKE '{worldSegment}')  OR ([Segment] LIKE '{industrySegment}'))" \
             f"AND ([Category] LIKE '{categoryName}')" \
             f"ORDER BY [Category], [BaseYear], [Company]"
         self.market_size_data = pd.read_sql(self.sql_query_market_size, self.connection)
         self.sql_query_market_forecast = \
             f"SELECT  [ForecastKey], [Study], [BaseYear], [Year],[Segment], [Category],[ParentCategory], [Forecast], [Units] FROM [dbo].[StudyForecasts]" \
-            f"WHERE   ([Study] = '{marketStudy}') AND ([BaseYear] =  {year}) AND (([Segment] LIKE '{worldSegment}')  OR ([Segment] LIKE '{industrySegment}'))" \
+            f"WHERE   ([Study] = '{marketStudy}') AND ([BaseYear] =  {year}) AND ([Units] =  'Revenues' ) AND (([Segment] LIKE '{worldSegment}')  OR ([Segment] LIKE '{industrySegment}'))" \
             f"AND ([Category] LIKE '{categoryName}')" \
             f"ORDER BY [Segment], [Category], [BaseYear], [Year] "
         self.market_forecast_data = pd.read_sql(self.sql_query_market_forecast, self.connection)

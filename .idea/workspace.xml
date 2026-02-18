@@ -7,21 +7,18 @@
     <list default="true" id="a7e4021d-836e-4dc6-b32e-6cca4ddc913b" name="Changes" comment="Version 4.5&#10;added validation checks before generating the market model. Requirs CK, all regions and industry segmentation&#10;Added more caching to improve response.&#10;Adjust_Automation degree : cleaned up flags to display table and added a remove duplicates function.&#10;incorporated session state keys in all modules;  reduced the number of database retrievals in the Adjust_xxx pages&#10;Minor fix to error catching in the Analyze tabs&#10;Fully function App with Generation, Analysis, and Economic Editing">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Home.py" beforeDir="false" afterPath="$PROJECT_DIR$/Home.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/myCountryModelPackages/CountryModel_Forecast.py" beforeDir="false" afterPath="$PROJECT_DIR$/myCountryModelPackages/CountryModel_Forecast.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/myCountryModelPackages/CountryModel_Generation.py" beforeDir="false" afterPath="$PROJECT_DIR$/myCountryModelPackages/CountryModel_Generation.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/myCountryModelPackages/CountryModel_MarketSize.py" beforeDir="false" afterPath="$PROJECT_DIR$/myCountryModelPackages/CountryModel_MarketSize.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/myCountryModelPackages/Economic_Research.py" beforeDir="false" afterPath="$PROJECT_DIR$/myCountryModelPackages/Economic_Research.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/0_TechnologyGroups_Info.py" beforeDir="false" afterPath="$PROJECT_DIR$/pages/0_TechnologyGroups_Info.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/13_Copy_Full_Year_EconomicModels.py" beforeDir="false" afterPath="$PROJECT_DIR$/pages/13_Copy_Full_Year_EconomicModels.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/14_Copy_TGroup_Models.py" beforeDir="false" afterPath="$PROJECT_DIR$/pages/14_Copy_TGroup_Models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/1_Generate_Single_BaseYear.py" beforeDir="false" afterPath="$PROJECT_DIR$/pages/1_Generate_Single_BaseYear.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/2_Generate_All_BaseYear.py" beforeDir="false" afterPath="$PROJECT_DIR$/pages/2_Generate_All_BaseYear.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/3_Analysis_Market_Shares.py" beforeDir="false" afterPath="$PROJECT_DIR$/pages/3_Analysis_Market_Shares.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/4_Analysis_Market_Forecast.py" beforeDir="false" afterPath="$PROJECT_DIR$/pages/4_Analysis_Market_Forecast.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/5_Economic_CountryWeights.py" beforeDir="false" afterPath="$PROJECT_DIR$/pages/5_Economic_CountryWeights.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/7_Adjust_x_TGroup_GDP_Scalar.py" beforeDir="false" afterPath="$PROJECT_DIR$/pages/7_Adjust_x_TGroup_GDP_Scalar.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/8_Adjust_CountryIndustryFractions.py" beforeDir="false" afterPath="$PROJECT_DIR$/pages/8_Adjust_CountryIndustryFractions.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/9_Adjust_Regional_Remainder.py" beforeDir="false" afterPath="$PROJECT_DIR$/pages/9_Adjust_Regional_Remainder.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/myCountryModelPackages/MarketReportRetrieval.py" beforeDir="false" afterPath="$PROJECT_DIR$/myCountryModelPackages/MarketReportRetrieval.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/13_Copy_Full_Year_EconomicModels.py" beforeDir="false" afterPath="$PROJECT_DIR$/pages/14_Copy_Full_Year_EconomicModels.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/14_Copy_TGroup_Models.py" beforeDir="false" afterPath="$PROJECT_DIR$/pages/15_Copy_TGroup_Models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/2_Generate_All_BaseYear.py" beforeDir="false" afterPath="$PROJECT_DIR$/pages/3_Generate_All_BaseYear.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/3_Analysis_Market_Shares.py" beforeDir="false" afterPath="$PROJECT_DIR$/pages/4_Analysis_Market_Shares.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/4_Analysis_Market_Forecast.py" beforeDir="false" afterPath="$PROJECT_DIR$/pages/5_Analysis_Market_Forecast.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/5_Economic_CountryWeights.py" beforeDir="false" afterPath="$PROJECT_DIR$/pages/6_Economic_CountryWeights.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/7_Adjust_x_TGroup_GDP_Scalar.py" beforeDir="false" afterPath="$PROJECT_DIR$/pages/8_Adjust_x_TGroup_GDP_Scalar.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/8_Adjust_CountryIndustryFractions.py" beforeDir="false" afterPath="$PROJECT_DIR$/pages/9_Adjust_CountryIndustryFractions.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/9_Adjust_Regional_Remainder.py" beforeDir="false" afterPath="$PROJECT_DIR$/pages/10_Adjust_Regional_Remainder.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -65,13 +62,15 @@
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/SSpada/ARC Advisory Group/Product Development - Documents/PythonProjects/CountryModel_StreamLit/pages&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/SSpada/ARC Advisory Group/Product Development - Documents/PythonProjects/Docker-CountryModel/app/pages&quot;,
     &quot;python.debugger.dataview.coloredbydefault&quot;: &quot;false&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;
+    &quot;settings.editor.selected.configurable&quot;: &quot;configurable.group.editor&quot;
   }
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\SSpada\ARC Advisory Group\Product Development - Documents\PythonProjects\Docker-CountryModel\app\pages" />
+      <recent name="C:\Users\SSpada\ARC Advisory Group\Product Development - Documents\PythonProjects\Docker-CountryModel\app\myCountryModelPackages" />
       <recent name="C:\Users\SSpada\ARC Advisory Group\Product Development - Documents\PythonProjects\CountryModel_StreamLit\pages" />
       <recent name="C:\Users\SSpada\ARC Advisory Group\Product Development - Documents\PythonProjects\CountryModel_StreamLit\myCountryModelPackages" />
       <recent name="C:\Users\SSpada\ARC Advisory Group\Product Development - Documents\PythonProjects\CountryModel_StreamLit" />
@@ -310,48 +309,38 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/myCountryModelPackages/MarketReportRetrieval.py</url>
-          <line>84</line>
-          <option name="timeStamp" value="341" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/pages/3_Analysis_Market_Forecast.py</url>
           <line>31</line>
           <option name="timeStamp" value="343" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/myCountryModelPackages/MarketReportRetrieval.py</url>
-          <line>44</line>
-          <option name="timeStamp" value="347" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/pages/12_Restore_CountryEconomicProfile.py</url>
+          <url>file://$PROJECT_DIR$/pages/13_Restore_CountryEconomicProfile.py</url>
           <line>66</line>
           <option name="timeStamp" value="434" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/pages/10_Version Management.py</url>
+          <url>file://$PROJECT_DIR$/pages/12_Version Management.py</url>
           <line>68</line>
           <option name="timeStamp" value="466" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/pages/10_Version Management.py</url>
+          <url>file://$PROJECT_DIR$/pages/12_Version Management.py</url>
           <line>70</line>
           <option name="timeStamp" value="467" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/pages/12_Restore_CountryEconomicProfile.py</url>
+          <url>file://$PROJECT_DIR$/pages/13_Restore_CountryEconomicProfile.py</url>
           <line>71</line>
           <option name="timeStamp" value="475" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/myCountryModelPackages/Economic_Research.py</url>
-          <line>447</line>
+          <line>454</line>
           <option name="timeStamp" value="476" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/myCountryModelPackages/Economic_Research.py</url>
-          <line>458</line>
+          <line>465</line>
           <option name="timeStamp" value="477" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
@@ -366,36 +355,36 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/myCountryModelPackages/Economic_Research.py</url>
-          <line>545</line>
+          <line>552</line>
           <option name="timeStamp" value="489" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/myCountryModelPackages/Economic_Research.py</url>
-          <line>552</line>
+          <line>559</line>
           <option name="timeStamp" value="490" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/myCountryModelPackages/Economic_Research.py</url>
-          <line>556</line>
+          <line>563</line>
           <option name="timeStamp" value="491" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/myCountryModelPackages/Economic_Research.py</url>
-          <line>564</line>
+          <line>571</line>
           <option name="timeStamp" value="492" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/pages/5_Economic_CountryWeights.py</url>
+          <url>file://$PROJECT_DIR$/pages/6_Economic_CountryWeights.py</url>
           <line>37</line>
           <option name="timeStamp" value="494" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/pages/5_Economic_CountryWeights.py</url>
+          <url>file://$PROJECT_DIR$/pages/6_Economic_CountryWeights.py</url>
           <line>38</line>
           <option name="timeStamp" value="495" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/pages/5_Economic_CountryWeights.py</url>
+          <url>file://$PROJECT_DIR$/pages/6_Economic_CountryWeights.py</url>
           <line>21</line>
           <option name="timeStamp" value="496" />
         </line-breakpoint>
@@ -403,6 +392,16 @@
           <url>file://$PROJECT_DIR$/pages/0_TechnologyGroups_Info.py</url>
           <line>70</line>
           <option name="timeStamp" value="513" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/pages/6_Economic_CountryWeights.py</url>
+          <line>64</line>
+          <option name="timeStamp" value="558" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/myCountryModelPackages/MarketReportRetrieval.py</url>
+          <line>94</line>
+          <option name="timeStamp" value="563" />
         </line-breakpoint>
       </breakpoints>
       <default-breakpoints>

@@ -62,7 +62,10 @@ class CountryEconomicResearch:
     def __init__(self,year, tg_id:int):
         # self.connection = cxcn
         self.year = year
-        self.technology_group_id = tg_id
+        if tg_id is None:
+            self.technology_group_id = 0
+        else:
+            self.technology_group_id = tg_id
         self.economic_data = EconomicResearchCreate(self.year, self.technology_group_id).get_EconomicResearch()
 
     def get_Economic_Comparison(self):
@@ -172,6 +175,10 @@ class EconomicResearchCreate:
         self.connection = DatabaseConnections().get_MiraIndustry_Connection()
         self.year = year
         self.tg_id = technology_id
+        if technology_id is None:
+            self.technology_group_id = 0
+        else:
+            self.technology_group_id = technology_id
         self.msal_token = st.session_state[f"{_GS_key_prefix}msal_access_token"]
 
 

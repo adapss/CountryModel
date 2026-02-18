@@ -24,6 +24,12 @@ class MarketReports:
     def get_base_year_list(self):
         return self.base_year_list    #market_reports['BaseYear'].drop_duplicates()
 
+    def get_country_model_report_list(self):
+        return self.cm_market_reports
+
+    def get_country_model_base_year_list(self):
+        return self.cm_base_year_list
+
     def __init__(self,cxcn ):
         worldSegment = "World Region"
         industrySegment = "Industry"
@@ -32,17 +38,25 @@ class MarketReports:
         year = "%"
         self.connection = cxcn
         self.sql_query_market_size = \
-            f"SELECT [Study], [BaseYear] FROM [dbo].[StudyForecasts]" \
+            f"SELECT [Study], [BaseYear] FROM [dbo].[StudyForecasts] " \
             f"WHERE   ([Study] LIKE '{marketStudy}') AND ([BaseYear] LIKE  '{year}') AND (([Segment] LIKE '{worldSegment}')  OR ([Segment] LIKE '{industrySegment}'))" \
             f"AND ([Category] LIKE '{categoryName}')" \
             f"ORDER BY [BaseYear]"
-        # self.market_reports = pd.read_sql(self.sql_query_market_size, self.connection)
+
+        self.dbo = "StudyForecastsCountryModel"
+        self.categoryName = "North America"
+        self.sql_query_country_models = \
+            f"SELECT [Study], [BaseYear] FROM [dbo].[{self.dbo}] " \
+            f"WHERE   ([Study] LIKE '{marketStudy}') AND ([BaseYear] LIKE  '{year}') AND ([BaseYear] LIKE  [Year]) " \
+            f"AND (([Segment] LIKE '{worldSegment}')) " \
+            f"AND ([Category] LIKE '{self.categoryName}') " \
+            f"ORDER BY [BaseYear]"
+
         try:
             start_time = time.time()
             self.market_reports = pd.read_sql(self.sql_query_market_size, self.connection)
-            # df = pd.read_sql(self.sql_query_market_size, self.connection)
             elapsed_time = time.time() - start_time
-            # st.write("Query executed successfully in {:.2f} seconds.".format(elapsed_time))
+            self.cm_market_reports = pd.read_sql(self.sql_query_country_models, self.connection)
             status = "success"
         except sqlalchemy.exc.OperationalError as e:
             st.write("Operational error:", e)
@@ -60,11 +74,18 @@ class MarketReports:
             sorted(
             self.market_reports['BaseYear'].drop_duplicates().tolist(),
             reverse=True
+            )
+        self.cm_base_year_list =  \
+            sorted(
+            self.cm_market_reports['BaseYear'].drop_duplicates().tolist(),
+            reverse=True
         )
 
         self.base_year_list = self.market_reports['BaseYear'].drop_duplicates().tolist()
         self.market_reports = self.market_reports[['BaseYear', 'Study']].drop_duplicates()
 
+        self.cm_base_year_list = self.cm_market_reports['BaseYear'].drop_duplicates().tolist()
+        self.cm_market_reports = self.cm_market_reports[['BaseYear', 'Study']].drop_duplicates()
 # MarketReportData class is used to pull market report data from either the worldwide or country model tables in the SQL database.
 # Currently, it only allows for one market report retrieval at a time.  Although this could easily be extended.
 class MarketReportData:
@@ -74,7 +95,7 @@ class MarketReportData:
     def get_worldwide_size(self):
         sql_query_market_size = \
             f"SELECT [Study], [BaseYear],[Company],[Segment],[Category],[ParentCategory],[Size] FROM [dbo].[StudySizes]" \
-            f"WHERE   ([Study] = '{self.market_report}') AND ([BaseYear] = '{self.base_year}') " \
+            f"WHERE   ([Study] = '{self.market_report}') AND ([BaseYear] = '{self.base_year}') AND ([Units] = 'Revenues')" \
             f"ORDER BY  [Company]"
         model_data = pd.read_sql(sql_query_market_size, self.connection)
         return model_data
@@ -82,7 +103,7 @@ class MarketReportData:
     def get_worldwide_forecast(self):
         sql_query_market_forecast = \
             f"SELECT [Study], [BaseYear],[Year],[Segment],[Category],[ParentCategory],[GrandParentCategory],[Forecast] FROM [dbo].[StudyForecasts] " \
-            f"WHERE   ([Study] = '{self.market_report}') AND ([BaseYear] = '{self.base_year}') " \
+            f"WHERE   ([Study] = '{self.market_report}') AND ([BaseYear] = '{self.base_year}') AND ([Units] = 'Revenues')" \
             f"ORDER BY  [Segment], [Category], [Year]"
         model_data = pd.read_sql(sql_query_market_forecast, self.connection)
         return model_data
