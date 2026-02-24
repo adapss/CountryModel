@@ -17,10 +17,13 @@ warnings.filterwarnings('ignore')
 # aligns it with the Worldwide market report
 class Country_Model_Forecast_RAS_Balancing:
 
-    def __init__(self, cxcn, market_report:str, base_year:int):
+    def __init__(self, cxcn, market_report:str, base_year:int, iterations:int):
         self.ABS_TOL = 0.01
-        self.max_iterations = 1000
-        self.tolerance = 1e-9
+        if iterations == None:
+            self.max_iterations = 25
+        else:
+            self.max_iterations = iterations
+        self.tolerance = 1e-7
         self.cxcn = cxcn
         self.base_year = base_year
         self.market_report = market_report
@@ -47,6 +50,29 @@ class Country_Model_Forecast_RAS_Balancing:
 
         return industry_by_region_base_year
 
+    def __industry_targets_forecast(self):
+        target_reg = (
+            self.worldwide_forecast.loc[
+                (self.worldwide_forecast["Segment"] == "World Region") &
+                (self.worldwide_forecast["Category"].isin(["Asia", "EMEA", "Latin America", "North America"]))
+                ]
+            .groupby(["Year", "Category"], as_index=False)["Forecast"]
+            .sum()
+            .rename(columns={"Category": "Region", "Forecast": "RegionTotal"})
+        )
+        industry_totals_by_year = (
+            self.worldwide_forecast.loc[
+                (self.worldwide_forecast["Segment"] == "Industry")
+            ]
+            .groupby(["Year", "Category"], as_index=False)["Forecast"]
+            .sum()
+            .rename(columns={"Category": "Industry", "Forecast": "IndustryTotal"})
+        )
+        _target_ind = industry_totals_by_year
+        # In some cases the Worldwide market report totals for Industry and Region aren't perfectly aligned
+        # This reconciliation ensures that the Industry totals align with the worldwide Regions.
+        target_ind = self.__reconcile_totals_per_year(target_reg, _target_ind)
+        return target_ind
 
     # Verification of Aligned Country Model Market Size with the Worldwide Market Size Report
     #  - Company Worldwide totals
@@ -128,7 +154,7 @@ class Country_Model_Forecast_RAS_Balancing:
 
         #2 Verify: Industry Totals - Country Model Forecast for Each Forecast Year vs  Worldwide Industry Totals
         industry_total_cm_forecast_aligned = (
-            self.country_model_forecast_aligned[self.country_model_forecast_aligned['Year'] > self.base_year].groupby(['Year','Industry'])['Forecast'].sum().reset_index())
+            self.country_model_forecast_aligned[self.country_model_forecast_aligned['Year'] >= self.base_year].groupby(['Year','Industry'])['Forecast'].sum().reset_index())
 #        industry_total_target = (
 #            self.worldwide_forecast[self.worldwide_forecast[['Segment'] == 'Industry'],['Year' > self.base_year]].groupby(['Year','Category'])['Forecast'].sum().reset_index().rename(columns={'Category': 'Industry'}))
 #        industry_total_target = (
@@ -148,8 +174,9 @@ class Country_Model_Forecast_RAS_Balancing:
             .sum()
             .rename(columns={'Category': 'Industry'})
         )
-        comparison_industry_totals = pd.merge(industry_total_cm_forecast_aligned, industry_total_target, on=['Year','Industry'], suffixes=('_IPF', '_Target'))
-        comparison_industry_totals['Difference'] = (comparison_industry_totals['Forecast_IPF'] - comparison_industry_totals['Forecast_Target']).abs()
+        _reconciled_industry_targets = self.__industry_targets_forecast()
+        comparison_industry_totals = pd.merge(industry_total_cm_forecast_aligned, _reconciled_industry_targets,on=['Year', 'Industry'], suffixes=('_IPF', '_Target'))
+        comparison_industry_totals['Difference'] = (comparison_industry_totals['Forecast'] - comparison_industry_totals['IndustryTotal']).abs()
         comparison_industry_totals['Exceeds_Tolerance'] = comparison_industry_totals ['Difference'] > self.ABS_TOL
         over_tolerance_industry_totals  = comparison_industry_totals.loc[comparison_industry_totals['Exceeds_Tolerance']]
 
@@ -176,6 +203,22 @@ class Country_Model_Forecast_RAS_Balancing:
         comparison_region_totals['Exceeds_Tolerance'] = comparison_region_totals['Difference'] > self.ABS_TOL
         over_tolerance_region_totals = comparison_region_totals.loc[comparison_region_totals['Exceeds_Tolerance']]
         return over_tolerance_industry_x_region_base_year, over_tolerance_industry_totals, over_tolerance_region_totals
+
+
+    def ipf_align_country_model(self):
+        model_aligned_share, iter_share = self.align_market_size_by_company_region_and_industry_with_worldwide()
+
+        industry_by_region_base_year = (
+            model_aligned_share[model_aligned_share['BaseYear'] == self.base_year]
+            .groupby(['BaseYear', 'Region', 'Industry'])['Size']
+            .sum()
+            .to_frame('Target_Value')
+            .reset_index()
+            .rename(columns={'BaseYear': 'Year'})
+        )
+        model_aligned_forecast, iter_x_year = self.align_forecast_by_region_and_industry(industry_by_region_base_year)
+
+        return model_aligned_share, model_aligned_forecast, iter_share, iter_x_year
 
     def align_market_size_by_company_region_and_industry_with_worldwide(self):
         """
@@ -229,7 +272,7 @@ class Country_Model_Forecast_RAS_Balancing:
             print(
                 f"Warning: Industry totals for these companies don't match Company totals: {mismatches.index.tolist()}")
 
-        for i in range(self.max_iterations):
+        for n_iter in range(self.max_iterations):
             # 0. Store current values for convergence check
             prev_sizes = country_model_size['Size'].copy()
 
@@ -248,16 +291,16 @@ class Country_Model_Forecast_RAS_Balancing:
             # 2. Check for convergence
             max_diff = np.abs(country_model_size['Size'] - prev_sizes).max()
 
-            if i % 10 == 0:
-                print(f"Iteration {i}: Max change = {max_diff:.8f}")
+           # if n_iter % 10 == 0:
+           #     st.write(f"Iteration {n_iter}: Max change = {max_diff:.8f}")
 
             if max_diff < self.tolerance:
-                print(f"--- SUCCESS: Matrix balanced at iteration {i} ---")
+                # st.write(f"--- SUCCESS: Matrix balanced at iteration {n_iter} ---")
                 break
         self.country_model_size_aligned = country_model_size
-        return country_model_size
+        return country_model_size, n_iter
 
-    def reconcile_totals_per_year(self, region_targets, industry_targets):
+    def __reconcile_totals_per_year(self, region_targets, industry_targets):
         """
         Each input is a DataFrame with columns ['Year', key, 'Target_Value']
         (key = 'Region' for region_targets, 'Industry' for industry_targets).
@@ -276,6 +319,18 @@ class Country_Model_Forecast_RAS_Balancing:
         ind['IndustryTotal'] = ind['IndustryTotal'] * ind['Scale']
         ind = ind.drop(columns=['Scale'])
         return ind
+
+    def __forcast_convergence_check(self, ipf_update, target):
+        # Check for convergence
+        _compare_with_target = pd.merge(ipf_update, target, on=['Segment'],
+                                                   suffixes=('_IPF', '_Target'))
+        _compare_with_target['Difference'] = (
+                _compare_with_target['Forecast'] - _compare_with_target['TargetTotal']).abs()
+        _compare_with_target['Exceeds_Tolerance'] = _compare_with_target[
+                                                                   'Difference'] > self.tolerance
+        over_tolerance_industry_totals = _compare_with_target.loc[
+            _compare_with_target['Exceeds_Tolerance']]
+        return over_tolerance_industry_totals
 
     def align_forecast_by_region_and_industry(self, industry_by_region_base_year):
         """
@@ -313,6 +368,9 @@ class Country_Model_Forecast_RAS_Balancing:
         )
 
         all_years = sorted(self.country_model_forecast_original['Year'].unique())
+        iterations_x_year = pd.DataFrame({'Year': all_years})
+        iterations_x_year['Iterations'] = 0
+
         first_year = all_years[0]
 
         # List to store each aligned year
@@ -328,7 +386,9 @@ class Country_Model_Forecast_RAS_Balancing:
             # 2. Prepare Targets for this specific year
             target_reg = region_totals_by_year[region_totals_by_year['Year'] == yr].set_index('Region')
             _target_ind = industry_totals_by_year[industry_totals_by_year['Year'] == yr].set_index('Industry')
-            target_ind = self.reconcile_totals_per_year(target_reg,  _target_ind )
+            # In some cases the Worldwide market report totals for Industry and Region aren't perfectly aligned
+            # This reconciliation ensures that the Industry totals align with the worldwide Regions.
+            target_ind = self.__reconcile_totals_per_year(target_reg,  _target_ind )
 
             year_targets = {
                 ('Region',): target_reg['RegionTotal'].to_frame('Target_Value'),
@@ -339,12 +399,12 @@ class Country_Model_Forecast_RAS_Balancing:
                 target_ind_reg = industry_by_region_base_year[industry_by_region_base_year['Year'] == yr]
                 year_targets[('Region', 'Industry')] = target_ind_reg.set_index(['Region', 'Industry'])[
                     ['Target_Value']]
-                print(f"Applying 3 constraints: Region, Industry, and Industry x Region")
-            else:
-                print(f"Applying 2 constraints: Region and Industry")
+                #st.write(f"Forecasting (base year) - Applying 3 constraints: Region, Industry, and Industry x Region")
+           # else:
+                #st.write(f"Forecasting (forecast years) - Applying 2 constraints: Region and Industry")
 
             # 3. INTERNAL ALIGNMENT LOOP (IPF) for the current year
-            for i in range(self.max_iterations):
+            for iteration in range(self.max_iterations):
                 prev_forecast = country_model_forecast_yr['Forecast'].copy()  # Use 'Forecast' or your actual value column
 
                 for dims, target_df in year_targets.items():
@@ -359,18 +419,38 @@ class Country_Model_Forecast_RAS_Balancing:
                     # Apply adjustment
                     country_model_forecast_yr['Forecast'] *= factors.fillna(1.0)
 
-                # Check for convergence
-                max_diff = np.abs(country_model_forecast_yr['Forecast'] - prev_forecast).max()
-                if max_diff < self.tolerance:
-                    print(f"Year {yr} balanced at iteration {i}. Max diff: {max_diff:.8f}")
+                # Check for convergence by Industry and Region alignments
+                _industry_totals_cm_forecast_aligned = (
+                    country_model_forecast_yr.groupby(
+                        ['Industry'])['Forecast'].sum().reset_index())
+                _industry_totals_cm_forecast_aligned.index.name = "Industry"
+
+                over_tolerance_industry_totals = \
+                    self.__forcast_convergence_check(
+                        _industry_totals_cm_forecast_aligned.rename(columns={'Industry': 'Segment'}),
+                        target_ind.rename(columns={'IndustryTotal': 'TargetTotal'})
+                        .rename_axis(index='Segment'))
+
+
+                _region_totals_cm_forecast_aligned = (
+                    country_model_forecast_yr.groupby(
+                        ['Region'])['Forecast'].sum().reset_index())
+                over_tolerance_region_totals = \
+                    self.__forcast_convergence_check(
+                        _region_totals_cm_forecast_aligned.rename(columns={'Region': 'Segment'}),
+                        target_reg.rename(columns={'RegionTotal': 'TargetTotal'})
+                        .rename_axis(index='Segment'))
+
+                if (over_tolerance_region_totals is not None and over_tolerance_region_totals.empty) and \
+                        (over_tolerance_industry_totals is not None and over_tolerance_industry_totals.empty):
                     break
-            else:
-                print(f"WARNING: Year {yr} did not converge after {self.max_iterations} iterations.")
 
             # 4. Store the result
             aligned_years_list.append(country_model_forecast_yr)
+            iterations_x_year.loc[iterations_x_year['Year'] == yr, 'Iterations'] = iteration
+            iterations_x_year['Iterations'] = iterations_x_year['Iterations'].astype('Int64')
 
         # 5. Recombine all years into the final dataframe
         final_aligned_forecast = pd.concat(aligned_years_list)
         self.country_model_forecast_aligned = final_aligned_forecast
-        return final_aligned_forecast
+        return final_aligned_forecast, iterations_x_year

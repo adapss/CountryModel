@@ -1,3 +1,4 @@
+import time
 import streamlit as st
 from myCountryModelPackages.CountryModel_RAS import *
 from myCountryModelPackages.CountryModel_Generation import *
@@ -6,9 +7,11 @@ from myCountryModelPackages.MarketReportRetrieval import *
 from myCountryModelPackages.ProductTechnologyGroup import *
 from myCountryModelPackages.CM_SessionStates import global_session_states_initialize, global_session_states_key
 
+
 st.set_page_config(layout="wide")
 
-key_prefix = "SS_Generator_"
+key_prefix = "SS_IPF_"
+
 _GS_key_prefix = global_session_states_key()
 selected_base_year = None
 # Two connections are provided so that there is flexibility to source the Worldwide Market study from a different
@@ -48,7 +51,7 @@ if f"{key_prefix}base_year_select_value" not in st.session_state:
     st.session_state[f"{key_prefix}base_year_select_value"] = st.session_state.base_year
     st.session_state[f"{key_prefix}selected_base_year_prev"]  = None
 
-if f"{key_prefix}technology_id_value" not in st.session_state:
+if f"{key_prefix}technology_id" not in st.session_state:
     st.session_state[f"{key_prefix}technology_id"] = None
 
 if st.session_state[f"{key_prefix}selected_base_year_prev"] is None or st.session_state[f"{key_prefix}base_year_select_value"] != st.session_state[f"{key_prefix}selected_base_year_prev"]:
@@ -73,9 +76,21 @@ if f"{key_prefix}forecast_country_model" not in st.session_state:
 if f"{key_prefix}align_model_flag"not in st.session_state:
     st.session_state[f"{key_prefix}align_model_flag"] = False
 
-#st.title("Iterative Proportional Fitting (IPF) Country Model Alignment <br> Industry & Region Alignment with Worldwide Market Report")
+if f"{key_prefix}align_model_done"not in st.session_state:
+    st.session_state[f"{key_prefix}align_model_done"] = False
 
-st.title("Country Model Alignment Using - Iterative Proportional Fitting Algorithm ")
+if f"{key_prefix}align_in_progress"not in st.session_state:
+    st.session_state[f"{key_prefix}align_in_progress"]= False
+
+if f"{key_prefix}publish_model_flag"not in st.session_state:
+    st.session_state[f"{key_prefix}publish_model_flag"] = False
+
+if f"{key_prefix}iter_size"not in st.session_state:
+    st.session_state[f"{key_prefix}iter_size"] = 25
+
+st.session_state.setdefault(f"{key_prefix}ipf_results", None)
+
+st.title("Country Model Alignment Using - Iterative Proportional Fit Algorithm ")
 st.subheader("Industry & Region Alignment with Worldwide Market Report")
 
 text_message = ("This application applies the Iterative Proportional Fitting (IPF) algorithm (also referred as RAS) to enforce Region - Industry - Company alignment of the Country Model with \
@@ -95,11 +110,40 @@ st.markdown(
     f"<h3 style='font-size:12pt; font-weight:bold;'><b>{text_reference}</b></h3>",
     unsafe_allow_html=True
 )
-base_year_col, market_report_col, technology_group_col = st.columns([1,2,4])
 
 def _start_model_RAS_alignment():
     st.session_state[f"{key_prefix}align_model_flag"] = True  #not st.session_state.button[f"{key_prefix}generate_model_button"]
 
+def _publish_RAS_aligned_model():
+    st.session_state[f"{key_prefix}publish_model_flag"] = True #not st.session_state.button[f"{key_prefix}generate_model_button"]
+
+publish_col, base_year_col, market_report_col, Iterations, technology_group_col = st.columns([1,1,2,1,4])
+with (publish_col):
+    st.markdown("<h1 style='font-size:12pt;text-align: center;'>Publish Status</h1>", unsafe_allow_html=True)
+    # st.info("Inactive")
+    if st.session_state[f"{key_prefix}publish_model_flag"]:
+        with st.spinner("Publishing Model..."):
+          #  st.warning("publication in progress")
+          results = st.session_state[f"{key_prefix}ipf_results"]
+          time.sleep(5.0)
+          size_ipf = results["country_model_size_aligned"]
+          forecast_ipf = results["country_model_forecast_aligned"]
+          pub_cxcn = st.session_state.db_engine_publication
+          publish_model = \
+                Country_Model_Publish(st.session_state.db_engine_publication,
+                                      results["market_report"],
+                                      results["base_year"],
+                                      results["country_model_size_aligned"],
+                                      results["country_model_forecast_aligned"])
+          status_size, errors_size = publish_model.publish_market_shares()
+          status_forecast, errors_forecast = publish_model.publish_market_forecast()
+          if status_size and status_forecast:
+
+              st.success("PUBLISHED")
+          else:
+              st.error(f"Publish Failed: {errors_size} and {errors_forecast}")
+
+          st.session_state[f"{key_prefix}publish_model_flag"]=False
 with base_year_col:
     st.markdown("<h1 style='font-size:12pt;text-align: center;'>Base Year</h1>", unsafe_allow_html=True)
     st.selectbox('Select Base Year', st.session_state[f"{key_prefix}base_year_list"],key = f"{key_prefix}base_year_select_value")
@@ -113,6 +157,20 @@ with market_report_col:
     st.selectbox('Select Report', filtered_df['Study'].tolist() ,index = 0, key = f"{key_prefix}market_report_select_value")
     st.session_state['market_report'] = st.session_state[f"{key_prefix}market_report_select_value"]
 
+with Iterations:
+    st.markdown(
+        f"<div style='line-height:1.2; font-size:14px;'><br><br> <br></div>",
+        unsafe_allow_html=True
+    )
+    options = [25, 50, 75, 100, 200, 500]
+    default_value = 20  # not the index
+
+    iterations_selected_value = st.selectbox(
+        "Iterations:",
+        options=options,
+        # index=options.index(st.session_state[key_name]),
+        key=f"{key_prefix}iter_size"
+    )
 with technology_group_col:
     pdt = st.session_state[f"{key_prefix}ProductDescriptionTable"]
     technology_group_name,st.session_state[f"{key_prefix}technology_id"]  = pdt.get_market_study_technology_group(st.session_state['market_report'])
@@ -133,39 +191,22 @@ with technology_group_col:
     text_message = "<br>The list of countries in the table are designated as KNOWN by the analyst. <br> \
         Only, those countries which are available in the Economic Model are included.   \
         The market size of these countries will NOT be modeled.  However the industry size will be distributed in each country according to the model. <br>"
-    st.markdown("<h3 style='font-size:14pt;'>" + text_message + "</h3>", unsafe_allow_html=True)
-    st.markdown("""
-    <style>
-    [data-testid="stDataFrame"] div[data-testid="stDataFrameCell"] {
-        font-size: 11px;       /* Smaller font */
-        padding: 2px 2px;      /* Reduce cell padding */
-    }
-    [data-testid="stDataFrame"] div[data-testid="stDataFrameRow"] {
-        height: 15px;          /* Reduce row height */
-    }
-    </style>
-    """, unsafe_allow_html=True)
-
-    if country_known_info is None:
-        # Option A: show a friendly placeholder (Streamlit example)
-        st.info("No country information available for the selected base year.")
-        styled_df = None  # or skip creating it
-    else:
-        styled_df = country_known_info.style.apply(
-            lambda col: [
-                'background-color: #DCECD1' if i % 2 == 0 else 'background-color: #ffffff'
-                for i in range(len(col))
-            ],
-            axis=0
-        )
-
-    st.dataframe(styled_df, use_container_width=True)
 
 with st.sidebar:
-    st.header("RAS Align")
-    st.button('Start',
-              on_click=_start_model_RAS_alignment,
-              key=f"{key_prefix}generate_model_button")
+    st.header("IPF Align")
+    st.button(
+        'START IPF',
+        on_click=_start_model_RAS_alignment,
+        key=f"{key_prefix}generate_model_button",
+        disabled=st.session_state[f"{key_prefix}align_in_progress"]
+        )
+
+    st.button(
+        'Publish (Visible Table)',
+        on_click=_publish_RAS_aligned_model,
+        key=f"{key_prefix}publish_model_button",
+        disabled = not st.session_state[f"{key_prefix}align_model_done"]
+    )
 
 col1, col2,col3 = st.columns(3)
 
@@ -173,18 +214,23 @@ with (col1):
     if st.session_state[f"{key_prefix}align_model_flag"]:
        st.session_state[f"{key_prefix}align_model_flag"] = False
        base_year_value = st.session_state[f"{key_prefix}base_year_select_value"]
+       st.session_state[f"{key_prefix}iter_size"]
 
 
        valid_report_message = ""   # placeholder to; will check whether a country model exists for this year and report
 
        if  valid_report_message == "":
+           st.session_state[f"{key_prefix}align_model_done"] = False
+           st.session_state[f"{key_prefix}align_in_progress"]= True
            with st.spinner("IPF Alignment of Country Model ..."):
                IPF_Correction = Country_Model_Forecast_RAS_Balancing(
                    st.session_state.db_cxcn_market_research,
                    st.session_state[f"{key_prefix}market_report_select_value"],
-                   base_year_value)
+                   base_year_value,
+                   iterations_selected_value
+               )
 
-               country_model_size_aligned = IPF_Correction.align_market_size_by_company_region_and_industry_with_worldwide()
+               country_model_size_aligned, n_iterations_size = IPF_Correction.align_market_size_by_company_region_and_industry_with_worldwide()
                st.session_state[f"{key_prefix}share_country_model"] = country_model_size_aligned
 
                industry_by_region_base_year= (
@@ -196,10 +242,33 @@ with (col1):
                     .rename(columns={'BaseYear': 'Year'})
                )
 
-               country_model_forecast_aligned = IPF_Correction.align_forecast_by_region_and_industry(industry_by_region_base_year)
+               country_model_forecast_aligned, n_iteration_x_year_forecast = IPF_Correction.align_forecast_by_region_and_industry(industry_by_region_base_year)
                st.session_state[f"{key_prefix}forecast_country_model"] = country_model_forecast_aligned
 
+               st.session_state[f"{key_prefix}align_model_flag"] = False
+               st.session_state[f"{key_prefix}align_model_done"] = True
+               st.session_state[f"{key_prefix}align_in_progress"]= False
 
+               # compute verification tables BEFORE rerun; store all artifacts
+               tol_totals, tol_region, tol_industry = IPF_Correction.verification_market_size_by_company_region_and_industry_with_worldwide()
+               tol_base_year_industry_x_region, tol_industry_total_x_year, tol_region_total_x_year = IPF_Correction.verification_market_forecast_by_region_and_industry_with_worldwide()
+
+               st.session_state[f"{key_prefix}ipf_results"] = {
+                   "base_year":st.session_state['base_year'],
+                   "market_report":st.session_state['market_report'],
+                   "country_model_size_aligned": country_model_size_aligned,
+                   "n_iterations_size": n_iterations_size,
+                   "country_model_forecast_aligned": country_model_forecast_aligned,
+                   "n_iteration_x_year_forecast": n_iteration_x_year_forecast,
+                   "tol_totals": tol_totals,
+                   "tol_region": tol_region,
+                   "tol_industry": tol_industry,
+                   "tol_base_year_industry_x_region": tol_base_year_industry_x_region,
+                   "tol_industry_total_x_year": tol_industry_total_x_year,
+                   "tol_region_total_x_year": tol_region_total_x_year,
+               }
+
+               st.rerun()
        else:
            warning_col = st.columns(1)[0]
            with col2:
@@ -211,26 +280,32 @@ with (col1):
                    """, unsafe_allow_html=True)
                st.stop()
 
-       with col1:
-           st.write("Market Shares - IPF Aligned")
-           st.write(country_model_size_aligned)
-           tol_totals, tol_region, tol_industry = IPF_Correction.verification_market_size_by_company_region_and_industry_with_worldwide()
-           st.write("Company Totals out of Tolerance")
-           st.write(tol_totals)
-           st.write("Company Industry out of Tolerance")
-           st.write(tol_region)
-           st.write("Company Region out of Tolerance")
-           st.write(tol_industry)
-       with col2:
-           st.write("Country Model Forecast - IPF Aligned")
-           st.write(country_model_forecast_aligned)
-           tol_base_year_industry_x_region, tol_industry_total_x_year, tol_region_total_x_year = IPF_Correction.verification_market_forecast_by_region_and_industry_with_worldwide()
-           st.write("Industry Totals by Region on Base Year out of Tolerance")
-           st.write(tol_base_year_industry_x_region)
-           st.write("Industry Totals by Year out of Tolerance")
-           st.write(tol_industry_total_x_year)
-           st.write("Region Totals by Year out of Tolerance")
-           st.write(tol_region_total_x_year)
+
+results = st.session_state[f"{key_prefix}ipf_results"]
+if results is not None:
+    col0, col1 = st.columns(2)
+
+    with col0:
+        st.markdown("**Market Shares - IPF Aligned**")
+        st.write(results["country_model_size_aligned"])
+        st.write("Iterations", results["n_iterations_size"])
+        st.write("Company Totals out of Tolerance")
+        st.write(results["tol_totals"])
+        st.write("Company Industry out of Tolerance")
+        st.write(results["tol_region"])
+        st.write("Company Region out of Tolerance")
+        st.write(results["tol_industry"])
+
+    with col1:
+        st.markdown("**Country Model Forecast - IPF Aligned**")
+        st.write(results["country_model_forecast_aligned"])
+        st.write("Iterations Required by Year", results["n_iteration_x_year_forecast"])
+        st.write("Industry Totals by Region on Base Year out of Tolerance")
+        st.write(results["tol_base_year_industry_x_region"])
+        st.write("Industry Totals by Year out of Tolerance")
+        st.write(results["tol_industry_total_x_year"])
+        st.write("Region Totals by Year out of Tolerance")
+        st.write(results["tol_region_total_x_year"])
 
 
 

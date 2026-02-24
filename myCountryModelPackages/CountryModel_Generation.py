@@ -10,6 +10,7 @@
 
 #from myCountryModelPackages.sqlTableRetrieve import *
 #from myCountryModelPackages.MarketReportRetrieval import *
+from sqlalchemy import exc as sa_exc
 from myCountryModelPackages.CountryModel_Forecast import *
 from myCountryModelPackages.CountryModel_MarketSize import *
 from myCountryModelPackages.Economic_Research import *
@@ -90,8 +91,14 @@ class Country_Model_Publish:
             with self.db_engine_market_data.connect() as connection:
                 connection.execute( text(_sql_delete_market_share_statement), {"study": self.market_report, "base_year": self.base_year})
                 connection.commit()
-        except Exception as e:
-            print(f"Error executing SQL statement: {e}")
+        except (sa_exc.IntegrityError,
+                        sa_exc.ProgrammingError,
+                        sa_exc.DataError,
+                        sa_exc.OperationalError,
+                        sa_exc.StatementError,
+                        ValueError,  # pandas arg/value issues
+                        TypeError) as e:  # wrong engine/arg types
+                return False, e
 
         _market_shares = self.market_shares.rename(columns={'Industry': 'ParentCategory','Region':'Category'})
         _market_shares['GrandParentCategory']= _market_shares['GrandParentCategory']=0
@@ -106,18 +113,31 @@ class Country_Model_Publish:
                 _market_shares['ParentCategory'].astype(str) + "~" +
                 _market_shares['GrandParentCategory'].astype(str)
                 )
-
-        _market_shares.to_sql('StudySizesCountryModel', self.db_engine_market_data, if_exists='append', index=False)
-        return
+        try:
+            _market_shares.to_sql('StudySizesCountryModel', self.db_engine_market_data, if_exists='append', index=False)
+        except (sa_exc.IntegrityError,
+                sa_exc.ProgrammingError,
+                sa_exc.DataError,
+                sa_exc.OperationalError,
+                sa_exc.StatementError,
+                ValueError,      # pandas arg/value issues
+                TypeError) as e: # wrong engine/arg types
+            return False, e
+        return True, None
 
     def publish_market_forecast(self):
         try:
             with self.db_engine_market_data.connect() as connection:
                 connection.execute(text(_sql_delete_market_forecast_statement), {"study": self.market_report, "base_year": self.base_year})
                 connection.commit()
-        except Exception as e:
-            print(f"Error executing SQL statement: {e}")
-
+        except (sa_exc.IntegrityError,
+                sa_exc.ProgrammingError,
+                sa_exc.DataError,
+                sa_exc.OperationalError,
+                sa_exc.StatementError,
+                Exception) as e:
+            # Return early with the exception.
+            return False, e
         _market_forecast = self.market_forecast.rename(columns={'Industry': 'GrandParentCategory', 'Region': 'Category', 'Country': 'ParentCategory'})
         _market_forecast['Units']="Revenues"
         _market_forecast[('ForecastKey')] = (
@@ -128,8 +148,31 @@ class Country_Model_Publish:
                 _market_forecast['ParentCategory'].astype(str) + "~" +
                 _market_forecast['GrandParentCategory'].astype(str)
                 )
-        _market_forecast.to_sql('StudyForecastsCountryModel', self.db_engine_market_data, if_exists='append', index=False)
-        return
+    #    _market_forecast.to_sql('StudyForecastsCountryModel', self.db_engine_market_data, if_exists='append', index=False)
+        try:
+            _market_forecast.to_sql(
+                'StudyForecastsCountryModel',
+                self.db_engine_market_data,
+                if_exists='append',
+                 index=False
+            )
+    #        _market_forecast.to_sql(
+    #      'StudyForecastsCountryModel',
+    #      self.db_engine_market_data,
+    #      if_exists='append',
+    #      index=False,
+    #      method='multi',
+    #      chunksize=5000
+    #  )
+        except (sa_exc.IntegrityError,
+                sa_exc.ProgrammingError,
+                sa_exc.DataError,
+                sa_exc.OperationalError,
+                sa_exc.StatementError,
+                ValueError,      # pandas arg/value issues
+                TypeError) as e: # wrong engine/arg types
+            return False, e
+        return True, None
 
     def __init__(self, db_engine, report, base_year, market_shares, market_forecast):
         self.market_report = report

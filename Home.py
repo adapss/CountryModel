@@ -5,7 +5,7 @@ from myCountryModelPackages.CM_SessionStates import global_session_states_initia
 st.set_page_config(layout="wide")
 
 def display_page_info():
-    st.markdown("<h1 style='text-align: center;'>Country Model Generator - V10.4</h1>", unsafe_allow_html=True)
+    st.markdown("<h1 style='text-align: center;'>Country Model Generator - V10.11</h1>", unsafe_allow_html=True)
     text_message = "This application is designed to generate a Country Model from a published World Wide market Report.  \
                   Country Model Economic Factors can be modified in several of the tabs on the left "
     st.markdown("<h3 style='font-size:14pt;'>" + text_message + "</h3>", unsafe_allow_html=True)
@@ -19,14 +19,15 @@ def display_page_info():
         <li>Product Description Table with Technology Groups</li>
         <li>Copy All Country Model Parameters from one Year to another.  Primarily for New Year creation, but useful for other situations.</li>
         <li>Copy and Create Technology Groups from one Year to another.  </li>
-        <li>Iterative Proportional Fitting (IPF) procedure developed to align Industry & Region with Worldwide Report. (under test)  </li>
+        <li>Iterative Proportional Fit (IPF) procedure developed to align Industry & Region with Worldwide Report.   </li>
     </ul>
     <h3 style='font-size:12pt;'>Please note: Technology Group partitioning is now available for all reports.  </h3>
     """, unsafe_allow_html=True)
     st.markdown("""
     <h3 style='font-size:14pt;'>Working On:</h3>
     <ul style='font-size:12pt;'>
-        <li>Waiting on Technology Group Testing before adding more features</li>
+        <li>Iterative Proportional Fit - Released.  This is integrated in the Single Report Generation.  </li>
+        <li>Iterative Proportional Fit - A separate page tab allows you to test without publishing IPF aligned models </li>
     </ul>
     """, unsafe_allow_html=True)
 

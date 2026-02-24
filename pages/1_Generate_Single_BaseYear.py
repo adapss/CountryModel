@@ -1,5 +1,6 @@
 import streamlit as st
 from myCountryModelPackages.CountryModel_Generation import *
+from myCountryModelPackages.CountryModel_RAS import *
 from myCountryModelPackages.sqlTableRetrieve import *
 from myCountryModelPackages.MarketReportRetrieval import *
 from myCountryModelPackages.ProductTechnologyGroup import *
@@ -72,6 +73,8 @@ if 'forecast_country_model' not in st.session_state:
 if f"{key_prefix}generate_model_flag"not in st.session_state:
     st.session_state[f"{key_prefix}generate_model_flag"] = False
 
+st.session_state.setdefault(f"{key_prefix}ipf_results", None)
+
 st.title("Country Model Generator")
 text_message = "This application is designed to generate a Country Model from a published World Wide market Report. \
         Worldwide market  and Country Known data is necessary to run a model.  \
@@ -109,7 +112,8 @@ with technology_group_col:
     country_known_info = mrd.get_country_known_sizes_list()
     economic_research= EconomicResearchFactorsRanges()
     valid_countries = economic_research.getlist_countries_from_industry_weights_research_all_regions(st.session_state[f"{key_prefix}base_year_select_value"])
-    country_known_info = country_known_info[country_known_info['Country'].isin(valid_countries)]
+    if not country_known_info.empty:
+        country_known_info = country_known_info[country_known_info['Country'].isin(valid_countries)]
     text_message = "<br>The list of countries in the table are designated as KNOWN by the analyst. <br> \
         Only, those countries which are available in the Economic Model are included.   \
         The market size of these countries will NOT be modeled.  However the industry size will be distributed in each country according to the model. <br>"
@@ -131,7 +135,10 @@ with technology_group_col:
         axis=0
     )
 
-    st.dataframe(styled_df, use_container_width=True)
+    if not country_known_info.empty:
+        st.dataframe(styled_df, use_container_width=True)
+    else:
+        st.warning(f"Country Known Table NOT Loaded for {st.session_state[f"{key_prefix}base_year_select_value"]} -- {st.session_state[f"{key_prefix}market_report_select_value"]}")
 
 with st.sidebar:
     st.header("Generate Model")
@@ -165,11 +172,41 @@ with (col1):
 
                country_forecast_model = country_model.generate_forecast()
                st.session_state['forecast_country_model'] = country_forecast_model
-               publish_model = \
+               publish_model_raw = \
                    Country_Model_Publish(st.session_state.db_engine_publication,
                                          st.session_state[f"{key_prefix}market_report_select_value"],
                                          st.session_state[f"{key_prefix}base_year_select_value"],
                                          country_share_model, country_forecast_model)
+               publish_model_raw.publish_market_shares()
+               publish_model_raw.publish_market_forecast()
+               IPF_Correction = Country_Model_Forecast_RAS_Balancing(
+                   st.session_state.db_cxcn_market_research,
+                   st.session_state[f"{key_prefix}market_report_select_value"],
+                   base_year_value,
+                   50
+               )
+               country_model_share_aligned, country_model_forecast_aligned, n_iterations_share, n_iteration_x_year_forecast = IPF_Correction.ipf_align_country_model()
+               publish_model_aligned = \
+                   Country_Model_Publish(st.session_state.db_engine_publication,
+                                         st.session_state[f"{key_prefix}market_report_select_value"],
+                                         st.session_state[f"{key_prefix}base_year_select_value"],
+                                         country_model_share_aligned, country_model_forecast_aligned)
+               tol_totals, tol_region, tol_industry = IPF_Correction.verification_market_size_by_company_region_and_industry_with_worldwide()
+               tol_base_year_industry_x_region, tol_industry_total_x_year, tol_region_total_x_year = IPF_Correction.verification_market_forecast_by_region_and_industry_with_worldwide()
+               st.session_state[f"{key_prefix}ipf_results"] = {
+                   "base_year":st.session_state['base_year'],
+                   "market_report":st.session_state['market_report'],
+                   "country_model_size_aligned": country_model_share_aligned,
+                   "n_iterations_size": n_iterations_share,
+                   "country_model_forecast_aligned": country_model_forecast_aligned,
+                   "n_iteration_x_year_forecast": n_iteration_x_year_forecast,
+                   "tol_totals": tol_totals,
+                   "tol_region": tol_region,
+                   "tol_industry": tol_industry,
+                   "tol_base_year_industry_x_region": tol_base_year_industry_x_region,
+                   "tol_industry_total_x_year": tol_industry_total_x_year,
+                   "tol_region_total_x_year": tol_region_total_x_year,
+               }
        else:
            warning_col = st.columns(1)[0]
            with col2:
@@ -187,14 +224,26 @@ with (col1):
 
        with col1:
            st.write("Market Shares")
-           st.write(country_share_model)
-           st.spinner("Publishing Country Market Share Model to the Database")
-           publish_model.publish_market_shares()
-
+           st.write(country_model_share_aligned)
+           st.spinner("Publishing IPF Aligned Country Market Share Model to the Database")
+           publish_model_aligned.publish_market_shares()
+           results = st.session_state[f"{key_prefix}ipf_results"]
+           st.write("Iterations", results["n_iterations_size"])
+           st.write("Company Totals out of Tolerance")
+           st.write(results["tol_totals"])
+           st.write("Company Industry out of Tolerance")
+           st.write(results["tol_region"])
+           st.write("Company Region out of Tolerance")
+           st.write(results["tol_industry"])
        with col2:
            st.write("Market Forecast")
-           st.write(country_forecast_model)
-           st.spinner("Publishing Country Model Forecast to the Database")
-           publish_model.publish_market_forecast()
-
-
+           st.write(country_model_forecast_aligned)
+           st.spinner("Publishing IPF Aligned Country Model Forecast to the Database")
+           publish_model_aligned.publish_market_forecast()
+           st.write("Iterations Required by Year", results["n_iteration_x_year_forecast"])
+           st.write("Industry Totals by Region on Base Year out of Tolerance")
+           st.write(results["tol_base_year_industry_x_region"])
+           st.write("Industry Totals by Year out of Tolerance")
+           st.write(results["tol_industry_total_x_year"])
+           st.write("Region Totals by Year out of Tolerance")
+           st.write(results["tol_region_total_x_year"])

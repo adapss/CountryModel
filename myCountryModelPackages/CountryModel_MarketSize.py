@@ -3,8 +3,9 @@ import warnings
 import pyodbc
 import pandas as pd
 import numpy as np
-
 from myCountryModelPackages.Economic_Research import *
+from myCountryModelPackages.MarketReportRetrieval import MarketReportData
+
 
 class Report_Market_Size_Data:
     market_size_data = None
@@ -13,6 +14,33 @@ class Report_Market_Size_Data:
     sql_query_market_size = None
     sql_query_market_forecast = None
     year = None
+    def __init__(self,cxcn, marketStudy,base_year):
+        worldSegment = "World Region"
+        industrySegment = "Industry"
+        categoryName = "%"
+        self.connection = cxcn
+        self.year = base_year
+        # Use this method o retrieval of the market size and Forecast because it
+        # takes care of managing the Invalid industries that are not modeled in the Economic Data
+        # the MarketReportData retrieval takes all the Invalid Industries and adds them to the Other Industries
+        # it also only brings in the Region and Industry segmentation, so the dataframes are smaller
+        market_report_data = MarketReportData(cxcn, marketStudy, base_year )
+        self.market_size_data = market_report_data.get_worldwide_size()
+        self.market_forecast_data = market_report_data.get_worldwide_forecast()
+
+    #   self.sql_query_market_size = \
+    #       f"SELECT  [SizeKey], [Study], [BaseYear], [Company], [Segment], [Category],[ParentCategory], [Size], [Fraction], [Units] FROM [dbo].[StudySizes]" \
+    #       f"WHERE   ([Study] = '{marketStudy}') AND ([BaseYear] =  {year}) AND ([Units] =  'Revenues' ) AND (([Segment] LIKE '{worldSegment}')  OR ([Segment] LIKE '{industrySegment}'))" \
+    #       f"AND ([Category] LIKE '{categoryName}')" \
+    #       f"ORDER BY [Category], [BaseYear], [Company]"
+    #   self.market_size_data = pd.read_sql(self.sql_query_market_size, self.connection)
+    #
+    #   self.sql_query_market_forecast = \
+    #       f"SELECT  [ForecastKey], [Study], [BaseYear], [Year],[Segment], [Category],[ParentCategory], [Forecast], [Units] FROM [dbo].[StudyForecasts]" \
+    #       f"WHERE   ([Study] = '{marketStudy}') AND ([BaseYear] =  {year}) AND ([Units] =  'Revenues' ) AND (([Segment] LIKE '{worldSegment}')  OR ([Segment] LIKE '{industrySegment}'))" \
+    #       f"AND ([Category] LIKE '{categoryName}')" \
+    #       f"ORDER BY [Segment], [Category], [BaseYear], [Year] "
+    #   self.market_forecast_data = pd.read_sql(self.sql_query_market_forecast, self.connection)
 
     def get_MarketSize_Table(self):
         return self.market_size_data
@@ -69,32 +97,24 @@ class Report_Market_Size_Data:
         industry_x_year = industry_x_year.rename(columns={'Category': 'Industry'})
         return industry_x_year
 
-    def __init__(self,cxcn, marketStudy,year):
-        worldSegment = "World Region"
-        industrySegment = "Industry"
-        categoryName = "%"
-        self.connection = cxcn
-        self.year = year
-        self.sql_query_market_size = \
-            f"SELECT  [SizeKey], [Study], [BaseYear], [Company], [Segment], [Category],[ParentCategory], [Size], [Fraction], [Units] FROM [dbo].[StudySizes]" \
-            f"WHERE   ([Study] = '{marketStudy}') AND ([BaseYear] =  {year}) AND ([Units] =  'Revenues' ) AND (([Segment] LIKE '{worldSegment}')  OR ([Segment] LIKE '{industrySegment}'))" \
-            f"AND ([Category] LIKE '{categoryName}')" \
-            f"ORDER BY [Category], [BaseYear], [Company]"
-        self.market_size_data = pd.read_sql(self.sql_query_market_size, self.connection)
-        self.sql_query_market_forecast = \
-            f"SELECT  [ForecastKey], [Study], [BaseYear], [Year],[Segment], [Category],[ParentCategory], [Forecast], [Units] FROM [dbo].[StudyForecasts]" \
-            f"WHERE   ([Study] = '{marketStudy}') AND ([BaseYear] =  {year}) AND ([Units] =  'Revenues' ) AND (([Segment] LIKE '{worldSegment}')  OR ([Segment] LIKE '{industrySegment}'))" \
-            f"AND ([Category] LIKE '{categoryName}')" \
-            f"ORDER BY [Segment], [Category], [BaseYear], [Year] "
-        self.market_forecast_data = pd.read_sql(self.sql_query_market_forecast, self.connection)
-
-
 
 class Report_CountryKnowns_Market_Size:
     country_known_size = None
     connection = None
     queryCountryKnown = None
     year = None
+
+    def __init__(self,cxcn, marketStudy,year,economic_research):
+        gRegionList = economic_research.get_RegionList()
+        gRegion_x_Country = economic_research.get_Region_X_Country_Table()
+        self.connection = cxcn
+        self.year = year
+        self.queryCountryKnown = f"SELECT [Study], [BaseYear],[Country],[Industry],[Company], [Size] FROM [dbo].[CountrySizes]" \
+                            f" WHERE   (([Study] = '{marketStudy}') AND ([BaseYear] =  {year}))" \
+                            f" ORDER BY [Study], [BaseYear], [Company], [Country], [Industry]"
+        self.country_known_size = pd.read_sql(self.queryCountryKnown, self.connection)
+        self.country_known_size = self.country_known_size.merge(gRegion_x_Country, on='Country', how='left')
+        self.country_known_size = self.country_known_size[self.country_known_size['Region'].isin(gRegionList)]
 
     def get_CountryKnown_Table(self):
         return self.country_known_size
@@ -144,15 +164,5 @@ class Report_CountryKnowns_Market_Size:
         countries = economic_research.get_CountryList()
         return self.country_known_size.loc[self.country_known_size['Country'].isin(countries), 'Country'].drop_duplicates()
 
-    def __init__(self,cxcn, marketStudy,year,economic_research):
-        gRegionList = economic_research.get_RegionList()
-        gRegion_x_Country = economic_research.get_Region_X_Country_Table()
-        self.connection = cxcn
-        self.year = year
-        self.queryCountryKnown = f"SELECT [Study], [BaseYear],[Country],[Industry],[Company], [Size] FROM [dbo].[CountrySizes]" \
-                            f" WHERE   (([Study] = '{marketStudy}') AND ([BaseYear] =  {year}))" \
-                            f" ORDER BY [Study], [BaseYear], [Company], [Country], [Industry]"
-        self.country_known_size = pd.read_sql(self.queryCountryKnown, self.connection)
-        self.country_known_size = self.country_known_size.merge(gRegion_x_Country, on='Country', how='left')
-        self.country_known_size = self.country_known_size[self.country_known_size['Region'].isin(gRegionList)]
+
 

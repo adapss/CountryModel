@@ -4,21 +4,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a7e4021d-836e-4dc6-b32e-6cca4ddc913b" name="Changes" comment="Version 4.5&#10;added validation checks before generating the market model. Requirs CK, all regions and industry segmentation&#10;Added more caching to improve response.&#10;Adjust_Automation degree : cleaned up flags to display table and added a remove duplicates function.&#10;incorporated session state keys in all modules;  reduced the number of database retrievals in the Adjust_xxx pages&#10;Minor fix to error catching in the Analyze tabs&#10;Fully function App with Generation, Analysis, and Economic Editing">
+    <list default="true" id="a7e4021d-836e-4dc6-b32e-6cca4ddc913b" name="Changes" comment="Version 10.4&#10;IPF algorith added - Validation visuals added to accelerate the testing.">
+      <change beforePath="$PROJECT_DIR$/.idea/.name" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.name" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Home.py" beforeDir="false" afterPath="$PROJECT_DIR$/Home.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/myCountryModelPackages/CM_SessionStates.py" beforeDir="false" afterPath="$PROJECT_DIR$/myCountryModelPackages/CM_SessionStates.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/myCountryModelPackages/CountryModel_Generation.py" beforeDir="false" afterPath="$PROJECT_DIR$/myCountryModelPackages/CountryModel_Generation.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/myCountryModelPackages/CountryModel_MarketSize.py" beforeDir="false" afterPath="$PROJECT_DIR$/myCountryModelPackages/CountryModel_MarketSize.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/myCountryModelPackages/Economic_Research.py" beforeDir="false" afterPath="$PROJECT_DIR$/myCountryModelPackages/Economic_Research.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/myCountryModelPackages/CountryModel_RAS.py" beforeDir="false" afterPath="$PROJECT_DIR$/myCountryModelPackages/CountryModel_RAS.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/myCountryModelPackages/MarketReportRetrieval.py" beforeDir="false" afterPath="$PROJECT_DIR$/myCountryModelPackages/MarketReportRetrieval.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/13_Copy_Full_Year_EconomicModels.py" beforeDir="false" afterPath="$PROJECT_DIR$/pages/14_Copy_Full_Year_EconomicModels.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/14_Copy_TGroup_Models.py" beforeDir="false" afterPath="$PROJECT_DIR$/pages/15_Copy_TGroup_Models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/2_Generate_All_BaseYear.py" beforeDir="false" afterPath="$PROJECT_DIR$/pages/3_Generate_All_BaseYear.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/3_Analysis_Market_Shares.py" beforeDir="false" afterPath="$PROJECT_DIR$/pages/4_Analysis_Market_Shares.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/4_Analysis_Market_Forecast.py" beforeDir="false" afterPath="$PROJECT_DIR$/pages/5_Analysis_Market_Forecast.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/5_Economic_CountryWeights.py" beforeDir="false" afterPath="$PROJECT_DIR$/pages/6_Economic_CountryWeights.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/7_Adjust_x_TGroup_GDP_Scalar.py" beforeDir="false" afterPath="$PROJECT_DIR$/pages/8_Adjust_x_TGroup_GDP_Scalar.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/8_Adjust_CountryIndustryFractions.py" beforeDir="false" afterPath="$PROJECT_DIR$/pages/9_Adjust_CountryIndustryFractions.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/9_Adjust_Regional_Remainder.py" beforeDir="false" afterPath="$PROJECT_DIR$/pages/10_Adjust_Regional_Remainder.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/myCountryModelPackages/sqlTableRetrieve.py" beforeDir="false" afterPath="$PROJECT_DIR$/myCountryModelPackages/sqlTableRetrieve.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/1_Generate_Single_BaseYear.py" beforeDir="false" afterPath="$PROJECT_DIR$/pages/1_Generate_Single_BaseYear.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/2_Iterative_Proportional_Fit .py" beforeDir="false" afterPath="$PROJECT_DIR$/pages/2_Iterative_Proportional_Fit .py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -278,7 +275,47 @@
       <option name="project" value="LOCAL" />
       <updated>1760027026491</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="Version 10.3&#10;IPF algorith added - Validation visuals added to accelerate the testing.">
+      <option name="closed" value="true" />
+      <created>1771420450344</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1771420450344</updated>
+    </task>
+    <task id="LOCAL-00021" summary="Version 10.3&#10;IPF algorith added - Validation visuals added to accelerate the testing.">
+      <option name="closed" value="true" />
+      <created>1771420499662</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1771420499662</updated>
+    </task>
+    <task id="LOCAL-00022" summary="Version 10.4&#10;IPF algorith added - Validation visuals added to accelerate the testing.">
+      <option name="closed" value="true" />
+      <created>1771420557626</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1771420557626</updated>
+    </task>
+    <task id="LOCAL-00023" summary="Version 10.4&#10;IPF algorith added - Validation visuals added to accelerate the testing.">
+      <option name="closed" value="true" />
+      <created>1771420952171</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1771420952171</updated>
+    </task>
+    <task id="LOCAL-00024" summary="Version 10.4&#10;IPF algorith added - Validation visuals added to accelerate the testing.">
+      <option name="closed" value="true" />
+      <created>1771421003351</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1771421003351</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -303,7 +340,9 @@
     <MESSAGE value="Version 4.3&#10;Adjust_Automation degree : cleaned up flags to display table and added a remove duplicates function.&#10;incorporated session state keys in all modules;  reduced the number of database retrievals in the Adjust_xxx pages&#10;Minor fix to error catching in the Analyze tabs&#10;Fully function App with Generation, Analysis, and Economic Editing" />
     <MESSAGE value="Version 4.4&#10;Added more caching to improve response.&#10;Adjust_Automation degree : cleaned up flags to display table and added a remove duplicates function.&#10;incorporated session state keys in all modules;  reduced the number of database retrievals in the Adjust_xxx pages&#10;Minor fix to error catching in the Analyze tabs&#10;Fully function App with Generation, Analysis, and Economic Editing" />
     <MESSAGE value="Version 4.5&#10;added validation checks before generating the market model. Requirs CK, all regions and industry segmentation&#10;Added more caching to improve response.&#10;Adjust_Automation degree : cleaned up flags to display table and added a remove duplicates function.&#10;incorporated session state keys in all modules;  reduced the number of database retrievals in the Adjust_xxx pages&#10;Minor fix to error catching in the Analyze tabs&#10;Fully function App with Generation, Analysis, and Economic Editing" />
-    <option name="LAST_COMMIT_MESSAGE" value="Version 4.5&#10;added validation checks before generating the market model. Requirs CK, all regions and industry segmentation&#10;Added more caching to improve response.&#10;Adjust_Automation degree : cleaned up flags to display table and added a remove duplicates function.&#10;incorporated session state keys in all modules;  reduced the number of database retrievals in the Adjust_xxx pages&#10;Minor fix to error catching in the Analyze tabs&#10;Fully function App with Generation, Analysis, and Economic Editing" />
+    <MESSAGE value="Version 10.3&#10;IPF algorith added - Validation visuals added to accelerate the testing." />
+    <MESSAGE value="Version 10.4&#10;IPF algorith added - Validation visuals added to accelerate the testing." />
+    <option name="LAST_COMMIT_MESSAGE" value="Version 10.4&#10;IPF algorith added - Validation visuals added to accelerate the testing." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -332,11 +371,6 @@
           <url>file://$PROJECT_DIR$/pages/13_Restore_CountryEconomicProfile.py</url>
           <line>71</line>
           <option name="timeStamp" value="475" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/myCountryModelPackages/Economic_Research.py</url>
-          <line>454</line>
-          <option name="timeStamp" value="476" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/myCountryModelPackages/Economic_Research.py</url>
@@ -374,34 +408,59 @@
           <option name="timeStamp" value="492" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/pages/6_Economic_CountryWeights.py</url>
-          <line>37</line>
-          <option name="timeStamp" value="494" />
+          <url>file://$PROJECT_DIR$/myCountryModelPackages/CountryModel_Generation.py</url>
+          <line>124</line>
+          <option name="timeStamp" value="595" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/pages/6_Economic_CountryWeights.py</url>
-          <line>38</line>
-          <option name="timeStamp" value="495" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/pages/6_Economic_CountryWeights.py</url>
-          <line>21</line>
-          <option name="timeStamp" value="496" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/pages/0_TechnologyGroups_Info.py</url>
-          <line>70</line>
-          <option name="timeStamp" value="513" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/pages/6_Economic_CountryWeights.py</url>
-          <line>64</line>
-          <option name="timeStamp" value="558" />
+          <url>file://$PROJECT_DIR$/myCountryModelPackages/CountryModel_Generation.py</url>
+          <line>173</line>
+          <option name="timeStamp" value="596" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/myCountryModelPackages/MarketReportRetrieval.py</url>
-          <line>94</line>
-          <option name="timeStamp" value="563" />
+          <line>42</line>
+          <option name="timeStamp" value="599" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/myCountryModelPackages/MarketReportRetrieval.py</url>
+          <line>49</line>
+          <option name="timeStamp" value="600" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/myCountryModelPackages/MarketReportRetrieval.py</url>
+          <line>59</line>
+          <option name="timeStamp" value="601" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/myCountryModelPackages/MarketReportRetrieval.py</url>
+          <line>68</line>
+          <option name="timeStamp" value="602" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/myCountryModelPackages/MarketReportRetrieval.py</url>
+          <line>76</line>
+          <option name="timeStamp" value="603" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/myCountryModelPackages/MarketReportRetrieval.py</url>
+          <line>80</line>
+          <option name="timeStamp" value="604" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/myCountryModelPackages/MarketReportRetrieval.py</url>
+          <line>87</line>
+          <option name="timeStamp" value="605" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/pages/1_Generate_Single_BaseYear.py</url>
+          <line>169</line>
+          <option name="timeStamp" value="614" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/pages/1_Generate_Single_BaseYear.py</url>
+          <line>195</line>
+          <option name="timeStamp" value="615" />
         </line-breakpoint>
       </breakpoints>
       <default-breakpoints>
